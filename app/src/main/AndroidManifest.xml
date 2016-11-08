@@ -23,9 +23,29 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SignupActivity" />
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
-        <activity android:name=".MenuActivity"></activity>
+        <activity
+            android:name=".MenuActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name=".MyProfileActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name=".MapActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name=".RatingActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name=".BattlesActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
     </application>
 
 </manifest>

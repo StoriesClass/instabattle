@@ -10,4 +10,43 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="me.instabattle.app.MenuActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:background="#000000">
+
+        <Button
+            android:id="@+id/mapBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:text="Map"
+            android:onClick="onButtonClick"/>
+
+        <Button
+            android:id="@+id/battlesBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:text="Battles"
+            android:onClick="onButtonClick"/>
+
+        <Button
+            android:id="@+id/ratingBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:text="Rating"
+            android:onClick="onButtonClick"/>
+
+        <Button
+            android:id="@+id/myProfileBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:text="My Profile"
+            android:onClick="onButtonClick"/>
+    </LinearLayout>
 </RelativeLayout>
