@@ -14,6 +14,7 @@ import java.util.List;
 public class Battle {
     private String name;
     private LatLng location;
+    private int radius;
     private List<Entry> entries;
 
     public Battle(String name, double lat, double lng) {
@@ -28,6 +29,10 @@ public class Battle {
 
     public LatLng getLocation() {
         return location;
+    }
+
+    public int getRadius() {
+        return radius;
     }
 
     public List<Entry> getEntries() {

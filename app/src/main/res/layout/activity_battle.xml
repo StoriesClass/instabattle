@@ -16,4 +16,23 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textSize="50sp" />
+
+    <Button
+        android:id="@+id/voteBtn"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:textSize="30sp"
+        android:text="Vote"
+        android:onClick="vote"/>
+
+    <Button
+        android:id="@+id/participateBtn"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textSize="30sp"
+        android:text="Participate"
+        android:onClick="participate"/>
 </RelativeLayout>
