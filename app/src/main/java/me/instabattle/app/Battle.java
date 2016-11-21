@@ -1,6 +1,11 @@
 package me.instabattle.app;
 
+import android.graphics.Bitmap;
+
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wackloner on 21.11.2016.
@@ -9,10 +14,12 @@ import com.google.android.gms.maps.model.LatLng;
 public class Battle {
     private String name;
     private LatLng location;
+    private List<Entry> entries;
 
     public Battle(String name, double lat, double lng) {
         this.name = name;
         this.location = new LatLng(lat, lng);
+        entries = new ArrayList<>();
     }
 
     public String getName() {
@@ -21,5 +28,9 @@ public class Battle {
 
     public LatLng getLocation() {
         return location;
+    }
+
+    public List<Entry> getEntries() {
+        return entries;
     }
 }
