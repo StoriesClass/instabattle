@@ -1,7 +1,13 @@
 package me.instabattle.app;
 
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import java.util.Arrays;
 import java.util.List;
+
+import me.instabattle.app.activities.MapActivity;
+import me.instabattle.app.activities.RatingActivity;
 
 /**
  * Created by wackloner on 21.11.2016.
@@ -9,9 +15,8 @@ import java.util.List;
 
 public class BattleFactory {
     public static List<Battle> getNearBattles() {
-        return Arrays.asList(kazansky, isakievsy);
+        return Arrays.asList(kazansky);
     }
 
-    private static Battle kazansky = new Battle("Kazansky Cathedral", 59.934031, 30.324311);
-    private static Battle isakievsy = new Battle("Isaak's Cathedral", 59.934209, 30.305924);
+    public static Battle kazansky = new Battle("Kazansky Cathedral", 59.934031, 30.324311);
 }

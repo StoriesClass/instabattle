@@ -15,6 +15,5 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="Back to Battle!"
-        android:inputType="text"
         android:textSize="20sp" />
 </LinearLayout>

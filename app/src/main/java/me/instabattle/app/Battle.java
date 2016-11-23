@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by wackloner on 21.11.2016.
@@ -40,8 +41,18 @@ public class Battle {
         return entries;
     }
 
+    public void setEntries(List<Entry> entries) {
+        this.entries = entries;
+    }
+
     public Pair<Entry, Entry> getNewPairForVote() {
-        return new Pair<>(null, null);
+        Random rnd = new Random(System.nanoTime());
+        int n = entries.size(), i = 0, j = 0;
+        while (i == j) {
+            i = rnd.nextInt(n);
+            j = rnd.nextInt(n);
+        }
+        return new Pair<>(entries.get(i), entries.get(j));
     }
 
     public void addNewVote(Entry winner, Entry looser) {

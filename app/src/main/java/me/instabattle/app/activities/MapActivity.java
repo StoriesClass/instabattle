@@ -2,6 +2,7 @@ package me.instabattle.app.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -23,12 +24,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import me.instabattle.app.Battle;
 import me.instabattle.app.BattleFactory;
+import me.instabattle.app.Entry;
 import me.instabattle.app.R;
 import me.instabattle.app.State;
+import me.instabattle.app.User;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener {
@@ -53,6 +57,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     .addApi(LocationServices.API)
                     .build();
         }
+
+        //example shouldnt be here TODO: fix
+        Entry first = new Entry(new User("Qumeric"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky1));
+        Entry second = new Entry(new User("glebwin"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky2));
+        Entry third = new Entry(new User("egor_bb"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky3));
+        Entry fourth = new Entry(new User("wackloner"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky4));
+        BattleFactory.kazansky.setEntries(Arrays.asList(first, second, third, fourth));
     }
 
 

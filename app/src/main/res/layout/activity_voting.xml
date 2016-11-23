@@ -16,6 +16,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
         <ImageView
+            android:id="@+id/firstImage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"/>
@@ -42,6 +43,7 @@
             android:textSize="30sp"
             android:onClick="vote"/>
         <ImageView
+            android:id="@+id/secondImage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"/>
