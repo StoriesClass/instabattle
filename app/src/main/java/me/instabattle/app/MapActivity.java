@@ -32,11 +32,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
-    private LatLng currentLocation;
 
     private HashMap<String, Battle> battleByMarker;
-
-    public static Battle chosenBattle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +57,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //TODO: make this shit work
-        //setCurrentLocation();
-         currentLocation = new LatLng(59.930969, 30.352445);
+        enableCurrentLocation();
 
         UiSettings settings = mMap.getUiSettings();
         settings.setZoomControlsEnabled(true);
         settings.setMapToolbarEnabled(false);
 
-        mMap.addMarker(new MarkerOptions().position(currentLocation).title("me"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 13));
+        LatLng startPoint = new LatLng(59.930969, 30.352445);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, 13));
 
         battleByMarker = new HashMap<>();
 
@@ -82,14 +78,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                chosenBattle = battleByMarker.get(marker.getId());
+                State.chosenBattle = battleByMarker.get(marker.getId());
                 Intent viewBattle = new Intent(MapActivity.this, BattleActivity.class);
                 startActivity(viewBattle);
             }
         });
     }
 
-    private void setCurrentLocation() {
+
+    private void enableCurrentLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -97,24 +94,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             return;
         }
         mMap.setMyLocationEnabled(true);
-        if (googleApiClient.isConnected()) {
-            Location loc = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            currentLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
-        } else {
-            currentLocation = new LatLng(59.930969, 30.352445);
-        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 0:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    setCurrentLocation();
-                } else {
-                    Toast.makeText(this, "succ", Toast.LENGTH_SHORT).show();
-                }
-                return;
+                enableCurrentLocation();
         }
     }
 
@@ -137,7 +123,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        enableCurrentLocation();
     }
 
     @Override
@@ -152,6 +138,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        //TODO: show radius
         return false;
     }
 }

@@ -16,7 +16,7 @@ public class BattleActivity extends Activity {
         setContentView(R.layout.activity_battle);
 
         title = (TextView) findViewById(R.id.battle_title);
-        title.setText(MapActivity.chosenBattle.getName());
+        title.setText(State.chosenBattle.getName());
     }
 
     public void vote(View v) {
