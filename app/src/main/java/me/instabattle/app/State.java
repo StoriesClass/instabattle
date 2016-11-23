@@ -7,5 +7,5 @@ package me.instabattle.app;
 public class State {
     public static Battle chosenBattle;
 
-    public static User user;
+    public static User currentUser = new User("wackloner");
 }

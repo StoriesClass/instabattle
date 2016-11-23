@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="me.instabattle.app.dialogs.VotingEndDialog">
+
+    <Button
+        android:id="@+id/voteAgainBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Vote Again!"
+        android:textSize="20sp" />
+    <Button
+        android:id="@+id/goToBattleBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Back to Battle!"
+        android:inputType="text"
+        android:textSize="20sp" />
+</LinearLayout>
