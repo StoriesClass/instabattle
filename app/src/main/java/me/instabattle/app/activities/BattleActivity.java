@@ -1,4 +1,4 @@
-package me.instabattle.app;
+package me.instabattle.app.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import me.instabattle.app.R;
+import me.instabattle.app.State;
 
 public class BattleActivity extends Activity {
 

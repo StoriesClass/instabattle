@@ -1,8 +1,7 @@
-package me.instabattle.app;
+package me.instabattle.app.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -10,7 +9,6 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.Toast;
 import android.Manifest;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -26,6 +24,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+
+import me.instabattle.app.Battle;
+import me.instabattle.app.BattleFactory;
+import me.instabattle.app.R;
+import me.instabattle.app.State;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener {

@@ -1,4 +1,4 @@
-package me.instabattle.app;
+package me.instabattle.app.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import me.instabattle.app.LoginTools;
+import me.instabattle.app.R;
 
 public class LoginActivity extends Activity {
     private EditText _email;

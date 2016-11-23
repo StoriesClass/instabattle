@@ -1,9 +1,13 @@
-package me.instabattle.app;
+package me.instabattle.app.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+
+import me.instabattle.app.Entry;
+import me.instabattle.app.R;
+import me.instabattle.app.State;
 
 public class VotingActivity extends Activity {
 

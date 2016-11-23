@@ -1,7 +1,9 @@
-package me.instabattle.app;
+package me.instabattle.app.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import me.instabattle.app.R;
 
 public class BattlesActivity extends Activity {
 

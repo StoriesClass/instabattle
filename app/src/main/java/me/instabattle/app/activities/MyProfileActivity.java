@@ -1,9 +1,12 @@
-package me.instabattle.app;
+package me.instabattle.app.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import me.instabattle.app.R;
+import me.instabattle.app.activities.LoginActivity;
 
 public class MyProfileActivity extends Activity {
 

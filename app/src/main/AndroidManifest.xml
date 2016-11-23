@@ -19,7 +19,7 @@
             android:value="AIzaSyCZcZq8LVZ2qIij1aNPe9rYR3f7n9i8ynk" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,31 +28,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignupActivity"
+            android:name=".activities.SignupActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".MenuActivity"
+            android:name=".activities.MenuActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".MyProfileActivity"
+            android:name=".activities.MyProfileActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".MapActivity"
+            android:name=".activities.MapActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".RatingActivity"
+            android:name=".activities.RatingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".BattlesActivity"
+            android:name=".activities.BattlesActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".CreateBattleActivity"
+            android:name=".activities.CreateBattleActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".BattleActivity"
+            android:name=".activities.BattleActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".VotingActivity"
+            android:name=".activities.VotingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
     </application>
 
