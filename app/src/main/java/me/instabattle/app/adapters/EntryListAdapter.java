@@ -17,12 +17,12 @@ import me.instabattle.app.R;
  * Created by wackloner on 28.11.2016.
  */
 
-public class ListEntryAdapter extends BaseAdapter {
+public class EntryListAdapter extends BaseAdapter {
     private List<Entry> entries;
     private Context context;
     private LayoutInflater inflater;
 
-    public ListEntryAdapter(Context context, List<Entry> entries) {
+    public EntryListAdapter(Context context, List<Entry> entries) {
         this.context = context;
         this.entries = entries;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

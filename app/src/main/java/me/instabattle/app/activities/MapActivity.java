@@ -42,6 +42,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private HashMap<String, Battle> battleByMarker;
 
+    public static Class<?> gotHereFrom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +101,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onInfoWindowClick(Marker marker) {
                 State.chosenBattle = battleByMarker.get(marker.getId());
-                State.gotToBattleFrom = MapActivity.class;
+                BattleActivity.gotHereFrom = MapActivity.class;
                 Intent viewBattle = new Intent(MapActivity.this, BattleActivity.class);
                 startActivity(viewBattle);
             }
@@ -165,7 +167,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onBackPressed() {
-        Intent voting = new Intent(this, MenuActivity.class);
+        Intent voting = new Intent(this, gotHereFrom);
         startActivity(voting);
     }
 }

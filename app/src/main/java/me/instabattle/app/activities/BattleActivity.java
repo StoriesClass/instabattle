@@ -10,13 +10,15 @@ import android.widget.Toast;
 
 import me.instabattle.app.R;
 import me.instabattle.app.State;
-import me.instabattle.app.adapters.ListEntryAdapter;
+import me.instabattle.app.adapters.EntryListAdapter;
 
 public class BattleActivity extends Activity {
 
     private TextView title;
-    private ListEntryAdapter listEntryAdapter;
+    private EntryListAdapter entryListAdapter;
     private ListView entryList;
+
+    public static Class<?> gotHereFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +28,15 @@ public class BattleActivity extends Activity {
         title = (TextView) findViewById(R.id.battle_title);
         title.setText(State.chosenBattle.getName());
 
-        listEntryAdapter = new ListEntryAdapter(this, State.chosenBattle.getEntries());
+        entryListAdapter = new EntryListAdapter(this, State.chosenBattle.getEntries());
 
-        entryList = (ListView) findViewById(R.id.listEntry);
-        entryList.setAdapter(listEntryAdapter);
+        entryList = (ListView) findViewById(R.id.entryList);
+        entryList.setAdapter(entryListAdapter);
     }
 
     @Override
     public void onBackPressed() {
-        Intent voting = new Intent(this, State.gotToBattleFrom);
+        Intent voting = new Intent(this, gotHereFrom);
         startActivity(voting);
     }
 

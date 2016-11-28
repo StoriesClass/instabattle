@@ -20,6 +20,7 @@ public class MenuActivity extends Activity {
         switch(view.getId()) {
             case R.id.mapBtn:
                 cls = MapActivity.class;
+                MapActivity.gotHereFrom = MenuActivity.class;
                 break;
             case R.id.battlesBtn:
                 cls = BattlesActivity.class;
