@@ -40,6 +40,10 @@ public class Battle {
         return entries;
     }
 
+    public int getEntriesCount() {
+        return entries.size();
+    }
+
     public void addEntry(Entry entry) {
         entry.setId(entries.size());
         entries.add(entry);
@@ -70,5 +74,9 @@ public class Battle {
             entries.set(winnerId, entries.get(swapId));
             entries.set(swapId, winner);
         }
+    }
+
+    public Entry getWinner() {
+        return entries.get(0);
     }
 }

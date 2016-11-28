@@ -59,19 +59,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     .addApi(LocationServices.API)
                     .build();
         }
-
-        //example shouldnt be here TODO: fix
-        BattleFactory.kazansky.addEntry(new Entry(new User("Qumeric"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky1)));
-        BattleFactory.kazansky.addEntry(new Entry(new User("glebwin"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky2)));
-        BattleFactory.kazansky.addEntry(new Entry(new User("egor_bb"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky3)));
-        BattleFactory.kazansky.addEntry(new Entry(new User("wackloner"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky4)));
-
-        BattleFactory.gallery.addEntry(new Entry(new User("yeputons"), BitmapFactory.decodeResource(getResources(), R.drawable.gallery1)));
-        BattleFactory.gallery.addEntry(new Entry(new User("egor_bb"), BitmapFactory.decodeResource(getResources(), R.drawable.gallery2)));
-        BattleFactory.gallery.addEntry(new Entry(new User("wackloner"), BitmapFactory.decodeResource(getResources(), R.drawable.gallery3)));
-        BattleFactory.gallery.addEntry(new Entry(new User("Qumeric"), BitmapFactory.decodeResource(getResources(), R.drawable.gallery4)));
-        BattleFactory.gallery.addEntry(new Entry(new User("katyakos"), BitmapFactory.decodeResource(getResources(), R.drawable.gallery5)));
-        BattleFactory.gallery.addEntry(new Entry(new User("glebwin"), BitmapFactory.decodeResource(getResources(), R.drawable.gallery6)));
     }
 
 

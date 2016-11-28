@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import me.instabattle.app.Battle;
 import me.instabattle.app.Entry;
 import me.instabattle.app.R;
 
@@ -17,25 +18,25 @@ import me.instabattle.app.R;
  * Created by wackloner on 28.11.2016.
  */
 
-public class EntryListAdapter extends BaseAdapter {
-    private List<Entry> entries;
+public class BattleListAdapter extends BaseAdapter {
+    private List<Battle> battles;
     private Context context;
     private LayoutInflater inflater;
 
-    public EntryListAdapter(Context context, List<Entry> entries) {
+    public BattleListAdapter(Context context, List<Battle> battles) {
         this.context = context;
-        this.entries = entries;
+        this.battles = battles;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return entries.size();
+        return battles.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return entries.get(position);
+        return battles.get(position);
     }
 
     @Override
@@ -47,12 +48,14 @@ public class EntryListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View res = convertView;
         if (res == null) {
-            res = inflater.inflate(R.layout.entry_list_item, parent, false);
+            res = inflater.inflate(R.layout.battle_list_item, parent, false);
         }
-        Entry entry = entries.get(position);
-        ((ImageView) res.findViewById(R.id.listEntryImage)).setImageBitmap(entry.getPhoto());
-        ((TextView) res.findViewById(R.id.listEntryAuthor)).setText(entry.getAuthor().getNickname());
-        ((TextView) res.findViewById(R.id.listEntryUpvotes)).setText(entry.getUpvotes() + " upvotes");
+        Battle battle = battles.get(position);
+
+        ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(battle.getWinner().getPhoto());
+        ((TextView) res.findViewById(R.id.battleListItemTitle)).setText(battle.getName());
+        ((TextView) res.findViewById(R.id.battleListItemDate)).setText("Created on 28.11.16");
+        ((TextView) res.findViewById(R.id.battleListItemCount)).setText(battle.getEntriesCount() + " photos");
         return res;
     }
 }
