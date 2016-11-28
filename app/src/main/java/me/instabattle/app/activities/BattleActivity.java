@@ -4,15 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import me.instabattle.app.R;
 import me.instabattle.app.State;
+import me.instabattle.app.adapters.ListEntryAdapter;
 
 public class BattleActivity extends Activity {
 
     private TextView title;
+    private ListEntryAdapter listEntryAdapter;
+    private ListView entryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,11 @@ public class BattleActivity extends Activity {
 
         title = (TextView) findViewById(R.id.battle_title);
         title.setText(State.chosenBattle.getName());
+
+        listEntryAdapter = new ListEntryAdapter(this, State.chosenBattle.getEntries());
+
+        entryList = (ListView) findViewById(R.id.listEntry);
+        entryList.setAdapter(listEntryAdapter);
     }
 
     public void vote(View v) {

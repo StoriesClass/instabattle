@@ -1,6 +1,5 @@
 package me.instabattle.app;
 
-import android.graphics.Bitmap;
 import android.util.Pair;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -56,6 +55,6 @@ public class Battle {
     }
 
     public void addNewVote(Entry winner, Entry looser) {
-
+        winner.upvote();
     }
 }
