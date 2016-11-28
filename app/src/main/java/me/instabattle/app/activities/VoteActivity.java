@@ -1,6 +1,7 @@
 package me.instabattle.app.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.DialogFragment;
 import android.util.Pair;
@@ -52,5 +53,11 @@ public class VoteActivity extends Activity {
             State.chosenBattle.addNewVote(secondEntry, firstEntry);
         }
         voteEnd.show(getFragmentManager(), "voteEnd");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent voting = new Intent(this, BattleActivity.class);
+        startActivity(voting);
     }
 }

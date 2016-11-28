@@ -34,4 +34,9 @@ public class MenuActivity extends Activity {
         Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
 }

@@ -99,6 +99,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onInfoWindowClick(Marker marker) {
                 State.chosenBattle = battleByMarker.get(marker.getId());
+                State.gotToBattleFrom = MapActivity.class;
                 Intent viewBattle = new Intent(MapActivity.this, BattleActivity.class);
                 startActivity(viewBattle);
             }
@@ -160,5 +161,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public boolean onMarkerClick(Marker marker) {
         //TODO: show radius
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent voting = new Intent(this, MenuActivity.class);
+        startActivity(voting);
     }
 }

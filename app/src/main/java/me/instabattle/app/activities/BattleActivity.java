@@ -32,6 +32,12 @@ public class BattleActivity extends Activity {
         entryList.setAdapter(listEntryAdapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent voting = new Intent(this, State.gotToBattleFrom);
+        startActivity(voting);
+    }
+
     public void vote(View v) {
         Intent voting = new Intent(this, VoteActivity.class);
         startActivity(voting);
