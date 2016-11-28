@@ -46,6 +46,7 @@ public class Battle {
 
     public void addEntry(Entry entry) {
         entry.setId(entries.size());
+        entry.setBattle(this);
         entries.add(entry);
     }
 

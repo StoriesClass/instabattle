@@ -11,11 +11,13 @@ public class Entry {
     private Bitmap photo;
     private int upvotes;
     private int id;
+    private Battle battle;
 
     public Entry(User author, Bitmap photo) {
         this.author = author;
         this.photo = photo;
         this.upvotes = 0;
+        author.addEntry(this);
     }
 
     public Bitmap getPhoto() {
@@ -32,6 +34,14 @@ public class Entry {
 
     public int getId() {
         return id;
+    }
+
+    public Battle getBattle() {
+        return battle;
+    }
+
+    public void setBattle(Battle battle) {
+        this.battle = battle;
     }
 
     public void setId(int id) {
