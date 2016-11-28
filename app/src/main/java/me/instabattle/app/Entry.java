@@ -10,6 +10,7 @@ public class Entry {
     private User author;
     private Bitmap photo;
     private int upvotes;
+    private int id;
 
     public Entry(User author, Bitmap photo) {
         this.author = author;
@@ -27,6 +28,14 @@ public class Entry {
 
     public int getUpvotes() {
         return upvotes;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void upvote() {

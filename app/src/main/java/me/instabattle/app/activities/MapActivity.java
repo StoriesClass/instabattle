@@ -59,11 +59,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
 
         //example shouldnt be here TODO: fix
-        Entry first = new Entry(new User("Qumeric"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky1));
-        Entry second = new Entry(new User("glebwin"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky2));
-        Entry third = new Entry(new User("egor_bb"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky3));
-        Entry fourth = new Entry(new User("wackloner"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky4));
-        BattleFactory.kazansky.setEntries(Arrays.asList(first, second, third, fourth));
+        BattleFactory.kazansky.addEntry(new Entry(new User("Qumeric"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky1)));
+        BattleFactory.kazansky.addEntry(new Entry(new User("glebwin"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky2)));
+        BattleFactory.kazansky.addEntry(new Entry(new User("egor_bb"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky3)));
+        BattleFactory.kazansky.addEntry(new Entry(new User("wackloner"), BitmapFactory.decodeResource(getResources(), R.drawable.kazansky4)));
     }
 
 

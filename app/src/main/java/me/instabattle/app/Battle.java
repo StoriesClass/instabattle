@@ -40,8 +40,9 @@ public class Battle {
         return entries;
     }
 
-    public void setEntries(List<Entry> entries) {
-        this.entries = entries;
+    public void addEntry(Entry entry) {
+        entry.setId(entries.size());
+        entries.add(entry);
     }
 
     public Pair<Entry, Entry> getNewPairForVote() {
@@ -56,5 +57,18 @@ public class Battle {
 
     public void addNewVote(Entry winner, Entry looser) {
         winner.upvote();
+        int winnerId = winner.getId(), swapId = winnerId;
+        while (swapId > 0) {
+            if (entries.get(swapId - 1).getUpvotes() >= winner.getUpvotes()) {
+                break;
+            }
+            swapId--;
+        }
+        if (swapId != winnerId) {
+            entries.get(swapId).setId(winnerId);
+            winner.setId(swapId);
+            entries.set(winnerId, entries.get(swapId));
+            entries.set(swapId, winner);
+        }
     }
 }
