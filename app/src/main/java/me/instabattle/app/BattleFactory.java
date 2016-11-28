@@ -15,8 +15,9 @@ import me.instabattle.app.activities.RatingActivity;
 
 public class BattleFactory {
     public static List<Battle> getNearBattles() {
-        return Arrays.asList(kazansky);
+        return Arrays.asList(kazansky, gallery);
     }
 
+    public static Battle gallery = new Battle("Gallery", 59.927615, 30.360142);
     public static Battle kazansky = new Battle("Kazansky Cathedral", 59.934031, 30.324311);
 }
