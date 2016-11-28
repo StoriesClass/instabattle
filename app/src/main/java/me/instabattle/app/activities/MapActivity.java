@@ -26,7 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashMap;
 
 import me.instabattle.app.Battle;
-import me.instabattle.app.BattleFactory;
+import me.instabattle.app.BattleManager;
 import me.instabattle.app.R;
 import me.instabattle.app.State;
 
@@ -74,9 +74,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         battleByMarker = new HashMap<>();
 
-        for (Battle nearBattle : BattleFactory.getNearBattles()) {
+        for (Battle nearBattle : BattleManager.getNearBattles(viewPoint, 1)) {
             Marker newMarker = mMap.addMarker(new MarkerOptions().position(nearBattle.getLocation()).
-                    title(nearBattle.getName()).snippet(nearBattle.getEntries().size() + " photos"));
+                    title(nearBattle.getName()).snippet(nearBattle.getEntries(0, 0).size() + " photos"));
             battleByMarker.put(newMarker.getId(), nearBattle);
         }
 

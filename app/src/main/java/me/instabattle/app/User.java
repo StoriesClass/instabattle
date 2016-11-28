@@ -3,11 +3,8 @@ package me.instabattle.app;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by wackloner on 23.11.2016.
- */
-
 public class User {
+    private int id;
     private String nickname;
     private List<Entry> entries;
 
@@ -22,6 +19,10 @@ public class User {
 
     public void addEntry(Entry entry) {
         entries.add(entry);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNickname() {

@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by wackloner on 21.11.2016.
- */
-
 public class Battle {
+    private int id;
     private String name;
     private LatLng location;
     private int radius;
@@ -36,7 +33,8 @@ public class Battle {
         return radius;
     }
 
-    public List<Entry> getEntries() {
+    public List<Entry> getEntries(int firstEntryNum, int entriesCount) {
+        //TODO: change to return EntryManager.getEntriesByBattle(id, firstEntryNum, entriesCount);
         return entries;
     }
 

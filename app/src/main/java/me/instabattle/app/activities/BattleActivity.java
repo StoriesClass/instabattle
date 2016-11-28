@@ -28,7 +28,7 @@ public class BattleActivity extends Activity {
         title = (TextView) findViewById(R.id.battle_title);
         title.setText(State.chosenBattle.getName());
 
-        entryListAdapter = new EntryListAdapter(this, State.chosenBattle.getEntries());
+        entryListAdapter = new EntryListAdapter(this, State.chosenBattle.getEntries(0, 0));
 
         entryList = (ListView) findViewById(R.id.entryList);
         entryList.setAdapter(entryListAdapter);
