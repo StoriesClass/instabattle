@@ -43,7 +43,7 @@
             android:name=".activities.RatingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".activities.BattlesActivity"
+            android:name=".activities.BattleListActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
             android:name=".activities.CreateBattleActivity"

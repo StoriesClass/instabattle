@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import me.instabattle.app.R;
 
-public class BattlesActivity extends Activity {
+public class BattleListActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

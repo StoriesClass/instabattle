@@ -23,7 +23,7 @@ public class MenuActivity extends Activity {
                 MapActivity.gotHereFrom = MenuActivity.class;
                 break;
             case R.id.battlesBtn:
-                cls = BattlesActivity.class;
+                cls = BattleListActivity.class;
                 break;
             case R.id.ratingBtn:
                 cls = RatingActivity.class;
