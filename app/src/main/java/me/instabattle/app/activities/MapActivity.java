@@ -2,7 +2,6 @@ package me.instabattle.app.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -24,15 +23,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 import me.instabattle.app.Battle;
 import me.instabattle.app.BattleFactory;
-import me.instabattle.app.Entry;
 import me.instabattle.app.R;
 import me.instabattle.app.State;
-import me.instabattle.app.User;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener {
@@ -43,6 +39,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private HashMap<String, Battle> battleByMarker;
 
     public static Class<?> gotHereFrom;
+
+    public static LatLng viewPoint = new LatLng(59.930969, 30.352445);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +70,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         settings.setZoomControlsEnabled(true);
         settings.setMapToolbarEnabled(false);
 
-        LatLng startPoint = new LatLng(59.930969, 30.352445);
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, 13));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewPoint, 15));
 
         battleByMarker = new HashMap<>();
 

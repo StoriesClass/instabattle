@@ -8,6 +8,4 @@ public class State {
     public static Battle chosenBattle;
 
     public static User currentUser = UserFactory.wackloner;
-
-    public static Class<?> gotToBattleFrom;
 }

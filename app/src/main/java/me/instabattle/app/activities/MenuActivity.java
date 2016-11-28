@@ -20,6 +20,15 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
 
         //example shouldnt be here TODO: fix
+        if (!init) {
+            initExamples();
+            init = true;
+        }
+    }
+
+    private boolean init = false;
+
+    private void initExamples() {
         BattleFactory.kazansky.addEntry(new Entry(UserFactory.qumeric, BitmapFactory.decodeResource(getResources(), R.drawable.kazansky1)));
         BattleFactory.kazansky.addEntry(new Entry(UserFactory.glebwin, BitmapFactory.decodeResource(getResources(), R.drawable.kazansky2)));
         BattleFactory.kazansky.addEntry(new Entry(UserFactory.egor_bb, BitmapFactory.decodeResource(getResources(), R.drawable.kazansky3)));

@@ -1,6 +1,7 @@
 package me.instabattle.app.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -22,5 +23,11 @@ public class BattleListActivity extends Activity {
 
         battleList = (ListView) findViewById(R.id.battleList);
         battleList.setAdapter(battleListAdapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent voting = new Intent(this, MenuActivity.class);
+        startActivity(voting);
     }
 }

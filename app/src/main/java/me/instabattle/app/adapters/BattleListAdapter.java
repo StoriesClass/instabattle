@@ -1,10 +1,12 @@
 package me.instabattle.app.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,10 @@ import java.util.List;
 import me.instabattle.app.Battle;
 import me.instabattle.app.Entry;
 import me.instabattle.app.R;
+import me.instabattle.app.State;
+import me.instabattle.app.activities.BattleActivity;
+import me.instabattle.app.activities.BattleListActivity;
+import me.instabattle.app.activities.MapActivity;
 
 /**
  * Created by wackloner on 28.11.2016.
@@ -50,12 +56,31 @@ public class BattleListAdapter extends BaseAdapter {
         if (res == null) {
             res = inflater.inflate(R.layout.battle_list_item, parent, false);
         }
-        Battle battle = battles.get(position);
+
+        final Battle battle = battles.get(position);
 
         ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(battle.getWinner().getPhoto());
         ((TextView) res.findViewById(R.id.battleListItemTitle)).setText(battle.getName());
         ((TextView) res.findViewById(R.id.battleListItemDate)).setText("Created on 28.11.16");
         ((TextView) res.findViewById(R.id.battleListItemCount)).setText(battle.getEntriesCount() + " photos");
+        res.findViewById(R.id.battleListItemViewBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                State.chosenBattle = battle;
+                BattleActivity.gotHereFrom = BattleListActivity.class;
+                Intent viewBattle = new Intent(context, BattleActivity.class);
+                context.startActivity(viewBattle);
+            }
+        });
+        res.findViewById(R.id.battleListItemViewOnMapBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapActivity.viewPoint = battle.getLocation();
+                MapActivity.gotHereFrom = BattleListActivity.class;
+                Intent viewMap = new Intent(context, MapActivity.class);
+                context.startActivity(viewMap);
+            }
+        });
         return res;
     }
 }
