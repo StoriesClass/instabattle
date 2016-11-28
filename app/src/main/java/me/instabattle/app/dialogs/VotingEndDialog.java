@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import me.instabattle.app.R;
 import me.instabattle.app.State;
 import me.instabattle.app.activities.BattleActivity;
-import me.instabattle.app.activities.VotingActivity;
+import me.instabattle.app.activities.VoteActivity;
 
 
 public class VotingEndDialog extends DialogFragment implements View.OnClickListener {
@@ -26,7 +26,7 @@ public class VotingEndDialog extends DialogFragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.voteAgainBtn) {
-            VotingActivity parent = (VotingActivity) getActivity();
+            VoteActivity parent = (VoteActivity) getActivity();
             parent.initNewVoting();
             dismiss();
         } else {

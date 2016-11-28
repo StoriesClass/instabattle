@@ -12,7 +12,7 @@ import me.instabattle.app.R;
 import me.instabattle.app.State;
 import me.instabattle.app.dialogs.VotingEndDialog;
 
-public class VotingActivity extends Activity {
+public class VoteActivity extends Activity {
 
     private Entry firstEntry;
     private Entry secondEntry;
@@ -25,7 +25,7 @@ public class VotingActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voting);
+        setContentView(R.layout.activity_vote);
 
         voteEnd = new VotingEndDialog();
 

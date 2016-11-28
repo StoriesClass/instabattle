@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +33,7 @@ public class BattleActivity extends Activity {
     }
 
     public void vote(View v) {
-        Intent voting = new Intent(this, VotingActivity.class);
+        Intent voting = new Intent(this, VoteActivity.class);
         startActivity(voting);
     }
 

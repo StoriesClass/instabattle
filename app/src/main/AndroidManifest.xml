@@ -52,7 +52,7 @@
             android:name=".activities.BattleActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".activities.VotingActivity"
+            android:name=".activities.VoteActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
     </application>
 
