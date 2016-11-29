@@ -1,5 +1,10 @@
 package me.instabattle.app;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import me.instabattle.app.models.Battle;
+import me.instabattle.app.models.User;
+
 /**
  * Created by wackloner on 23.11.2016.
  */
@@ -7,5 +12,7 @@ package me.instabattle.app;
 public class State {
     public static Battle chosenBattle;
 
-    public static User currentUser = UserFactory.wackloner;
+    public static User currentUser = new User("wackloner");
+
+    public static LatLng currentLocation;
 }

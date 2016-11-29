@@ -1,4 +1,6 @@
-package me.instabattle.app;
+package me.instabattle.app.managers;
+
+import me.instabattle.app.models.Vote;
 
 public class VoteManager {
     public static Vote getVote(int battleId, int userId) {

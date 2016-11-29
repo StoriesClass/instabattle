@@ -6,14 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
-import me.instabattle.app.Battle;
-import me.instabattle.app.Entry;
+import me.instabattle.app.models.Battle;
 import me.instabattle.app.R;
 import me.instabattle.app.State;
 import me.instabattle.app.activities.BattleActivity;

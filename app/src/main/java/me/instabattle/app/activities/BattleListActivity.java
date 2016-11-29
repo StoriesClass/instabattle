@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import me.instabattle.app.BattleManager;
+import me.instabattle.app.State;
+import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.R;
 import me.instabattle.app.adapters.BattleListAdapter;
 
@@ -19,7 +20,7 @@ public class BattleListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_list);
 
-        battleListAdapter = new BattleListAdapter(this, BattleManager.getNearBattles());
+        battleListAdapter = new BattleListAdapter(this, BattleManager.getNearBattles(State.currentLocation, 1));
 
         battleList = (ListView) findViewById(R.id.battleList);
         battleList.setAdapter(battleListAdapter);

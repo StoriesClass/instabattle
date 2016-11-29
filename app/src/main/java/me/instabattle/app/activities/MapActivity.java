@@ -25,8 +25,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
 
-import me.instabattle.app.Battle;
-import me.instabattle.app.BattleManager;
+import me.instabattle.app.models.Battle;
+import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.R;
 import me.instabattle.app.State;
 

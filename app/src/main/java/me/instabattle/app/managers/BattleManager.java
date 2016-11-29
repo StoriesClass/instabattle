@@ -1,9 +1,11 @@
-package me.instabattle.app;
+package me.instabattle.app.managers;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Arrays;
 import java.util.List;
+
+import me.instabattle.app.models.Battle;
 
 public class BattleManager {
     public static List<Battle> getNearBattles(LatLng location, double radius) {

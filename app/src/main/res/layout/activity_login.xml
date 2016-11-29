@@ -19,7 +19,7 @@
         android:background="#000000">
 
         <EditText
-            android:id="@+id/email_input"
+            android:id="@+id/loginInput"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:hint="E-mail"
@@ -27,7 +27,7 @@
             android:layout_margin="7dp"/>
 
         <EditText
-            android:id="@+id/password_input"
+            android:id="@+id/passwordInput"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:hint="Password"

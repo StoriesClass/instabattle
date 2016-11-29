@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import me.instabattle.app.Entry;
+import me.instabattle.app.models.Entry;
 import me.instabattle.app.R;
 
 /**

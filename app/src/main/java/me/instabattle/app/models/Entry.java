@@ -1,4 +1,4 @@
-package me.instabattle.app;
+package me.instabattle.app.models;
 
 import android.graphics.Bitmap;
 

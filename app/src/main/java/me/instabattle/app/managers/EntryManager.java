@@ -1,7 +1,8 @@
-package me.instabattle.app;
+package me.instabattle.app.managers;
 
-import java.util.Collections;
 import java.util.List;
+
+import me.instabattle.app.models.Entry;
 
 public class EntryManager {
     public static List<Entry> getEntriesByBattle(int battleId, int firstEntryNum, int entriesCount) {

@@ -1,4 +1,4 @@
-package me.instabattle.app;
+package me.instabattle.app.models;
 
 import java.util.ArrayList;
 import java.util.List;

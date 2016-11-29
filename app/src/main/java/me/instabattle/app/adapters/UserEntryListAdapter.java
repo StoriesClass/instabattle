@@ -11,18 +11,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import me.instabattle.app.Battle;
-import me.instabattle.app.Entry;
+import me.instabattle.app.models.Battle;
+import me.instabattle.app.models.Entry;
 import me.instabattle.app.R;
 import me.instabattle.app.State;
 import me.instabattle.app.activities.BattleActivity;
-import me.instabattle.app.activities.BattleListActivity;
 import me.instabattle.app.activities.MapActivity;
 import me.instabattle.app.activities.MyProfileActivity;
-
-/**
- * Created by wackloner on 28.11.2016.
- */
 
 public class UserEntryListAdapter extends BaseAdapter {
     private List<Entry> entries;

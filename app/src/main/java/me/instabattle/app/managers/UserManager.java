@@ -1,4 +1,6 @@
-package me.instabattle.app;
+package me.instabattle.app.managers;
+
+import me.instabattle.app.models.User;
 
 public class UserManager {
     public static User getUserById(int id) {
