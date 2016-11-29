@@ -76,7 +76,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         for (Battle nearBattle : BattleManager.getNearBattles(viewPoint, 1)) {
             Marker newMarker = mMap.addMarker(new MarkerOptions().position(nearBattle.getLocation()).
-                    title(nearBattle.getName()).snippet(nearBattle.getEntries(0, 0).size() + " photos"));
+                    title(nearBattle.getName()).snippet(nearBattle.getEntriesCount() + " photos"));
             battleByMarker.put(newMarker.getId(), nearBattle);
         }
 
@@ -103,7 +103,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case 0:
                 enableCurrentLocation();

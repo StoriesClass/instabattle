@@ -13,10 +13,6 @@ import java.util.List;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.R;
 
-/**
- * Created by wackloner on 28.11.2016.
- */
-
 public class EntryListAdapter extends BaseAdapter {
     private List<Entry> entries;
     private Context context;

@@ -18,10 +18,6 @@ import me.instabattle.app.activities.BattleActivity;
 import me.instabattle.app.activities.BattleListActivity;
 import me.instabattle.app.activities.MapActivity;
 
-/**
- * Created by wackloner on 28.11.2016.
- */
-
 public class BattleListAdapter extends BaseAdapter {
     private List<Battle> battles;
     private Context context;

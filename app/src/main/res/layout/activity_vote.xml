@@ -19,7 +19,8 @@
             android:id="@+id/firstImage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"/>
+            android:layout_weight="5"
+            android:contentDescription="First photo in vote"/>
         <Button
             android:id="@+id/voteFirstBtn"
             android:layout_width="0dp"
@@ -46,7 +47,8 @@
             android:id="@+id/secondImage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"/>
+            android:layout_weight="5"
+            android:contentDescription="Second photo in vote"/>
     </LinearLayout>
     
     

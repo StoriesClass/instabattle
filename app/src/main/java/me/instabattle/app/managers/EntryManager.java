@@ -16,4 +16,9 @@ public class EntryManager {
         //TODO: make entries from json
         return null;
     }
+
+    public static Entry getEntryById(int id) {
+        //TODO: bla-bla-bla
+        return null;
+    }
 }

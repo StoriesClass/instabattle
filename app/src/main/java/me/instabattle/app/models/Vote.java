@@ -1,18 +1,19 @@
 package me.instabattle.app.models;
 
+import me.instabattle.app.managers.EntryManager;
 import me.instabattle.app.managers.VoteManager;
 
 public class Vote {
-    int id;
-    private Entry firstEntry;
-    private Entry secondEntry;
+    private int id;
+    private int firstEntryId;
+    private int secondEntryId;
 
     public Entry getFirstEntry() {
-        return firstEntry;
+        return EntryManager.getEntryById(firstEntryId);
     }
 
     public Entry getSecondEntry() {
-        return secondEntry;
+        return EntryManager.getEntryById(secondEntryId);
     }
 
     public boolean voteForFirst() {

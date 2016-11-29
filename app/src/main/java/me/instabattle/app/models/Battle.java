@@ -1,24 +1,26 @@
 package me.instabattle.app.models;
 
-import android.util.Pair;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import me.instabattle.app.State;
+import me.instabattle.app.managers.EntryManager;
+import me.instabattle.app.managers.VoteManager;
 
 public class Battle {
     private int id;
     private String name;
+    private String desctiption;
     private LatLng location;
     private int radius;
-    private List<Entry> entries;
+    private int entriesCount;
 
-    public Battle(String name, double lat, double lng) {
+    public Battle(String name, LatLng location, int entriesCount) {
         this.name = name;
-        this.location = new LatLng(lat, lng);
-        entries = new ArrayList<>();
+        this.location = location;
+        this.entriesCount = entriesCount;
     }
 
     public String getName() {
@@ -34,48 +36,22 @@ public class Battle {
     }
 
     public List<Entry> getEntries(int firstEntryNum, int entriesCount) {
-        //TODO: change to return EntryManager.getEntriesByBattle(id, firstEntryNum, entriesCount);
-        return entries;
+        return EntryManager.getEntriesByBattle(id, firstEntryNum, entriesCount);
+    }
+
+    public List<Entry> getEntries() {
+        return getEntries(0, entriesCount);
     }
 
     public int getEntriesCount() {
-        return entries.size();
-    }
-
-    public void addEntry(Entry entry) {
-        entry.setId(entries.size());
-        entry.setBattle(this);
-        entries.add(entry);
-    }
-
-    public Pair<Entry, Entry> getNewPairForVote() {
-        Random rnd = new Random(System.nanoTime());
-        int n = entries.size(), i = 0, j = 0;
-        while (i == j) {
-            i = rnd.nextInt(n);
-            j = rnd.nextInt(n);
-        }
-        return new Pair<>(entries.get(i), entries.get(j));
-    }
-
-    public void addNewVote(Entry winner, Entry looser) {
-        winner.upvote();
-        int winnerId = winner.getId(), swapId = winnerId;
-        while (swapId > 0) {
-            if (entries.get(swapId - 1).getUpvotes() >= winner.getUpvotes()) {
-                break;
-            }
-            swapId--;
-        }
-        if (swapId != winnerId) {
-            entries.get(swapId).setId(winnerId);
-            winner.setId(swapId);
-            entries.set(winnerId, entries.get(swapId));
-            entries.set(swapId, winner);
-        }
+        return entriesCount;
     }
 
     public Entry getWinner() {
-        return entries.get(0);
+        return getEntries(0, 1).get(0);
+    }
+
+    public Vote getVote() {
+        return VoteManager.getVote(id, State.currentUser.getId());
     }
 }

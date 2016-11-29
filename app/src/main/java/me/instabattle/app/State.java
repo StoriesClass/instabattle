@@ -5,10 +5,6 @@ import com.google.android.gms.maps.model.LatLng;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.User;
 
-/**
- * Created by wackloner on 23.11.2016.
- */
-
 public class State {
     public static Battle chosenBattle;
 

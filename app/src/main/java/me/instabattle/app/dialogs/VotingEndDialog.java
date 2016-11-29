@@ -1,6 +1,5 @@
 package me.instabattle.app.dialogs;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.DialogFragment;
@@ -12,7 +11,6 @@ import me.instabattle.app.R;
 import me.instabattle.app.State;
 import me.instabattle.app.activities.BattleActivity;
 import me.instabattle.app.activities.VoteActivity;
-
 
 public class VotingEndDialog extends DialogFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -1,24 +1,24 @@
 package me.instabattle.app.models;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import me.instabattle.app.managers.EntryManager;
 
 public class User {
     private int id;
     private String nickname;
-    private List<Entry> entries;
+    private int entriesCount;
 
     public User(String nickname) {
         this.nickname = nickname;
-        entries = new ArrayList<>();
+    }
+
+    public List<Entry> getEntries(int firstEntryNum, int entriesCount) {
+        return EntryManager.getEntriesByUser(id, firstEntryNum, entriesCount);
     }
 
     public List<Entry> getEntries() {
-        return entries;
-    }
-
-    public void addEntry(Entry entry) {
-        entries.add(entry);
+        return getEntries(0, entriesCount);
     }
 
     public int getId() {

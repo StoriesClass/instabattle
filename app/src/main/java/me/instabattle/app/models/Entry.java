@@ -2,30 +2,22 @@ package me.instabattle.app.models;
 
 import android.graphics.Bitmap;
 
-/**
- * Created by wackloner on 21.11.2016.
- */
+import me.instabattle.app.managers.BattleManager;
+import me.instabattle.app.managers.PhotoManager;
+import me.instabattle.app.managers.UserManager;
 
 public class Entry {
-    private User author;
-    private Bitmap photo;
-    private int upvotes;
     private int id;
-    private Battle battle;
-
-    public Entry(User author, Bitmap photo) {
-        this.author = author;
-        this.photo = photo;
-        this.upvotes = 0;
-        author.addEntry(this);
-    }
+    private int authorId;
+    private int battleId;
+    private int upvotes;
 
     public Bitmap getPhoto() {
-        return photo;
+        return PhotoManager.getPhoto(id);
     }
 
     public User getAuthor() {
-        return author;
+        return UserManager.getUserById(authorId);
     }
 
     public int getUpvotes() {
@@ -37,18 +29,10 @@ public class Entry {
     }
 
     public Battle getBattle() {
-        return battle;
-    }
-
-    public void setBattle(Battle battle) {
-        this.battle = battle;
+        return BattleManager.getBattleById(battleId);
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void upvote() {
-        upvotes++;
     }
 }
