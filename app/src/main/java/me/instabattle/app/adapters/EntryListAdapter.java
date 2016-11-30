@@ -48,7 +48,7 @@ public class EntryListAdapter extends BaseAdapter {
         Entry entry = entries.get(position);
         ((ImageView) res.findViewById(R.id.listEntryImage)).setImageBitmap(entry.getPhoto());
         ((TextView) res.findViewById(R.id.listEntryAuthor)).setText(entry.getAuthor().getNickname());
-        ((TextView) res.findViewById(R.id.listEntryUpvotes)).setText(entry.getUpvotes() + " upvotes");
+        ((TextView) res.findViewById(R.id.listEntryUpvotes)).setText(entry.getRating() + " points");
         return res;
     }
 }

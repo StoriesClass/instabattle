@@ -10,7 +10,14 @@ public class Entry {
     private int id;
     private int authorId;
     private int battleId;
-    private int upvotes;
+    private int rating;
+
+    public Entry(int id, int battleId, int authorId, int rating) {
+        this.id = id;
+        this.authorId = authorId;
+        this.battleId = battleId;
+        this.rating = rating;
+    }
 
     public Bitmap getPhoto() {
         return PhotoManager.getPhoto(id);
@@ -20,8 +27,8 @@ public class Entry {
         return UserManager.getUserById(authorId);
     }
 
-    public int getUpvotes() {
-        return upvotes;
+    public int getRating() {
+        return rating;
     }
 
     public int getId() {

@@ -58,7 +58,7 @@ public class UserEntryListAdapter extends BaseAdapter {
         ((ImageView) res.findViewById(R.id.userEntryListItemImage)).setImageBitmap(entry.getPhoto());
         ((TextView) res.findViewById(R.id.userEntryListItemTitle)).setText(battle.getName());
         ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText("Posted on 28.11.16");
-        ((TextView) res.findViewById(R.id.userEntryListItemUpvotes)).setText(entry.getUpvotes() + " upvotes");
+        ((TextView) res.findViewById(R.id.userEntryListItemUpvotes)).setText(entry.getRating() + " points");
         res.findViewById(R.id.userEntryListItemViewBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

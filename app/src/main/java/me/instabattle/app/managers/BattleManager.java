@@ -12,15 +12,21 @@ public class BattleManager {
         //TODO: send http request to get json with near battles
         //TODO: make battles from json
         //example for debug
-        return Arrays.asList(
-                new Battle("Gallery", new LatLng(59.927615, 30.360142), 6),
-                new Battle("Kazansky Cathedral", new LatLng(59.934031, 30.324311), 4)
-        );
+        return examples;
     }
 
     public static Battle getBattleById(int battleId) {
         //TODO: send http request to get json with battle by id
         //TODO: make battle from json
-        return null;
+        if (battleId < examples.size()) {
+            return examples.get(battleId);
+        } else {
+            return null;
+        }
     }
+
+    private static List<Battle> examples = Arrays.asList(
+            new Battle(0, "Kazansky Cathedral", new LatLng(59.934031, 30.324311), 4),
+            new Battle(1, "Gallery", new LatLng(59.927615, 30.360142), 6)
+    );
 }

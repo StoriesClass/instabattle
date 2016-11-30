@@ -8,9 +8,13 @@ public class User {
     private int id;
     private String nickname;
     private int entriesCount;
+    private int rating;
 
-    public User(String nickname) {
+    public User(int id, String nickname, int entriesCount, int rating) {
+        this.id = id;
         this.nickname = nickname;
+        this.entriesCount = entriesCount;
+        this.rating = rating;
     }
 
     public List<Entry> getEntries(int firstEntryNum, int entriesCount) {

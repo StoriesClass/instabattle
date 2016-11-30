@@ -17,7 +17,8 @@ public class Battle {
     private int radius;
     private int entriesCount;
 
-    public Battle(String name, LatLng location, int entriesCount) {
+    public Battle(int id, String name, LatLng location, int entriesCount) {
+        this.id = id;
         this.name = name;
         this.location = location;
         this.entriesCount = entriesCount;
