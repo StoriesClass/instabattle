@@ -1,5 +1,7 @@
 package me.instabattle.app.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -10,18 +12,41 @@ import me.instabattle.app.managers.EntryManager;
 import me.instabattle.app.managers.VoteManager;
 
 public class Battle {
-    private int id;
-    private String name;
-    private String desctiption;
     private LatLng location;
     private int radius;
-    private int entriesCount;
+    private int entriesCount = 0;
+
+    @SerializedName("created_on")
+    @Expose
+    private String createdOn;
+    @SerializedName("creator_id")
+    @Expose
+    private Integer creatorId;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("latitude")
+    @Expose
+    private Double latitude;
+    @SerializedName("longitude")
+    @Expose
+    private Double longitude;
+    @SerializedName("name")
+    @Expose
+    private String name;
 
     public Battle(int id, String name, LatLng location, int entriesCount) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.entriesCount = entriesCount;
+    }
+
+    public void init() {
+        location = new LatLng(this.latitude, this.longitude);
     }
 
     public String getName() {

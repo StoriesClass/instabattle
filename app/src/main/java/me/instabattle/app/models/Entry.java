@@ -2,6 +2,8 @@ package me.instabattle.app.models;
 
 import android.graphics.Bitmap;
 
+import me.instabattle.app.BattleCallback;
+import me.instabattle.app.UserCallback;
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.managers.PhotoManager;
 import me.instabattle.app.managers.UserManager;
@@ -23,8 +25,8 @@ public class Entry {
         return PhotoManager.getPhoto(id);
     }
 
-    public User getAuthor() {
-        return UserManager.getUserById(authorId);
+    public void getAuthorAndDo(UserCallback callback) {
+        UserManager.getAndDo(authorId, callback);
     }
 
     public int getRating() {
@@ -35,8 +37,8 @@ public class Entry {
         return id;
     }
 
-    public Battle getBattle() {
-        return BattleManager.getBattleById(battleId);
+    public void getBattleAndDo(BattleCallback callback) {
+        BattleManager.getAndDo(id, callback);
     }
 
     public void setId(int id) {

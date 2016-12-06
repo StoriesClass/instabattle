@@ -1,28 +1,32 @@
 package me.instabattle.app.models;
 
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import me.instabattle.app.managers.EntryManager;
 
 public class User {
-    private int id;
-    private String nickname;
-    private int entriesCount;
-    private int rating;
-
-    public User(int id, String nickname, int entriesCount, int rating) {
-        this.id = id;
-        this.nickname = nickname;
-        this.entriesCount = entriesCount;
-        this.rating = rating;
-    }
-
-    public List<Entry> getEntries(int firstEntryNum, int entriesCount) {
-        return EntryManager.getEntriesByUser(id, firstEntryNum, entriesCount);
-    }
+    @SerializedName("created_on")
+    @Expose
+    private String createdOn;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("rating")
+    @Expose
+    private Double rating;
+    @SerializedName("username")
+    @Expose
+    private String username;
 
     public List<Entry> getEntries() {
-        return getEntries(0, entriesCount);
+        return EntryManager.getEntriesByUser(id);
     }
 
     public int getId() {
@@ -30,6 +34,6 @@ public class User {
     }
 
     public String getNickname() {
-        return nickname;
+        return username;
     }
 }
