@@ -25,6 +25,11 @@ public class User {
     @Expose
     private String username;
 
+    //FIXME: made for example
+    public User(String username) {
+        this.username = username;
+    }
+
     public List<Entry> getEntries() {
         return EntryManager.getEntriesByUser(id);
     }
@@ -33,7 +38,7 @@ public class User {
         return id;
     }
 
-    public String getNickname() {
+    public String getUsername() {
         return username;
     }
 }

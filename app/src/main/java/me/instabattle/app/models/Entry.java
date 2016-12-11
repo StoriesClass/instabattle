@@ -2,11 +2,10 @@ package me.instabattle.app.models;
 
 import android.graphics.Bitmap;
 
-import me.instabattle.app.BattleCallback;
-import me.instabattle.app.UserCallback;
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.managers.PhotoManager;
 import me.instabattle.app.managers.UserManager;
+import retrofit2.Callback;
 
 public class Entry {
     private int id;
@@ -25,7 +24,7 @@ public class Entry {
         return PhotoManager.getPhoto(id);
     }
 
-    public void getAuthorAndDo(UserCallback callback) {
+    public void getAuthorAndDo(Callback<User> callback) {
         UserManager.getAndDo(authorId, callback);
     }
 
@@ -37,7 +36,7 @@ public class Entry {
         return id;
     }
 
-    public void getBattleAndDo(BattleCallback callback) {
+    public void getBattleAndDo(Callback<Battle> callback) {
         BattleManager.getAndDo(id, callback);
     }
 

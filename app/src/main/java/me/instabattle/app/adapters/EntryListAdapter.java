@@ -12,6 +12,10 @@ import java.util.List;
 
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.R;
+import me.instabattle.app.models.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EntryListAdapter extends BaseAdapter {
     private List<Entry> entries;
@@ -41,14 +45,23 @@ public class EntryListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View res = convertView;
-        if (res == null) {
-            res = inflater.inflate(R.layout.entry_list_item, parent, false);
-        }
+        final View res = convertView != null ? convertView :
+                inflater.inflate(R.layout.entry_list_item, parent, false);
+
         Entry entry = entries.get(position);
         ((ImageView) res.findViewById(R.id.listEntryImage)).setImageBitmap(entry.getPhoto());
-        ((TextView) res.findViewById(R.id.listEntryAuthor)).setText(entry.getAuthor().getNickname());
         ((TextView) res.findViewById(R.id.listEntryUpvotes)).setText(entry.getRating() + " points");
+        entry.getAuthorAndDo(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                ((TextView) res.findViewById(R.id.listEntryAuthor)).setText(response.body().getUsername());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                //TODO
+            }
+        });
         return res;
     }
 }

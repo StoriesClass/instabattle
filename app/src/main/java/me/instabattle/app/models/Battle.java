@@ -12,7 +12,7 @@ import me.instabattle.app.managers.EntryManager;
 import me.instabattle.app.managers.VoteManager;
 
 public class Battle {
-    private LatLng location;
+    private LatLng location = null;
     private int radius;
     private int entriesCount = 0;
 
@@ -45,15 +45,14 @@ public class Battle {
         this.entriesCount = entriesCount;
     }
 
-    public void init() {
-        location = new LatLng(this.latitude, this.longitude);
-    }
-
     public String getName() {
         return name;
     }
 
     public LatLng getLocation() {
+        if (location == null) {
+            location = new LatLng(this.latitude, this.longitude);
+        }
         return location;
     }
 

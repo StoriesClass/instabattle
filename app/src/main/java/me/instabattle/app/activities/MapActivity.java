@@ -24,11 +24,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+import java.util.List;
 
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.R;
 import me.instabattle.app.State;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener {
@@ -74,11 +78,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         battleByMarker = new HashMap<>();
 
-        for (Battle nearBattle : BattleManager.getNearBattles(viewPoint, 1)) {
-            Marker newMarker = mMap.addMarker(new MarkerOptions().position(nearBattle.getLocation()).
-                    title(nearBattle.getName()).snippet(nearBattle.getEntriesCount() + " photos"));
-            battleByMarker.put(newMarker.getId(), nearBattle);
-        }
+        BattleManager.getAllBattlesAndDo(new Callback<List<Battle>>() {
+            @Override
+            public void onResponse(Call<List<Battle>> call, Response<List<Battle>> response) {
+                for (Battle nearBattle : response.body()) {
+                    Marker newMarker = mMap.addMarker(new MarkerOptions().position(nearBattle.getLocation()).
+                            title(nearBattle.getName()).snippet(nearBattle.getEntriesCount() + " photos"));
+                    battleByMarker.put(newMarker.getId(), nearBattle);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Battle>> call, Throwable t) {
+                //TODO
+            }
+        });
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override

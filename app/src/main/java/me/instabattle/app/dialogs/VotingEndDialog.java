@@ -14,7 +14,7 @@ import me.instabattle.app.activities.VoteActivity;
 
 public class VotingEndDialog extends DialogFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle("Nice vote, " + State.currentUser.getNickname() + "!");
+        getDialog().setTitle("Nice vote, " + State.currentUser.getUsername() + "!");
         View v = inflater.inflate(R.layout.fragment_voting_end_dialog, null);
         v.findViewById(R.id.voteAgainBtn).setOnClickListener(this);
         v.findViewById(R.id.goToBattleBtn).setOnClickListener(this);

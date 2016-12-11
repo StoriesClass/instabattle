@@ -4,13 +4,11 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-import me.instabattle.app.BattleCallback;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.Entry;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -28,24 +26,14 @@ public class BattleManager {
         return null;
     }
 
-    public static void getAndDo(Integer battleId, final BattleCallback callback) {
+    public static void getAllBattlesAndDo(Callback<List<Battle>> callback) {
+        Call<List<Battle>> call = service.listBattles();
+        call.enqueue(callback);
+    }
+
+    public static void getAndDo(Integer battleId, Callback<Battle> callback) {
         Call<Battle> call = service.getBattle(battleId);
-
-        call.enqueue(new Callback<Battle>() {
-            @Override
-            public void onResponse(Call<Battle> call, Response<Battle> response) {
-                if (response.isSuccessful()) {
-                    callback.success(response.body());
-                } else {
-                    callback.failure();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Battle> call, Throwable t) {
-                callback.failure();
-            }
-        });
+        call.enqueue(callback);
     }
 
     interface BattleService {

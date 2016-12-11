@@ -23,7 +23,7 @@ public class MyProfileActivity extends Activity {
         setContentView(R.layout.activity_my_profile);
 
         userName = (TextView) findViewById(R.id.currentUserName);
-        userName.setText(State.currentUser.getNickname());
+        userName.setText(State.currentUser.getUsername());
 
         userEntryListAdapter = new UserEntryListAdapter(this, State.currentUser.getEntries());
 
