@@ -1,6 +1,7 @@
 package me.instabattle.app.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,7 @@ public class EntryListAdapter extends BaseAdapter {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 //TODO
+                Log.e("web", "cant get entries author");
             }
         });
         return res;

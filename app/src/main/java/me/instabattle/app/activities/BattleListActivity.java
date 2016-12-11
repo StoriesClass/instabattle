@@ -20,6 +20,7 @@ public class BattleListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_list);
 
+        //FIXME
         battleListAdapter = new BattleListAdapter(this, BattleManager.getNearBattles(State.currentLocation, 1));
 
         battleList = (ListView) findViewById(R.id.battleList);

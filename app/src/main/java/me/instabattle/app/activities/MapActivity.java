@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.Manifest;
 
@@ -91,6 +92,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onFailure(Call<List<Battle>> call, Throwable t) {
                 //TODO
+                Log.e("web", "cant get battles for map");
             }
         });
 

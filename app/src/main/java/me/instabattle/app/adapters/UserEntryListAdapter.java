@@ -2,6 +2,7 @@ package me.instabattle.app.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +90,7 @@ public class UserEntryListAdapter extends BaseAdapter {
 
             @Override
             public void onFailure(Call<Battle> call, Throwable t) {
+                Log.e("web", "cant get entries battle");
                 //TODO
             }
         });
