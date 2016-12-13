@@ -10,6 +10,7 @@ import java.util.List;
 import me.instabattle.app.State;
 import me.instabattle.app.managers.EntryManager;
 import me.instabattle.app.managers.VoteManager;
+import retrofit2.Callback;
 
 public class Battle {
     private LatLng location = null;
@@ -60,20 +61,18 @@ public class Battle {
         return radius;
     }
 
-    public List<Entry> getEntries(int firstEntryNum, int entriesCount) {
-        return EntryManager.getEntriesByBattle(id, firstEntryNum, entriesCount);
-    }
-
-    public List<Entry> getEntries() {
-        return getEntries(0, entriesCount);
+    public void getEntriesAndDo(Callback<List<Entry>> callback) {
+        EntryManager.getEntriesByBattleAndDo(id, callback);
     }
 
     public int getEntriesCount() {
         return entriesCount;
     }
 
+
+    //FIXME
     public Entry getWinner() {
-        return getEntries(0, 1).get(0);
+        return null;
     }
 
     public Vote getVote() {

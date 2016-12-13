@@ -18,7 +18,7 @@ public class BattleManager {
             .baseUrl("https://instabattle2.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-    private static final BattleService service =  retrofit.create(BattleService.class);
+    private static final BattleService service = retrofit.create(BattleService.class);
 
     public static List<Battle> getNearBattles(LatLng location, double radius) {
         //TODO: send http request to get json with near battles
@@ -42,12 +42,5 @@ public class BattleManager {
 
         @GET("battles/{battle_id}")
         Call<Battle> getBattle(@Path("battle_id") Integer battleId);
-
-        @GET("battles/{battle_id}/entries")
-        Call<List<Entry>> battleEntries(@Path("battle_id") Integer battleId);
-
-        // FIXME
-        //@GET("battles/{battle_id}/voting")
-        //Call<List<Entry>> battleEntries(@Path("battle_id") Integer battleId);
     }
 }
