@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_camera"
+    android:id="@+id/activity_photo_edit"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="me.instabattle.app.activities.CameraActivity">
+    tools:context="me.instabattle.app.activities.PhotoEditActivity">
+
 
     <TextView
         android:layout_width="match_parent"
@@ -17,19 +20,20 @@
         android:textSize="18sp"
         android:gravity="center"/>
     <TextView
-        android:id="@+id/photoBattleTitle"
+        android:id="@+id/editPhotoBattleTitle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:textSize="22sp"
         android:gravity="center"
         android:paddingBottom="10dp"/>
-    <TextureView
-        android:id="@+id/photoPreview"
+    <ImageView
+        android:id="@+id/currentPhoto"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"/>
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
@@ -38,10 +42,18 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
         <Button
-            android:id="@+id/takePictureBtn"
-            android:layout_width="match_parent"
+            android:id="@+id/takeNewPictureBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Make new photo!"
-            android:onClick="takePicture"/>
+            android:text="Take a new one!"
+            android:onClick="takeNewPhoto"/>
+        <Button
+            android:id="@+id/usePictureBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Use this one!!"
+            android:onClick="useThisPhoto"/>
     </LinearLayout>
 </LinearLayout>

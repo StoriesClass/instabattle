@@ -2,6 +2,7 @@ package me.instabattle.app.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +21,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -37,11 +40,15 @@ import retrofit2.Response;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener {
+    private static String TAG = "MapActivity";
 
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
 
     private HashMap<String, Battle> battleByMarker;
+    private HashMap<String, Circle> circleByMarker;
+
+    private Circle visibleCircle = null;
 
     public static Class<?> gotHereFrom;
 
@@ -75,24 +82,37 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         settings.setZoomControlsEnabled(true);
         settings.setMapToolbarEnabled(false);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewPoint, 15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewPoint, 1));
 
         battleByMarker = new HashMap<>();
+        circleByMarker = new HashMap<>();
 
         BattleManager.getAllBattlesAndDo(new Callback<List<Battle>>() {
             @Override
             public void onResponse(Call<List<Battle>> call, Response<List<Battle>> response) {
                 for (Battle nearBattle : response.body()) {
-                    Marker newMarker = mMap.addMarker(new MarkerOptions().position(nearBattle.getLocation()).
-                            title(nearBattle.getName()).snippet(nearBattle.getEntriesCount() + " photos"));
+                    Marker newMarker = mMap.addMarker(new MarkerOptions()
+                            .position(nearBattle.getLocation())
+                            .title(nearBattle.getName())
+                            .snippet(nearBattle.getEntriesCount() + " photos"));
                     battleByMarker.put(newMarker.getId(), nearBattle);
+
+                    Circle newCircle = mMap.addCircle(new CircleOptions()
+                            .center(nearBattle.getLocation())
+                            .radius(nearBattle.getRadius())
+                            .strokeColor(Color.GREEN)
+                            .strokeWidth(4)
+                            .visible(false));
+                    circleByMarker.put(newMarker.getId(), newCircle);
+
+                    Log.i(TAG, "added battle: " + nearBattle.getName() + " in " + nearBattle.getLocation() + " with radius=" + nearBattle.getRadius());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Battle>> call, Throwable t) {
                 //TODO
-                Log.e("web", "cant get battles for map");
+                Log.e(TAG, "cant get battles");
             }
         });
 
@@ -103,6 +123,28 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 BattleActivity.gotHereFrom = MapActivity.class;
                 Intent viewBattle = new Intent(MapActivity.this, BattleActivity.class);
                 startActivity(viewBattle);
+            }
+        });
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (visibleCircle != null) {
+                    visibleCircle.setVisible(false);
+                    visibleCircle = null;
+                }
+            }
+        });
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                if (visibleCircle != null) {
+                    visibleCircle.setVisible(false);
+                }
+                visibleCircle = circleByMarker.get(marker.getId());
+                visibleCircle.setVisible(true);
+                return false;
             }
         });
     }

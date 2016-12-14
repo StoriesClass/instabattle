@@ -14,7 +14,7 @@ import retrofit2.Callback;
 
 public class Battle {
     private LatLng location = null;
-    private int radius;
+    private int radius = 500000;
     private int entriesCount = 0;
     private int winnerId;
 
@@ -64,6 +64,10 @@ public class Battle {
     }
 
     public int getRadius() {
+        //FIXME pls
+        if (radius == 0) {
+            radius = 500000;
+        }
         return radius;
     }
 
