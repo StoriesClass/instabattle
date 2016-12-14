@@ -62,6 +62,7 @@ public class BattleActivity extends Activity {
     }
 
     public void participate(View v) {
-        Toast.makeText(this, "Participating lol", Toast.LENGTH_SHORT).show();
+        Intent participating = new Intent(this, CameraActivity.class);
+        startActivity(participating);
     }
 }
