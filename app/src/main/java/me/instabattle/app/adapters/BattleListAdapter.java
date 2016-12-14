@@ -17,6 +17,10 @@ import me.instabattle.app.State;
 import me.instabattle.app.activities.BattleActivity;
 import me.instabattle.app.activities.BattleListActivity;
 import me.instabattle.app.activities.MapActivity;
+import me.instabattle.app.models.Entry;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BattleListAdapter extends BaseAdapter {
     private List<Battle> battles;
@@ -46,14 +50,24 @@ public class BattleListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View res = convertView;
-        if (res == null) {
-            res = inflater.inflate(R.layout.battle_list_item, parent, false);
-        }
+        final View res = convertView != null ? convertView :
+                inflater.inflate(R.layout.battle_list_item, parent, false);
 
         final Battle battle = battles.get(position);
 
-        ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(battle.getWinner().getPhoto());
+        battle.getWinnerAndDo(new Callback<Entry>() {
+            @Override
+            public void onResponse(Call<Entry> call, Response<Entry> response) {
+                Entry winner = response.body();
+                ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(winner.getPhoto());
+            }
+
+            @Override
+            public void onFailure(Call<Entry> call, Throwable t) {
+
+            }
+        });
+
         ((TextView) res.findViewById(R.id.battleListItemTitle)).setText(battle.getName());
         ((TextView) res.findViewById(R.id.battleListItemDate)).setText("Created on 28.11.16");
         ((TextView) res.findViewById(R.id.battleListItemCount)).setText(battle.getEntriesCount() + " photos");

@@ -5,10 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import me.instabattle.app.State;
+import java.util.List;
+
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.R;
 import me.instabattle.app.adapters.BattleListAdapter;
+import me.instabattle.app.models.Battle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BattleListActivity extends Activity {
 
@@ -20,11 +25,20 @@ public class BattleListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_list);
 
-        //FIXME
-        battleListAdapter = new BattleListAdapter(this, BattleManager.getNearBattles(State.currentLocation, 1));
-
         battleList = (ListView) findViewById(R.id.battleList);
-        battleList.setAdapter(battleListAdapter);
+
+        BattleManager.getAllBattlesAndDo(new Callback<List<Battle>>() {
+            @Override
+            public void onResponse(Call<List<Battle>> call, Response<List<Battle>> response) {
+                battleListAdapter = new BattleListAdapter(BattleListActivity.this, response.body());
+                battleList.setAdapter(battleListAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Battle>> call, Throwable t) {
+                //TODO
+            }
+        });
     }
 
     @Override

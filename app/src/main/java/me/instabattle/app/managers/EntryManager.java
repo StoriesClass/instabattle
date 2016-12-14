@@ -2,7 +2,6 @@ package me.instabattle.app.managers;
 
 import java.util.List;
 
-import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.Entry;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,19 +22,24 @@ public class EntryManager {
         call.enqueue(callback);
     }
 
-    public static List<Entry> getEntriesByUser(int userId) {
-        //TODO: send http request to get json with users entries [firstEntryNum, firstEntryNum + entriesCount)
-        //TODO: make entries from json
-        return null;
+    public static void getEntriesByUserAndDo(int userId, Callback<List<Entry>> callback) {
+        Call<List<Entry>> call = service.getEntriesByUser(userId);
+        call.enqueue(callback);
     }
 
-    public static Entry getEntryById(int entryId) {
-        //TODO: bla-bla-bla
-        return null;
+    public static void getEntryByIdAndDo(int entryId, Callback<Entry> callback) {
+        Call<Entry> call = service.getEntryById(entryId);
+        call.enqueue(callback);
     }
 
     interface EntryService {
         @GET("battles/{battle_id}/entries")
         Call<List<Entry>> getEntriesByBattle(@Path("battle_id") Integer battleId);
+
+        @GET("users/{user_id}/entries")
+        Call<List<Entry>> getEntriesByUser(@Path("user_id") Integer userId);
+
+        @GET("entries/{entry_id}")
+        Call<Entry> getEntryById(@Path("entry_id") Integer entryId);
     }
 }

@@ -1,11 +1,8 @@
 package me.instabattle.app.managers;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.List;
 
 import me.instabattle.app.models.Battle;
-import me.instabattle.app.models.Entry;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -20,27 +17,21 @@ public class BattleManager {
             .build();
     private static final BattleService service = retrofit.create(BattleService.class);
 
-    public static List<Battle> getNearBattles(LatLng location, double radius) {
-        //TODO: send http request to get json with near battles
-        //TODO: make battles from json
-        return null;
-    }
-
     public static void getAllBattlesAndDo(Callback<List<Battle>> callback) {
-        Call<List<Battle>> call = service.listBattles();
+        Call<List<Battle>> call = service.getAllBattles();
         call.enqueue(callback);
     }
 
-    public static void getAndDo(Integer battleId, Callback<Battle> callback) {
-        Call<Battle> call = service.getBattle(battleId);
+    public static void getBattleByIdAndDo(Integer battleId, Callback<Battle> callback) {
+        Call<Battle> call = service.getBattleById(battleId);
         call.enqueue(callback);
     }
 
     interface BattleService {
         @GET("battles/")
-        Call<List<Battle>> listBattles();
+        Call<List<Battle>> getAllBattles();
 
         @GET("battles/{battle_id}")
-        Call<Battle> getBattle(@Path("battle_id") Integer battleId);
+        Call<Battle> getBattleById(@Path("battle_id") Integer battleId);
     }
 }

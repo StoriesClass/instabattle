@@ -1,12 +1,12 @@
 package me.instabattle.app.models;
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 import me.instabattle.app.managers.EntryManager;
+import retrofit2.Callback;
 
 public class User {
     @SerializedName("created_on")
@@ -30,8 +30,8 @@ public class User {
         this.username = username;
     }
 
-    public List<Entry> getEntries() {
-        return EntryManager.getEntriesByUser(id);
+    public void getEntriesAndDo(Callback<List<Entry>> callback) {
+        EntryManager.getEntriesByUserAndDo(id, callback);
     }
 
     public int getId() {

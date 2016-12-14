@@ -16,6 +16,7 @@ public class Battle {
     private LatLng location = null;
     private int radius;
     private int entriesCount = 0;
+    private int winnerId;
 
     @SerializedName("created_on")
     @Expose
@@ -50,7 +51,12 @@ public class Battle {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public LatLng getLocation() {
+        //FIXME: need to get LatLng from JsonConverter
         if (location == null) {
             location = new LatLng(this.latitude, this.longitude);
         }
@@ -69,10 +75,8 @@ public class Battle {
         return entriesCount;
     }
 
-
-    //FIXME
-    public Entry getWinner() {
-        return null;
+    public void getWinnerAndDo(Callback<Entry> callback) {
+        EntryManager.getEntryByIdAndDo(winnerId, callback);
     }
 
     public Vote getVote() {

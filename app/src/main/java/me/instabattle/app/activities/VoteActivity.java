@@ -10,7 +10,11 @@ import android.widget.ImageView;
 import me.instabattle.app.R;
 import me.instabattle.app.State;
 import me.instabattle.app.dialogs.VotingEndDialog;
+import me.instabattle.app.models.Entry;
 import me.instabattle.app.models.Vote;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VoteActivity extends Activity {
 
@@ -36,10 +40,31 @@ public class VoteActivity extends Activity {
 
     public void initNewVoting() {
         currentVote = State.chosenBattle.getVote();
-        firstImage.setImageBitmap(currentVote.getFirstEntry().getPhoto());
-        firstImage.invalidate();
-        secondImage.setImageBitmap(currentVote.getSecondEntry().getPhoto());
-        secondImage.invalidate();
+
+        currentVote.getFirstEntryAndDo(new Callback<Entry>() {
+            @Override
+            public void onResponse(Call<Entry> call, Response<Entry> response) {
+                firstImage.setImageBitmap(response.body().getPhoto());
+                firstImage.invalidate();
+            }
+
+            @Override
+            public void onFailure(Call<Entry> call, Throwable t) {
+                //TODO
+            }
+        });
+        currentVote.getSecondEntryAndDo(new Callback<Entry>() {
+            @Override
+            public void onResponse(Call<Entry> call, Response<Entry> response) {
+                secondImage.setImageBitmap(response.body().getPhoto());
+                secondImage.invalidate();
+            }
+
+            @Override
+            public void onFailure(Call<Entry> call, Throwable t) {
+                //TODO
+            }
+        });
     }
 
     public void vote(View v) {

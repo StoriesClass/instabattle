@@ -7,9 +7,15 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import me.instabattle.app.R;
 import me.instabattle.app.State;
 import me.instabattle.app.adapters.UserEntryListAdapter;
+import me.instabattle.app.models.Entry;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyProfileActivity extends Activity {
 
@@ -25,10 +31,20 @@ public class MyProfileActivity extends Activity {
         userName = (TextView) findViewById(R.id.currentUserName);
         userName.setText(State.currentUser.getUsername());
 
-        userEntryListAdapter = new UserEntryListAdapter(this, State.currentUser.getEntries());
-
         userEntryList = (ListView) findViewById(R.id.userEntryList);
-        userEntryList.setAdapter(userEntryListAdapter);
+
+        State.currentUser.getEntriesAndDo(new Callback<List<Entry>>() {
+            @Override
+            public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
+                userEntryListAdapter = new UserEntryListAdapter(MyProfileActivity.this, response.body());
+                userEntryList.setAdapter(userEntryListAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Entry>> call, Throwable t) {
+                //TODO
+            }
+        });
     }
 
     public void logout(View view) {
