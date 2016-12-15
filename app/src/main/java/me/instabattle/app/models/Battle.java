@@ -66,7 +66,7 @@ public class Battle {
     public int getRadius() {
         //FIXME pls
         if (radius == 0) {
-            radius = 500000;
+            radius = 2000000;
         }
         return radius;
     }
