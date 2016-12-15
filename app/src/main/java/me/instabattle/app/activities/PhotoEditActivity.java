@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.instabattle.app.R;
+import me.instabattle.app.classes.SquareImageView;
 import me.instabattle.app.settings.State;
 
 public class PhotoEditActivity extends Activity {
@@ -23,8 +24,7 @@ public class PhotoEditActivity extends Activity {
 
         byte[] photoBytes = getIntent().getByteArrayExtra("takenPhoto");
         Bitmap photoBitmap = BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.length);
-        ImageView currentPhoto = (ImageView) findViewById(R.id.currentPhoto);
-        currentPhoto.setImageBitmap(photoBitmap);
+        ((ImageView) findViewById(R.id.currentPhoto)).setImageBitmap(photoBitmap);
     }
 
     public void takeNewPhoto(View v) {
