@@ -1,21 +1,44 @@
 package me.instabattle.app.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-import me.instabattle.app.State;
+import me.instabattle.app.settings.State;
 import me.instabattle.app.managers.EntryManager;
 import me.instabattle.app.managers.VoteManager;
+import retrofit2.Callback;
 
 public class Battle {
-    private int id;
+    private LatLng location = null;
+    private int radius = 500000;
+    private int entriesCount = 0;
+    private int winnerId;
+
+    @SerializedName("created_on")
+    @Expose
+    private String createdOn;
+    @SerializedName("creator_id")
+    @Expose
+    private Integer creatorId;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("latitude")
+    @Expose
+    private Double latitude;
+    @SerializedName("longitude")
+    @Expose
+    private Double longitude;
+    @SerializedName("name")
+    @Expose
     private String name;
-    private String desctiption;
-    private LatLng location;
-    private int radius;
-    private int entriesCount;
 
     public Battle(int id, String name, LatLng location, int entriesCount) {
         this.id = id;
@@ -28,28 +51,36 @@ public class Battle {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public LatLng getLocation() {
+        //FIXME: need to get LatLng from JsonConverter
+        if (location == null) {
+            location = new LatLng(this.latitude, this.longitude);
+        }
         return location;
     }
 
     public int getRadius() {
+        //FIXME pls
+        if (radius == 0) {
+            radius = 500000;
+        }
         return radius;
     }
 
-    public List<Entry> getEntries(int firstEntryNum, int entriesCount) {
-        return EntryManager.getEntriesByBattle(id, firstEntryNum, entriesCount);
-    }
-
-    public List<Entry> getEntries() {
-        return getEntries(0, entriesCount);
+    public void getEntriesAndDo(Callback<List<Entry>> callback) {
+        EntryManager.getEntriesByBattleAndDo(id, callback);
     }
 
     public int getEntriesCount() {
         return entriesCount;
     }
 
-    public Entry getWinner() {
-        return getEntries(0, 1).get(0);
+    public void getWinnerAndDo(Callback<Entry> callback) {
+        EntryManager.getEntryByIdAndDo(winnerId, callback);
     }
 
     public Vote getVote() {

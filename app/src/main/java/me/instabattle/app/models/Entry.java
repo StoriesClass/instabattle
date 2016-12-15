@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.managers.PhotoManager;
 import me.instabattle.app.managers.UserManager;
+import retrofit2.Callback;
 
 public class Entry {
     private int id;
@@ -23,8 +24,8 @@ public class Entry {
         return PhotoManager.getPhoto(id);
     }
 
-    public User getAuthor() {
-        return UserManager.getUserById(authorId);
+    public void getAuthorAndDo(Callback<User> callback) {
+        UserManager.getAndDo(authorId, callback);
     }
 
     public int getRating() {
@@ -35,8 +36,8 @@ public class Entry {
         return id;
     }
 
-    public Battle getBattle() {
-        return BattleManager.getBattleById(battleId);
+    public void getBattleAndDo(Callback<Battle> callback) {
+        BattleManager.getBattleByIdAndDo(id, callback);
     }
 
     public void setId(int id) {

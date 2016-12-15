@@ -1,27 +1,29 @@
 package me.instabattle.app.managers;
 
-import java.util.Arrays;
-import java.util.List;
-
 import me.instabattle.app.models.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Retrofit;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public class UserManager {
-    public static User getUserById(int userId) {
-        //TODO: send http request to get json with user by id
-        //TODO: make user from json
-        if (userId < examples.size()) {
-            return examples.get(userId);
-        } else {
-            return null;
-        }
+    private static final Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("https://instabattle2.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    private static final UserService service = retrofit.create(UserService.class);
+
+
+    public static void getAndDo(Integer userId, Callback<User> callback) {
+        Call<User> call = service.getUser(userId);
+        call.enqueue(callback);
     }
 
-    public static List<User> examples = Arrays.asList(
-            new User(0, "wackloner", 2, 100500),
-            new User(1, "Qumeric", 2, 420),
-            new User(2, "glebwin", 2, 1337),
-            new User(3, "egor_bb", 2, 666),
-            new User(4, "tourist", 1, 3600),
-            new User(5, "Miracle", 1, 9000)
-    );
+    interface UserService {
+        @GET("users/{user_id}")
+        Call<User> getUser(@Path("user_id") Integer userId);
+    }
 }

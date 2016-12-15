@@ -8,14 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import me.instabattle.app.R;
-import me.instabattle.app.State;
+import me.instabattle.app.settings.State;
 import me.instabattle.app.activities.BattleActivity;
 import me.instabattle.app.activities.VoteActivity;
 
 public class VotingEndDialog extends DialogFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle("Nice vote, " + State.currentUser.getNickname() + "!");
-        View v = inflater.inflate(R.layout.fragment_voting_end_dialog, null);
+        getDialog().setTitle("Nice vote, " + State.currentUser.getUsername() + "!");
+        View v = inflater.inflate(R.layout.fragment_voting_end_dialog, container);
         v.findViewById(R.id.voteAgainBtn).setOnClickListener(this);
         v.findViewById(R.id.goToBattleBtn).setOnClickListener(this);
         return v;
