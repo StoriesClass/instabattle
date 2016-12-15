@@ -1,59 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_photo_edit"
+    android:id="@+id/activity_camera"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="me.instabattle.app.activities.PhotoEditActivity">
-
+    tools:context="me.instabattle.app.activities.CameraActivity">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="New participation in"
         android:textSize="18sp"
-        android:gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
     <TextView
         android:id="@+id/editPhotoBattleTitle"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="22sp"
-        android:gravity="center"
-        android:paddingBottom="10dp"/>
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
     <ImageView
         android:id="@+id/currentPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"/>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
-        <Button
-            android:id="@+id/takeNewPictureBtn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="Take a new one!"
-            android:onClick="takeNewPhoto"/>
-        <Button
-            android:id="@+id/usePictureBtn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="Use this one!!"
-            android:onClick="useThisPhoto"/>
-    </LinearLayout>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <Button
+                android:id="@+id/takeNewPictureBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Take a new one!"
+                android:onClick="takeNewPhoto"/>
+            <Button
+                android:id="@+id/usePictureBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Use this one!!"
+                android:onClick="useThisPhoto"/>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
