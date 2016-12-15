@@ -1,4 +1,4 @@
-package me.instabattle.app;
+package me.instabattle.app.settings;
 
 import com.google.android.gms.maps.model.LatLng;
 

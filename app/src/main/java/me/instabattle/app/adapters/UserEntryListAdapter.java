@@ -15,7 +15,7 @@ import java.util.List;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.R;
-import me.instabattle.app.State;
+import me.instabattle.app.settings.State;
 import me.instabattle.app.activities.BattleActivity;
 import me.instabattle.app.activities.MapActivity;
 import me.instabattle.app.activities.MyProfileActivity;

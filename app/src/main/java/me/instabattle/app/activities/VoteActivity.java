@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import me.instabattle.app.R;
-import me.instabattle.app.State;
+import me.instabattle.app.settings.State;
 import me.instabattle.app.dialogs.VotingEndDialog;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.models.Vote;

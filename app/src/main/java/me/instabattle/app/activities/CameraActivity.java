@@ -38,7 +38,7 @@ import java.util.Collections;
 import java.util.List;
 
 import me.instabattle.app.R;
-import me.instabattle.app.State;
+import me.instabattle.app.settings.State;
 
 public class CameraActivity extends Activity {
     private static final String TAG = "CameraActivity";

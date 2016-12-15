@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.instabattle.app.R;
-import me.instabattle.app.State;
+import me.instabattle.app.settings.State;
 
 public class PhotoEditActivity extends Activity {
 

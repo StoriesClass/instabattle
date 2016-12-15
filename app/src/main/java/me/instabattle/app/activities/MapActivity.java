@@ -33,7 +33,7 @@ import java.util.List;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.R;
-import me.instabattle.app.State;
+import me.instabattle.app.settings.State;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

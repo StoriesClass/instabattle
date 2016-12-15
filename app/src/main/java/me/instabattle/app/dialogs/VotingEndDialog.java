@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import me.instabattle.app.R;
-import me.instabattle.app.State;
+import me.instabattle.app.settings.State;
 import me.instabattle.app.activities.BattleActivity;
 import me.instabattle.app.activities.VoteActivity;
 

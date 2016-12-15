@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-import me.instabattle.app.State;
+import me.instabattle.app.settings.State;
 import me.instabattle.app.managers.EntryManager;
 import me.instabattle.app.managers.VoteManager;
 import retrofit2.Callback;
