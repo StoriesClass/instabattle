@@ -3,7 +3,6 @@ package me.instabattle.app.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,8 +21,6 @@ import retrofit2.Response;
 
 public class BattleActivity extends Activity {
 
-    private final static String TAG = "BattleActivity";
-
     private EntryListAdapter entryListAdapter;
     private ListView entryList;
 
@@ -35,13 +32,6 @@ public class BattleActivity extends Activity {
         setContentView(R.layout.activity_battle);
 
         ((TextView) findViewById(R.id.battle_title)).setText(State.chosenBattle.getName());
-
-        boolean canParticipate = true;
-        if (!LocationService.hasActualLocation() || LocationService.isTooFarFrom(State.chosenBattle)) {
-            canParticipate = false;
-        }
-
-        findViewById(R.id.participateBtn).setActivated(canParticipate);
 
         entryList = (ListView) findViewById(R.id.entryList);
 
@@ -71,18 +61,13 @@ public class BattleActivity extends Activity {
     }
 
     public void participate(View v) {
-        if (v.isActivated()) {
+        if (!LocationService.hasActualLocation()) {
+            Toast.makeText(this, "There're problems with detecting your location. Try again later.", Toast.LENGTH_SHORT).show();
+        } else if (LocationService.isTooFarFrom(State.chosenBattle)) {
+            Toast.makeText(this, "You're too far away, come closer to battle for participating!", Toast.LENGTH_SHORT).show();
+        } else {
             Intent participating = new Intent(this, CameraActivity.class);
             startActivity(participating);
-        } else {
-            String message;
-            if (LocationService.hasActualLocation()) {
-                message = "You're too far away, come closer to battle for participating!";
-                Log.d(TAG, "radius=" + State.chosenBattle.getRadius() + " dist=" + LocationService.getDistanceFromMeTo(State.chosenBattle.getLocation()));
-            } else {
-                message = "There're problems with detecting your location. Try again later.";
-            }
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
     }
 }
