@@ -37,7 +37,6 @@ public class BattleManager {
                                         Callback<List<Battle>> callback) {
         Call<List<Battle>> call = service.getInRadius(location.getLatitude(),
                 location.getLongitude(), radius);
-
         call.enqueue(callback);
     }
 

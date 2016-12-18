@@ -53,6 +53,8 @@ import me.instabattle.app.settings.State;
 
 public class CameraActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
+    private static final String TAG = "CameraActivity";
+
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
@@ -63,8 +65,6 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
 
-    private static final String TAG = "CameraActivity";
-
     private static final int STATE_PREVIEW = 0;
     private static final int STATE_WAITING_LOCK = 1;
     private static final int STATE_WAITING_PRECAPTURE = 2;
@@ -73,6 +73,8 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
     private static final int MAX_PREVIEW_WIDTH = 1920;
     private static final int MAX_PREVIEW_HEIGHT = 1080;
+
+    public static Class<?> gotHereFrom;
 
     private final TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
 
@@ -141,7 +143,8 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
             byte[] bytes = new byte[buffer.capacity()];
             buffer.get(bytes);
             Intent editPhoto = new Intent(CameraActivity.this, PhotoEditActivity.class);
-            editPhoto.putExtra("takenPhoto", bytes);
+            editPhoto.putExtra("photoBytes", bytes);
+            editPhoto.putExtra("battleTitle", battleTitle);
             startActivity(editPhoto);
         }
     };
@@ -235,6 +238,8 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
         }
     }
 
+    private String battleTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
@@ -245,7 +250,9 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
         mTextureView = (AutoFitTextureView) findViewById(R.id.photoPreview);
 
-        ((TextView) findViewById(R.id.photoBattleTitle)).setText(State.chosenBattle.getName());
+        battleTitle = getIntent().getStringExtra("battleTitle");
+
+        ((TextView) findViewById(R.id.photoBattleTitle)).setText(battleTitle);
     }
 
     @Override
@@ -599,5 +606,11 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
         public int compare(Size lhs, Size rhs) {
             return Long.signum((long) lhs.getWidth() * lhs.getHeight() - (long) rhs.getWidth() * rhs.getHeight());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, gotHereFrom);
+        startActivity(intent);
     }
 }

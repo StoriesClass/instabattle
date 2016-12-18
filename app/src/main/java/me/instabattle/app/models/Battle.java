@@ -18,7 +18,7 @@ public class Battle {
 
     @SerializedName("radius")
     @Expose
-    private double radius = 500000;
+    private int radius;
     @SerializedName("entry_count")
     @Expose
     private int entriesCount = 0;
@@ -44,11 +44,17 @@ public class Battle {
     @Expose
     private String name;
 
-    public Battle(int id, String name, LatLng location, int entriesCount) {
-        this.id = id;
+    public Battle(String name, String description, LatLng location, int radius) {
         this.name = name;
+        this.description = description;
         this.location = location;
-        this.entriesCount = entriesCount;
+        this.latitude = location.latitude;
+        this.longitude = location.longitude;
+        this.radius = radius;
+
+        this.creatorId = State.currentUser.getId();
+        this.entriesCount = 1;
+        this.createdOn = (new Date()).toString();
     }
 
     public String getName() {
@@ -95,6 +101,6 @@ public class Battle {
     public void createEntryAndDo(byte[] photo, Callback<Entry> callback) {
         //FIXME date format
         //TODO: sent photo
-        EntryManager.createAndDo(id, State.currentUser.getId(), (new Date()).toString(), callback);
+        EntryManager.createAndDo(id, State.currentUser.getId(), (new Date()).toString(), photo, callback);
     }
 }

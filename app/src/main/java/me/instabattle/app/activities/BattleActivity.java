@@ -70,7 +70,9 @@ public class BattleActivity extends Activity {
         } else if (LocationService.isTooFarFrom(State.chosenBattle)) {
             Toast.makeText(this, "You're too far away, come closer to battle for participating!", Toast.LENGTH_SHORT).show();
         } else {
+            CameraActivity.gotHereFrom = BattleActivity.class;
             Intent participating = new Intent(this, CameraActivity.class);
+            participating.putExtra("battleTitle", State.chosenBattle.getName());
             startActivity(participating);
         }
     }

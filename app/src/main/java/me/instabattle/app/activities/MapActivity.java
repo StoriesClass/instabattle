@@ -153,6 +153,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     public void goCreateBattle(View v) {
+        State.creatingBattle = true;
         Intent createBattle = new Intent(this, CreateBattleActivity.class);
         startActivity(createBattle);
     }
