@@ -44,7 +44,7 @@ public class PhotoEditActivity extends Activity {
 
     public void useThisPhoto(View v) {
         if (!State.creatingBattle) {
-            State.chosenBattle.createEntryAndDo(photoBytes, new Callback<Entry>() {
+            State.chosenBattle.createEntryAndDo(new Callback<Entry>() {
                 @Override
                 public void onResponse(Call<Entry> call, Response<Entry> response) {
                     // TODO

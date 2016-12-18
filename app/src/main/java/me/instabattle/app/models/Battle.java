@@ -18,13 +18,13 @@ public class Battle {
 
     @SerializedName("radius")
     @Expose
-    private int radius;
+    private Integer radius;
     @SerializedName("entry_count")
     @Expose
-    private int entriesCount = 0;
+    private Integer entriesCount = 0;
     @SerializedName("created_on")
     @Expose
-    private String createdOn;
+    private Date createdOn;
     @SerializedName("creator_id")
     @Expose
     private Integer creatorId;
@@ -43,18 +43,24 @@ public class Battle {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("user_id")
+    @Expose
+    private Integer authorId;
 
-    public Battle(String name, String description, LatLng location, int radius) {
+    // FIXME constructor without description
+    public Battle(Integer authorId, String name, String description,
+                  Double lat, Double lng, Integer radius) {
+        this.authorId = authorId;
         this.name = name;
         this.description = description;
-        this.location = location;
-        this.latitude = location.latitude;
-        this.longitude = location.longitude;
+        this.location = new LatLng(lat, lng);
+        this.latitude = lat;
+        this.longitude = lng;
         this.radius = radius;
 
         this.creatorId = State.currentUser.getId();
         this.entriesCount = 1;
-        this.createdOn = (new Date()).toString();
+        this.createdOn = new Date();
     }
 
     public String getName() {
@@ -65,7 +71,7 @@ public class Battle {
         return description;
     }
 
-    public String getCreatedOn() {
+    public Date getCreatedOn() {
         return createdOn;
     }
 
@@ -98,9 +104,12 @@ public class Battle {
         EntryManager.getVoteAndDo(id, callback);
     }
 
-    public void createEntryAndDo(byte[] photo, Callback<Entry> callback) {
-        //FIXME date format
-        //TODO: sent photo
-        EntryManager.createAndDo(id, State.currentUser.getId(), (new Date()).toString(), photo, callback);
+    public void createEntryAndDo(Callback<Entry> callback) {
+        //TODO: send photo
+        EntryManager.createAndDo(id, State.currentUser.getId(), callback);
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

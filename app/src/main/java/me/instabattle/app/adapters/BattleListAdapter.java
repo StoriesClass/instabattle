@@ -78,7 +78,7 @@ public class BattleListAdapter extends BaseAdapter {
         });
 
         ((TextView) res.findViewById(R.id.battleListItemTitle)).setText(battle.getName());
-        ((TextView) res.findViewById(R.id.battleListItemDate)).setText(battle.getCreatedOn());
+        ((TextView) res.findViewById(R.id.battleListItemDate)).setText(battle.getCreatedOn().toString());
         ((TextView) res.findViewById(R.id.battleListItemCount)).setText(battle.getEntriesCount() + " photos");
         res.findViewById(R.id.battleListItemViewBtn).setOnClickListener(new View.OnClickListener() {
             @Override

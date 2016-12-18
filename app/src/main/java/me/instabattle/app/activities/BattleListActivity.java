@@ -30,7 +30,7 @@ public class BattleListActivity extends Activity {
 
         battleList = (ListView) findViewById(R.id.battleList);
 
-        BattleManager.getAllBattlesAndDo(new Callback<List<Battle>>() {
+        BattleManager.getAllAndDo(new Callback<List<Battle>>() {
             @Override
             public void onResponse(Call<List<Battle>> call, Response<List<Battle>> response) {
                 battleListAdapter = new BattleListAdapter(BattleListActivity.this, response.body());

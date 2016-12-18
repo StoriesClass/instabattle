@@ -2,17 +2,44 @@ package me.instabattle.app.models;
 
 import android.graphics.Bitmap;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
+
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.managers.PhotoManager;
 import me.instabattle.app.managers.UserManager;
 import retrofit2.Callback;
 
 public class Entry {
-    private int id;
-    private int authorId;
-    private int battleId;
-    private int rating;
-    private String createdOn;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("user_id")
+    @Expose
+    private Integer authorId;
+    @SerializedName("battle_id")
+    @Expose
+    private Integer battleId;
+    @SerializedName("rating")
+    @Expose
+    private Double rating =25d;
+    @SerializedName("created_on")
+    @Expose
+    private Date createdOn;
+    @SerializedName("image")
+    @Expose
+    private String imageName;
+    @SerializedName("latitude")
+    @Expose
+    private Double lat;
+    @SerializedName("longitude")
+    @Expose
+    private Double lng;
+    //FIXME
+    private String description;
+
 
     public Entry(int battleId, int authorId) {
         this.authorId = authorId;
@@ -27,23 +54,31 @@ public class Entry {
         UserManager.getAndDo(authorId, callback);
     }
 
-    public int getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
     public void getBattleAndDo(Callback<Battle> callback) {
-        BattleManager.getBattleByIdAndDo(id, callback);
+        BattleManager.getAndDo(id, callback);
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getCreatedOn() {
+    public Date getCreatedOn() {
         return createdOn;
+    }
+
+    public Integer getBattleId() {
+        return battleId;
+    }
+
+    public Integer getAuhtorId() {
+        return authorId;
     }
 }
