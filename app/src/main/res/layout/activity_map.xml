@@ -19,7 +19,7 @@
         android:layout_gravity="bottom|start"
         android:id="@+id/createBattleBtn"
         android:layout_margin="30dp"
-        android:text="Create Battle"
+        android:text="@string/createBattle"
         android:textSize="25sp"
         android:onClick="goCreateBattle"/>
 

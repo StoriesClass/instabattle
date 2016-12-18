@@ -22,4 +22,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- CreateBattle strings -->
+    <string name="newBattle">New Battle</string>
+    <string name="newBattleTitle">Battle Name</string>
+    <string name="newBattleDescription">Battle Description</string>
+    <string name="newBattleRadius">Battle Radius (in meters)</string>
+    <string name="newBattlePhoto">Your Photo</string>
+    <string name="createBattle">Create Battle</string>
+    <string name="takePhoto">Take Photo</string>
 </resources>

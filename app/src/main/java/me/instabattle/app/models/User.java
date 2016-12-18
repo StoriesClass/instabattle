@@ -28,6 +28,7 @@ public class User {
     //FIXME: made for example
     public User(String username) {
         this.username = username;
+        this.id = 0;
     }
 
     public void getEntriesAndDo(Callback<List<Entry>> callback) {

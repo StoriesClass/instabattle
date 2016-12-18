@@ -32,12 +32,11 @@ public class EntryManager {
         call.enqueue(callback);
     }
 
-    public static void createAndDo(int battleId, int authorId, String createdOn, Callback<Entry> callback) {
+    public static void createAndDo(int battleId, int authorId, String createdOn, byte[] photo, Callback<Entry> callback) {
         //FIXME
         Call<Entry> call = service.get(0);
         call.enqueue(callback);
     }
-
 
     public static void getEntriesAndDo(Integer battleId, Callback<List<Entry>> callback) {
         Call<List<Entry>> call =service.getByBattle(battleId);
