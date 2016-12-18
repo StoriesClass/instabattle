@@ -25,7 +25,7 @@ public class UserManager {
 
 
     public static void getAndDo(Integer userId, Callback<User> callback) {
-        Call<User> call = service.getUser(userId);
+        Call<User> call = service.get(userId);
         call.enqueue(callback);
     }
 
@@ -44,11 +44,6 @@ public class UserManager {
         call.enqueue(callback);
     }
 
-    public static void getEntriesAndDo(Callback<List<Entry>> callback, Integer userId) {
-        Call<List<Entry>> call = service.getEntries(userId);
-        call.enqueue(callback);
-    }
-
     public static void createAndDo(Callback<User> callback, User user) {
         Call<User> call = service.create(user);
         call.enqueue(callback);
@@ -56,13 +51,10 @@ public class UserManager {
 
     interface UserService {
         @GET("users/{user_id}")
-        Call<User> getUser(@Path("user_id") Integer userId);
+        Call<User> get(@Path("user_id") Integer userId);
 
         @GET("users/")
         Call<List<User>> getCount(@Query("count") Integer count);
-
-        @GET("users/{user_id}/entries")
-        Call<List<Entry>> getEntries(@Path("user_id") Integer userId);
 
         @PUT("users/{user_id}")
         Call<User> update(@Path("user_id") Integer userId,

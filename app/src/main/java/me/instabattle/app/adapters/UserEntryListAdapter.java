@@ -24,6 +24,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserEntryListAdapter extends BaseAdapter {
+
+    private static final String TAG = "UserEntryListManager";
+
     private List<Entry> entries;
     private Context context;
     private LayoutInflater inflater;
@@ -90,7 +93,7 @@ public class UserEntryListAdapter extends BaseAdapter {
 
             @Override
             public void onFailure(Call<Battle> call, Throwable t) {
-                Log.e("web", "cant get entries battle");
+                Log.e(TAG, "cant get entries battle: " + t);
                 //TODO
             }
         });

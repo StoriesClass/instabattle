@@ -17,29 +17,55 @@ public class EntryManager {
             .build();
     private static final EntryService service = retrofit.create(EntryService.class);
 
-    public static void getEntriesByBattleAndDo(int battleId, Callback<List<Entry>> callback) {
-        Call<List<Entry>> call = service.getEntriesByBattle(battleId);
+    public static void getByBattleAndDo(int battleId, Callback<List<Entry>> callback) {
+        Call<List<Entry>> call = service.getByBattle(battleId);
         call.enqueue(callback);
     }
 
-    public static void getEntriesByUserAndDo(int userId, Callback<List<Entry>> callback) {
-        Call<List<Entry>> call = service.getEntriesByUser(userId);
+    public static void getByUserAndDo(int userId, Callback<List<Entry>> callback) {
+        Call<List<Entry>> call = service.getByUser(userId);
         call.enqueue(callback);
     }
 
-    public static void getEntryByIdAndDo(int entryId, Callback<Entry> callback) {
-        Call<Entry> call = service.getEntryById(entryId);
+    public static void getAndDo(int entryId, Callback<Entry> callback) {
+        Call<Entry> call = service.get(entryId);
+        call.enqueue(callback);
+    }
+
+    public static void createAndDo(int battleId, int authorId, String createdOn, Callback<Entry> callback) {
+        //FIXME
+        Call<Entry> call = service.get(0);
+        call.enqueue(callback);
+    }
+
+
+    public static void getEntriesAndDo(Integer battleId, Callback<List<Entry>> callback) {
+        Call<List<Entry>> call =service.getByBattle(battleId);
+        call.enqueue(callback);
+    }
+
+    public static void getVoteAndDo(Integer battleId, Callback<List<Entry>> callback) {
+        Call<List<Entry>> call = service.getVote(battleId);
+        call.enqueue(callback);
+    }
+
+    public static void voteAndDo(int winnerEntryId, int looserEntryId, Callback<List<Entry>> callback) {
+        //FIXME
+        Call<List<Entry>> call = service.getByBattle(0);
         call.enqueue(callback);
     }
 
     interface EntryService {
-        @GET("battles/{battle_id}/entries")
-        Call<List<Entry>> getEntriesByBattle(@Path("battle_id") Integer battleId);
+        @GET("entries/{entry_id}")
+        Call<Entry> get(@Path("entry_id") Integer entryId);
 
         @GET("users/{user_id}/entries")
-        Call<List<Entry>> getEntriesByUser(@Path("user_id") Integer userId);
+        Call<List<Entry>> getByUser(@Path("user_id") Integer userId);
 
-        @GET("entries/{entry_id}")
-        Call<Entry> getEntryById(@Path("entry_id") Integer entryId);
+        @GET("battles/{battle_id}/entries")
+        Call<List<Entry>> getByBattle(@Path("battle_id") Integer battleId);
+
+        @GET("battles/{battle_id}/voting")
+        Call<List<Entry>> getVote(@Path("battle_id") Integer battleId);
     }
 }

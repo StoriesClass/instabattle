@@ -2,6 +2,7 @@ package me.instabattle.app.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BattleListAdapter extends BaseAdapter {
+
+    private static final String TAG = "BattleListAdapter";
+
     private List<Battle> battles;
     private Context context;
     private LayoutInflater inflater;
@@ -59,17 +63,22 @@ public class BattleListAdapter extends BaseAdapter {
             @Override
             public void onResponse(Call<Entry> call, Response<Entry> response) {
                 Entry winner = response.body();
-                ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(winner.getPhoto());
+                if (winner != null) {
+                    ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(winner.getPhoto());
+                } else {
+                    Log.e(TAG, "winner entry is null");
+                }
             }
 
             @Override
             public void onFailure(Call<Entry> call, Throwable t) {
-
+                //TODO
+                Log.e(TAG, "cant get entry: " + t);
             }
         });
 
         ((TextView) res.findViewById(R.id.battleListItemTitle)).setText(battle.getName());
-        ((TextView) res.findViewById(R.id.battleListItemDate)).setText("Created on 28.11.16");
+        ((TextView) res.findViewById(R.id.battleListItemDate)).setText(battle.getCreatedOn());
         ((TextView) res.findViewById(R.id.battleListItemCount)).setText(battle.getEntriesCount() + " photos");
         res.findViewById(R.id.battleListItemViewBtn).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -35,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
-    private static String TAG = "MapActivity";
+    private static final String TAG = "MapActivity";
 
     private GoogleMap googleMap;
 
@@ -64,6 +64,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "map ready");
+
         this.googleMap = googleMap;
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -145,7 +147,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             @Override
             public void onFailure(Call<List<Battle>> call, Throwable t) {
                 //TODO
-                Log.e(TAG, "cant get battles");
+                Log.e(TAG, "cant get battles: " + t);
             }
         });
     }
@@ -165,12 +167,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         if (requestCode == LocationService.REQUEST_LOCATION_PERMISSION) {
             if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-
+                //TODO: cant participate message
+                Log.d(TAG, "didn't get location permission");
             } else {
+                Log.d(TAG, "got location permission");
+
                 try {
                     googleMap.setMyLocationEnabled(true);
                 } catch (SecurityException e) {
-                    //trycatch is required by API 23 and higher
+                    //try catch block is required by API 23 and higher
+                    //never get here
                 }
             }
         } else {

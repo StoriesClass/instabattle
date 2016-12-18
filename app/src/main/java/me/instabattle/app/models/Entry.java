@@ -12,12 +12,11 @@ public class Entry {
     private int authorId;
     private int battleId;
     private int rating;
+    private String createdOn;
 
-    public Entry(int id, int battleId, int authorId, int rating) {
-        this.id = id;
+    public Entry(int battleId, int authorId) {
         this.authorId = authorId;
         this.battleId = battleId;
-        this.rating = rating;
     }
 
     public Bitmap getPhoto() {
@@ -42,5 +41,9 @@ public class Entry {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
     }
 }

@@ -31,7 +31,7 @@ public class User {
     }
 
     public void getEntriesAndDo(Callback<List<Entry>> callback) {
-        EntryManager.getEntriesByUserAndDo(id, callback);
+        EntryManager.getByUserAndDo(id, callback);
     }
 
     public int getId() {

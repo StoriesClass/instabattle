@@ -3,6 +3,7 @@ package me.instabattle.app.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BattleActivity extends Activity {
+
+    private static final String TAG = "BattleActivity";
 
     private EntryListAdapter entryListAdapter;
     private ListView entryList;
@@ -45,6 +48,7 @@ public class BattleActivity extends Activity {
             @Override
             public void onFailure(Call<List<Entry>> call, Throwable t) {
                 //TODO
+                Log.e(TAG, "cant get entries: " + t);
             }
         });
     }

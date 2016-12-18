@@ -4,26 +4,32 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.DialogFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.List;
+
 import me.instabattle.app.R;
+import me.instabattle.app.managers.EntryManager;
 import me.instabattle.app.settings.State;
 import me.instabattle.app.dialogs.VotingEndDialog;
 import me.instabattle.app.models.Entry;
-import me.instabattle.app.models.Vote;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VoteActivity extends Activity {
 
-    private Vote currentVote;
+    private static final String TAG = "VoteActivity";
 
     private DialogFragment voteEnd;
 
     private ImageView firstImage;
     private ImageView secondImage;
+
+    private Entry firstEntry;
+    private Entry secondEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,40 +45,49 @@ public class VoteActivity extends Activity {
     }
 
     public void initNewVoting() {
-        currentVote = State.chosenBattle.getVote();
-
-        currentVote.getFirstEntryAndDo(new Callback<Entry>() {
+        State.chosenBattle.getVoteAndDo(new Callback<List<Entry>>() {
             @Override
-            public void onResponse(Call<Entry> call, Response<Entry> response) {
-                firstImage.setImageBitmap(response.body().getPhoto());
+            public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
+                firstEntry = response.body().get(0);
+                secondEntry = response.body().get(1);
+
+                firstImage.setImageBitmap(firstEntry.getPhoto());
                 firstImage.invalidate();
-            }
 
-            @Override
-            public void onFailure(Call<Entry> call, Throwable t) {
-                //TODO
-            }
-        });
-        currentVote.getSecondEntryAndDo(new Callback<Entry>() {
-            @Override
-            public void onResponse(Call<Entry> call, Response<Entry> response) {
-                secondImage.setImageBitmap(response.body().getPhoto());
+                secondImage.setImageBitmap(secondEntry.getPhoto());
                 secondImage.invalidate();
             }
 
             @Override
-            public void onFailure(Call<Entry> call, Throwable t) {
+            public void onFailure(Call<List<Entry>> call, Throwable t) {
                 //TODO
+                Log.e(TAG, "cant get vote: " + t);
             }
         });
     }
 
     public void vote(View v) {
+        int winnerId, looserId;
         if (v.getId() == R.id.voteFirstBtn) {
-            currentVote.voteForFirst();
+            winnerId = firstEntry.getId();
+            looserId = secondEntry.getId();
         } else {
-            currentVote.voteForSecond();
+            winnerId = secondEntry.getId();
+            looserId = firstEntry.getId();
         }
+
+        EntryManager.voteAndDo(winnerId, looserId, new Callback<List<Entry>>() {
+            @Override
+            public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
+                //TODO
+            }
+
+            @Override
+            public void onFailure(Call<List<Entry>> call, Throwable t) {
+                //TODO
+            }
+        });
+
         voteEnd.show(getFragmentManager(), "voteEnd");
     }
 

@@ -19,6 +19,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EntryListAdapter extends BaseAdapter {
+
+    private static final String TAG = "EntryListAdapter";
+
     private List<Entry> entries;
     private Context context;
     private LayoutInflater inflater;
@@ -61,7 +64,7 @@ public class EntryListAdapter extends BaseAdapter {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 //TODO
-                Log.e("web", "cant get entries author");
+                Log.e(TAG, "cant get entries author: " + t);
             }
         });
         return res;

@@ -5,19 +5,23 @@ import com.google.gson.annotations.SerializedName;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Date;
 import java.util.List;
 
-import me.instabattle.app.settings.State;
 import me.instabattle.app.managers.EntryManager;
-import me.instabattle.app.managers.VoteManager;
+import me.instabattle.app.settings.State;
 import retrofit2.Callback;
 
 public class Battle {
     private LatLng location = null;
-    private int radius = 500000;
-    private int entriesCount = 0;
     private int winnerId;
 
+    @SerializedName("radius")
+    @Expose
+    private double radius = 500000;
+    @SerializedName("entry_count")
+    @Expose
+    private int entriesCount = 0;
     @SerializedName("created_on")
     @Expose
     private String createdOn;
@@ -55,6 +59,10 @@ public class Battle {
         return description;
     }
 
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
     public LatLng getLocation() {
         //FIXME: need to get LatLng from JsonConverter
         if (location == null) {
@@ -65,14 +73,11 @@ public class Battle {
 
     public int getRadius() {
         //FIXME pls
-        if (radius == 0) {
-            radius = 2000000;
-        }
-        return radius;
+        return 500000;
     }
 
     public void getEntriesAndDo(Callback<List<Entry>> callback) {
-        EntryManager.getEntriesByBattleAndDo(id, callback);
+        EntryManager.getByBattleAndDo(id, callback);
     }
 
     public int getEntriesCount() {
@@ -80,10 +85,16 @@ public class Battle {
     }
 
     public void getWinnerAndDo(Callback<Entry> callback) {
-        EntryManager.getEntryByIdAndDo(winnerId, callback);
+        EntryManager.getAndDo(winnerId, callback);
     }
 
-    public Vote getVote() {
-        return VoteManager.getVote(id, State.currentUser.getId());
+    public void getVoteAndDo(Callback<List<Entry>> callback) {
+        EntryManager.getVoteAndDo(id, callback);
+    }
+
+    public void createEntryAndDo(byte[] photo, Callback<Entry> callback) {
+        //FIXME date format
+        //TODO: sent photo
+        EntryManager.createAndDo(id, State.currentUser.getId(), (new Date()).toString(), callback);
     }
 }
