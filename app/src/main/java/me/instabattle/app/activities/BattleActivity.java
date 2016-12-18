@@ -55,8 +55,8 @@ public class BattleActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        Intent voting = new Intent(this, gotHereFrom);
-        startActivity(voting);
+        Intent back = new Intent(this, gotHereFrom);
+        startActivity(back);
     }
 
     public void vote(View v) {

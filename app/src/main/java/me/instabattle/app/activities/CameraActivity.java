@@ -275,6 +275,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
         closeCamera();
         stopBackgroundThread();
+
         super.onPause();
     }
 

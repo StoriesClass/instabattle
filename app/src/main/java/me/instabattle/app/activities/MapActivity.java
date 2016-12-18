@@ -37,6 +37,8 @@ import retrofit2.Response;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
     private static final String TAG = "MapActivity";
 
+    private static final int DEFAULT_ZOOM = 14;
+
     private GoogleMap googleMap;
 
     private HashMap<String, Battle> battleByMarker;
@@ -77,7 +79,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         if (LocationService.hasActualLocation()) {
             viewPoint = LocationService.getCurrentLocation();
-            viewZoom = 14;
+            viewZoom = DEFAULT_ZOOM;
         }
 
         UiSettings settings = googleMap.getUiSettings();
