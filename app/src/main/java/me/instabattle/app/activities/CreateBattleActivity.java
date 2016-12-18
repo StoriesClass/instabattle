@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import me.instabattle.app.R;
 import me.instabattle.app.managers.BattleManager;
@@ -23,16 +24,33 @@ public class CreateBattleActivity extends Activity {
 
     private static final String TAG = "CreateBattleActivity";
 
+    private static final int BATTLE_TITLE_MINIMUM_LENGTH = 1;
+
     private TextView newBattleTitle;
     private TextView newBattleDescription;
     private TextView newBattleRadius;
     private ImageView newBattlePhoto;
 
+    private static String savedTitle = "";
+    private static String savedDescription = "";
+    private static String savedRadius = "";
+
+    private String getBattleTitle() {
+        return newBattleTitle.getText().toString();
+    }
+
+    private String getBattleDescription() {
+        return newBattleDescription.getText().toString();
+    }
+
+    private String getBattleRadius() {
+        return newBattleRadius.getText().toString();
+    }
+
     private byte[] photoBytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO: save instance
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_battle);
 
@@ -47,7 +65,33 @@ public class CreateBattleActivity extends Activity {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        newBattleTitle.setText(savedTitle);
+        newBattleDescription.setText(savedDescription);
+        newBattleRadius.setText(savedRadius);
+    }
+
+    private boolean battleIsCorrect() {
+        if (getBattleTitle().length() < BATTLE_TITLE_MINIMUM_LENGTH) {
+            Toast.makeText(this, "Battle name should have at least " +
+                    BATTLE_TITLE_MINIMUM_LENGTH + " characters!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (photoBytes == null) {
+            Toast.makeText(this, "You should take a first photo in battle!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     public void sendBattle(View v) {
+        if (!battleIsCorrect()) {
+            return;
+        }
+
         Battle newBattle = new Battle(
                 newBattleTitle.getText().toString(),
                 newBattleDescription.getText().toString(),
@@ -71,6 +115,8 @@ public class CreateBattleActivity extends Activity {
         //TODO add focusing on battle on map
         State.creatingBattle = false;
         Intent goToMap = new Intent(this, MapActivity.class);
+
+        clearFields();
         startActivity(goToMap);
     }
 
@@ -93,7 +139,27 @@ public class CreateBattleActivity extends Activity {
     public void takeBattlePhoto(View v) {
         CameraActivity.gotHereFrom = CreateBattleActivity.class;
         Intent takePhoto = new Intent(this, CameraActivity.class);
-        takePhoto.putExtra("battleTitle", newBattleTitle.getText());
+        takePhoto.putExtra("battleTitle", getBattleTitle());
+
+        saveFields();
         startActivity(takePhoto);
+    }
+
+    private void saveFields() {
+        savedTitle = getBattleTitle();
+        savedDescription = getBattleDescription();
+        savedRadius = getBattleRadius();
+    }
+
+    private void clearFields() {
+        savedTitle = savedDescription = savedRadius = "";
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MapActivity.class);
+
+        clearFields();
+        startActivity(intent);
     }
 }
