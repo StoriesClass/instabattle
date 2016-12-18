@@ -1,21 +1,16 @@
 package me.instabattle.app.activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.Manifest;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,17 +28,16 @@ import java.util.List;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.R;
+import me.instabattle.app.services.LocationService;
 import me.instabattle.app.settings.State;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
     private static String TAG = "MapActivity";
 
-    private GoogleMap mMap;
-    private GoogleApiClient googleApiClient;
+    private GoogleMap googleMap;
 
     private HashMap<String, Battle> battleByMarker;
     private HashMap<String, Circle> circleByMarker;
@@ -53,6 +47,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public static Class<?> gotHereFrom;
 
     public static LatLng viewPoint = new LatLng(59.930969, 30.352445);
+    public static int viewZoom = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,61 +57,34 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        if (googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
+        battleByMarker = new HashMap<>();
+        circleByMarker = new HashMap<>();
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        this.googleMap = googleMap;
 
-        enableCurrentLocation();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            googleMap.setMyLocationEnabled(true);
+        } else {
+            LocationService.askLocationPermission(this);
+        }
 
-        UiSettings settings = mMap.getUiSettings();
+        if (LocationService.hasActualLocation()) {
+            viewPoint = LocationService.getCurrentLocation();
+            viewZoom = 14;
+        }
+
+        UiSettings settings = googleMap.getUiSettings();
         settings.setZoomControlsEnabled(true);
         settings.setMapToolbarEnabled(false);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewPoint, 1));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewPoint, viewZoom));
 
-        battleByMarker = new HashMap<>();
-        circleByMarker = new HashMap<>();
-
-        BattleManager.getAllBattlesAndDo(new Callback<List<Battle>>() {
-            @Override
-            public void onResponse(Call<List<Battle>> call, Response<List<Battle>> response) {
-                for (Battle nearBattle : response.body()) {
-                    Marker newMarker = mMap.addMarker(new MarkerOptions()
-                            .position(nearBattle.getLocation())
-                            .title(nearBattle.getName())
-                            .snippet(nearBattle.getEntriesCount() + " photos"));
-                    battleByMarker.put(newMarker.getId(), nearBattle);
-
-                    Circle newCircle = mMap.addCircle(new CircleOptions()
-                            .center(nearBattle.getLocation())
-                            .radius(nearBattle.getRadius())
-                            .strokeColor(Color.GREEN)
-                            .strokeWidth(4)
-                            .visible(false));
-                    circleByMarker.put(newMarker.getId(), newCircle);
-
-                    Log.i(TAG, "added battle: " + nearBattle.getName() + " in " + nearBattle.getLocation() + " with radius=" + nearBattle.getRadius());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Battle>> call, Throwable t) {
-                //TODO
-                Log.e(TAG, "cant get battles");
-            }
-        });
-
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 State.chosenBattle = battleByMarker.get(marker.getId());
@@ -126,7 +94,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 if (visibleCircle != null) {
@@ -136,7 +104,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 if (visibleCircle != null) {
@@ -147,25 +115,39 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 return false;
             }
         });
+
+        placeMarkers();
     }
 
+    private void placeMarkers() {
+        BattleManager.getAllBattlesAndDo(new Callback<List<Battle>>() {
+            @Override
+            public void onResponse(Call<List<Battle>> call, Response<List<Battle>> response) {
+                List<Battle> battles = response.body();
+                for (Battle nearBattle : battles) {
+                    Marker newMarker = MapActivity.this.googleMap.addMarker(new MarkerOptions()
+                            .position(nearBattle.getLocation())
+                            .title(nearBattle.getName())
+                            .snippet(nearBattle.getEntriesCount() + " photos"));
+                    battleByMarker.put(newMarker.getId(), nearBattle);
 
-    private void enableCurrentLocation() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-    }
+                    Circle newCircle = MapActivity.this.googleMap.addCircle(new CircleOptions()
+                            .center(nearBattle.getLocation())
+                            .radius(nearBattle.getRadius())
+                            .strokeColor(Color.GREEN)
+                            .strokeWidth(4)
+                            .visible(false));
+                    circleByMarker.put(newMarker.getId(), newCircle);
+                }
+                Log.d(TAG, "placed markers for " + battles.size() + " battles");
+            }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 0:
-                enableCurrentLocation();
-        }
+            @Override
+            public void onFailure(Call<List<Battle>> call, Throwable t) {
+                //TODO
+                Log.e(TAG, "cant get battles");
+            }
+        });
     }
 
     public void goCreateBattle(View v) {
@@ -174,41 +156,25 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     @Override
-    protected void onResume() {
-        googleApiClient.connect();
-        super.onResume();
-    }
-
-    @Override
-    protected void onStop() {
-        googleApiClient.disconnect();
-        super.onStop();
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        enableCurrentLocation();
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        //TODO: show radius
-        return false;
-    }
-
-    @Override
     public void onBackPressed() {
-        Intent voting = new Intent(this, gotHereFrom);
-        startActivity(voting);
+        Intent intent = new Intent(this, gotHereFrom);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (requestCode == LocationService.REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                try {
+                    googleMap.setMyLocationEnabled(true);
+                } catch (SecurityException e) {
+                    //trycatch is required by API 23 and higher
+                }
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

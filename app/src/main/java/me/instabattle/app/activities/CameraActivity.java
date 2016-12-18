@@ -135,7 +135,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
         @Override
         public void onImageAvailable(ImageReader reader) {
-            Log.e(TAG, "got photo");
+            Log.d(TAG, "got photo");
             Image image = reader.acquireLatestImage();
             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
             byte[] bytes = new byte[buffer.capacity()];
@@ -237,7 +237,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e(TAG, "onCreate");
+        Log.d(TAG, "onCreate");
 
         super.onCreate(savedInstanceState);
 
@@ -250,7 +250,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
     @Override
     public void onResume() {
-        Log.e(TAG, "onResume");
+        Log.d(TAG, "onResume");
 
         super.onResume();
         startBackgroundThread();
@@ -264,7 +264,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
     @Override
     public void onPause() {
-        Log.e(TAG, "onPause");
+        Log.d(TAG, "onPause");
 
         closeCamera();
         stopBackgroundThread();
@@ -501,14 +501,14 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
     }
 
     public void takePicture(View v) {
-        Log.e(TAG, "taking pic");
+        Log.d(TAG, "taking pic");
 
         lockFocus();
     }
 
     private void lockFocus() {
         try {
-            Log.e(TAG, "locking focus");
+            Log.d(TAG, "locking focus");
 
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_START);
 
@@ -521,7 +521,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
     private void runPrecaptureSequence() {
         try {
-            Log.e(TAG, "running precapture");
+            Log.d(TAG, "running precapture");
 
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER,
                     CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_START);
@@ -535,7 +535,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
     private void captureStillPicture() {
         try {
-            Log.e(TAG, "capturing pic");
+            Log.d(TAG, "capturing pic");
 
             if (mCameraDevice == null) {
                 return;
@@ -574,7 +574,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
     private void unlockFocus() {
         try {
-            Log.e(TAG, "unlocking focus");
+            Log.d(TAG, "unlocking focus");
 
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
             setAutoFlash(mPreviewRequestBuilder);

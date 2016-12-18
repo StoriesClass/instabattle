@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import me.instabattle.app.R;
+import me.instabattle.app.services.LocationService;
 import me.instabattle.app.settings.State;
 import me.instabattle.app.adapters.EntryListAdapter;
 import me.instabattle.app.models.Entry;
@@ -19,7 +21,6 @@ import retrofit2.Response;
 
 public class BattleActivity extends Activity {
 
-    private TextView title;
     private EntryListAdapter entryListAdapter;
     private ListView entryList;
 
@@ -30,15 +31,14 @@ public class BattleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
 
-        title = (TextView) findViewById(R.id.battle_title);
-        title.setText(State.chosenBattle.getName());
+        ((TextView) findViewById(R.id.battle_title)).setText(State.chosenBattle.getName());
+
+        entryList = (ListView) findViewById(R.id.entryList);
 
         State.chosenBattle.getEntriesAndDo(new Callback<List<Entry>>() {
             @Override
             public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
                 entryListAdapter = new EntryListAdapter(BattleActivity.this, response.body());
-
-                entryList = (ListView) findViewById(R.id.entryList);
                 entryList.setAdapter(entryListAdapter);
             }
 
@@ -61,7 +61,13 @@ public class BattleActivity extends Activity {
     }
 
     public void participate(View v) {
-        Intent participating = new Intent(this, CameraActivity.class);
-        startActivity(participating);
+        if (!LocationService.hasActualLocation()) {
+            Toast.makeText(this, "There're problems with detecting your location. Try again later.", Toast.LENGTH_SHORT).show();
+        } else if (LocationService.isTooFarFrom(State.chosenBattle)) {
+            Toast.makeText(this, "You're too far away, come closer to battle for participating!", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent participating = new Intent(this, CameraActivity.class);
+            startActivity(participating);
+        }
     }
 }

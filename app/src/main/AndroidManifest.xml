@@ -64,6 +64,8 @@
         <activity
             android:name=".activities.PhotoEditActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <service android:name=".services.LocationService" />
     </application>
 
 </manifest>

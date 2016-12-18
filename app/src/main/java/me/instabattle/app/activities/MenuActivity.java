@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import me.instabattle.app.R;
+import me.instabattle.app.services.LocationService;
 
 public class MenuActivity extends Activity {
 
@@ -13,6 +14,8 @@ public class MenuActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        startService(new Intent(this, LocationService.class));
     }
 
     public void onButtonClick(View view) {
