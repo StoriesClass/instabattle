@@ -59,15 +59,7 @@ public class EntryListAdapter extends BaseAdapter {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 Log.d(TAG, "got author");
-
-                User author = response.body();
-
-                if (author != null) {
-                    ((TextView) res.findViewById(R.id.listEntryAuthor)).setText(author.getUsername());
-                } else {
-                    //FIXME
-                    Log.e(TAG, "author is null");
-                }
+                ((TextView) res.findViewById(R.id.listEntryAuthor)).setText(response.body().getUsername());
             }
 
             @Override

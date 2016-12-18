@@ -33,7 +33,7 @@ public class User {
     //FIXME: made for example
     public User(String username) {
         this.username = username;
-        this.id = 0;
+        this.id = 1;
     }
 
     public User(String username, String email, String password) {

@@ -39,6 +39,7 @@ public class MyProfileActivity extends Activity {
         State.currentUser.getEntriesAndDo(new Callback<List<Entry>>() {
             @Override
             public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
+                Log.d(TAG, "got user entries");
                 userEntryListAdapter = new UserEntryListAdapter(MyProfileActivity.this, response.body());
                 userEntryList.setAdapter(userEntryListAdapter);
             }

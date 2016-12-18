@@ -35,6 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+
     private static final String TAG = "MapActivity";
 
     private static final int DEFAULT_ZOOM = 14;
@@ -85,6 +86,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         UiSettings settings = googleMap.getUiSettings();
         settings.setZoomControlsEnabled(true);
         settings.setMapToolbarEnabled(false);
+        settings.setMyLocationButtonEnabled(true);
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewPoint, viewZoom));
 

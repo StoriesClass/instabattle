@@ -64,7 +64,8 @@
         android:id="@+id/newBattlePhoto"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:contentDescription="First photo in battle"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

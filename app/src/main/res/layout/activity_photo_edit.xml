@@ -24,7 +24,8 @@
     <ImageView
         android:id="@+id/currentPhoto"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:contentDescription="Editable photo"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

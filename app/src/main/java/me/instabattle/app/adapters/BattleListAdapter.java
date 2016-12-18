@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import me.instabattle.app.models.Battle;
@@ -62,11 +63,16 @@ public class BattleListAdapter extends BaseAdapter {
         battle.getWinnerAndDo(new Callback<List<Entry>>() {
             @Override
             public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
-                Entry winner = response.body().get(0);
+                //FIXME pls
+                List<Entry> top = response.body();
+                if (top == null) {
+                    Log.e(TAG, "suck: " + response.code());
+                    return;
+                }
+                Entry winner = top.get(0);
                 if (winner != null) {
                     ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(winner.getPhoto());
                 } else {
-                    //FIXME
                     Log.e(TAG, "winner entry is null");
                 }
             }
@@ -79,7 +85,8 @@ public class BattleListAdapter extends BaseAdapter {
         });
 
         ((TextView) res.findViewById(R.id.battleListItemTitle)).setText(battle.getName());
-        ((TextView) res.findViewById(R.id.battleListItemDate)).setText(battle.getCreatedOn().toString());
+        ((TextView) res.findViewById(R.id.battleListItemDate)).setText(
+                (new SimpleDateFormat("dd/mm/yyyy")).format(battle.getCreatedOn()));
         ((TextView) res.findViewById(R.id.battleListItemCount)).setText(battle.getEntriesCount() + " photos");
         res.findViewById(R.id.battleListItemViewBtn).setOnClickListener(new View.OnClickListener() {
             @Override

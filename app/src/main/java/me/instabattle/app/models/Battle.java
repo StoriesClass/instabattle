@@ -13,9 +13,6 @@ import me.instabattle.app.settings.State;
 import retrofit2.Callback;
 
 public class Battle {
-    private LatLng location = null;
-    private int winnerId;
-
     @SerializedName("radius")
     @Expose
     private Integer radius;
@@ -25,9 +22,6 @@ public class Battle {
     @SerializedName("created_on")
     @Expose
     private Date createdOn;
-    @SerializedName("creator_id")
-    @Expose
-    private Integer creatorId;
     @SerializedName("description")
     @Expose
     private String description;
@@ -45,20 +39,19 @@ public class Battle {
     private String name;
     @SerializedName("user_id")
     @Expose
-    private Integer authorId;
+    private Integer userId;
 
-    // FIXME constructor without description
-    public Battle(Integer authorId, String name, String description,
+
+    public Battle(Integer userId, String name, String description,
                   Double lat, Double lng, Integer radius) {
-        this.authorId = authorId;
+        this.userId = userId;
         this.name = name;
         this.description = description;
-        this.location = new LatLng(lat, lng);
         this.latitude = lat;
         this.longitude = lng;
         this.radius = radius;
 
-        this.creatorId = State.currentUser.getId();
+        this.userId = State.currentUser.getId();
         this.entriesCount = 1;
         this.createdOn = new Date();
     }
@@ -76,16 +69,12 @@ public class Battle {
     }
 
     public LatLng getLocation() {
-        //FIXME: need to get LatLng from JsonConverter
-        if (location == null) {
-            location = new LatLng(this.latitude, this.longitude);
-        }
-        return location;
+        return new LatLng(latitude, longitude);
     }
 
     public int getRadius() {
-        //FIXME return radius;
-        return 2000000; // for example
+        radius = 20000000; // for example
+        return radius;
     }
 
     public void getEntriesAndDo(Callback<List<Entry>> callback) {
@@ -97,7 +86,7 @@ public class Battle {
     }
 
     public void getWinnerAndDo(Callback<List<Entry>> callback) {
-        EntryManager.getTopByBattleAndDo(winnerId, 1, callback);
+        EntryManager.getTopByBattleAndDo(id, 1, callback);
     }
 
     public void getVoteAndDo(Callback<List<Entry>> callback) {
