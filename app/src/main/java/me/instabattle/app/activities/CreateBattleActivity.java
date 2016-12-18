@@ -112,7 +112,6 @@ public class CreateBattleActivity extends Activity {
             }
         });
 
-        //TODO add focusing on battle on map
         State.creatingBattle = false;
         Intent goToMap = new Intent(this, MapActivity.class);
 
@@ -160,6 +159,7 @@ public class CreateBattleActivity extends Activity {
         Intent intent = new Intent(this, MapActivity.class);
 
         clearFields();
+        State.creatingBattle = false;
         startActivity(intent);
     }
 }
