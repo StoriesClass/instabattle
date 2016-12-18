@@ -56,6 +56,8 @@ public class VoteActivity extends Activity {
 
                 secondImage.setImageBitmap(secondEntry.getPhoto());
                 secondImage.invalidate();
+
+                Log.d(TAG, "got vote");
             }
 
             @Override
@@ -80,11 +82,13 @@ public class VoteActivity extends Activity {
             @Override
             public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
                 //TODO
+                Log.d(TAG, "vote sent");
             }
 
             @Override
             public void onFailure(Call<List<Entry>> call, Throwable t) {
                 //TODO
+                Log.e(TAG, "failed to send vote");
             }
         });
 

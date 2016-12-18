@@ -84,8 +84,8 @@ public class Battle {
     }
 
     public int getRadius() {
-        //FIXME pls
-        return 500000;
+        //FIXME return radius;
+        return 2000000; // for example
     }
 
     public void getEntriesAndDo(Callback<List<Entry>> callback) {
@@ -96,8 +96,8 @@ public class Battle {
         return entriesCount;
     }
 
-    public void getWinnerAndDo(Callback<Entry> callback) {
-        EntryManager.getAndDo(winnerId, callback);
+    public void getWinnerAndDo(Callback<List<Entry>> callback) {
+        EntryManager.getTopByBattleAndDo(winnerId, 1, callback);
     }
 
     public void getVoteAndDo(Callback<List<Entry>> callback) {

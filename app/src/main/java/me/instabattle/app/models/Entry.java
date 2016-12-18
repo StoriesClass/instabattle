@@ -13,6 +13,8 @@ import me.instabattle.app.managers.UserManager;
 import retrofit2.Callback;
 
 public class Entry {
+    private static int RATING_MULTIPLIER = 60;
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -24,7 +26,7 @@ public class Entry {
     private Integer battleId;
     @SerializedName("rating")
     @Expose
-    private Double rating =25d;
+    private Double rating = 25d;
     @SerializedName("created_on")
     @Expose
     private Date createdOn;
@@ -41,9 +43,11 @@ public class Entry {
     private String description;
 
 
-    public Entry(int battleId, int authorId) {
+    public Entry(int battleId, int authorId, double lat, double lng) {
         this.authorId = authorId;
         this.battleId = battleId;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public Bitmap getPhoto() {
@@ -54,8 +58,8 @@ public class Entry {
         UserManager.getAndDo(authorId, callback);
     }
 
-    public Double getRating() {
-        return rating;
+    public int getRating() {
+        return (int) (rating * RATING_MULTIPLIER);
     }
 
     public Integer getId() {

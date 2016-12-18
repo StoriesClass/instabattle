@@ -1,21 +1,31 @@
 package me.instabattle.app.managers;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 import me.instabattle.app.models.Entry;
+import me.instabattle.app.models.User;
 import me.instabattle.app.models.Vote;
+import me.instabattle.app.services.LocationService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public class EntryManager extends JSONManager {
     private static final EntryService service = retrofit.create(EntryService.class);
 
     public static void getByBattleAndDo(int battleId, Callback<List<Entry>> callback) {
         Call<List<Entry>> call = service.getByBattle(battleId);
+        call.enqueue(callback);
+    }
+
+    public static void getTopByBattleAndDo(int battleId, int count, Callback<List<Entry>> callback) {
+        Call<List<Entry>> call = service.getTopByBattle(battleId, count);
         call.enqueue(callback);
     }
 
@@ -30,12 +40,8 @@ public class EntryManager extends JSONManager {
     }
 
     public static void createAndDo(Integer battleId, Integer userId, Callback<Entry> callback) {
-        Call<Entry> call = service.create(new Entry(battleId, userId));
-        call.enqueue(callback);
-    }
-
-    public static void getEntriesAndDo(Integer battleId, Callback<List<Entry>> callback) {
-        Call<List<Entry>> call =service.getByBattle(battleId);
+        LatLng loc = LocationService.getCurrentLocation();
+        Call<Entry> call = service.create(new Entry(battleId, userId, loc.latitude, loc.longitude));
         call.enqueue(callback);
     }
 
@@ -59,6 +65,10 @@ public class EntryManager extends JSONManager {
 
         @GET("battles/{battle_id}/entries")
         Call<List<Entry>> getByBattle(@Path("battle_id") Integer battleId);
+
+        @GET("battles/{battle_id}/entries")
+        Call<List<Entry>> getTopByBattle(@Path("battle_id") Integer battleId,
+                                         @Query("count") Integer count);
 
         @GET("battles/{battle_id}/voting")
         Call<List<Entry>> getVote(@Path("battle_id") Integer battleId);

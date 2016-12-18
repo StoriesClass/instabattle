@@ -405,15 +405,15 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
     private void closeCamera() {
         try {
             mCameraOpenCloseLock.acquire();
-            if (null != mCaptureSession) {
+            if (mCaptureSession != null) {
                 mCaptureSession.close();
                 mCaptureSession = null;
             }
-            if (null != mCameraDevice) {
+            if (mCameraDevice != null) {
                 mCameraDevice.close();
                 mCameraDevice = null;
             }
-            if (null != mImageReader) {
+            if (mImageReader != null) {
                 mImageReader.close();
                 mImageReader = null;
             }

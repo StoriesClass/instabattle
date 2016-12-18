@@ -65,15 +65,15 @@ public class BattleActivity extends Activity {
     }
 
     public void participate(View v) {
-        if (!LocationService.hasActualLocation()) {
-            Toast.makeText(this, "There're problems with detecting your location. Try again later.", Toast.LENGTH_SHORT).show();
-        } else if (LocationService.isTooFarFrom(State.chosenBattle)) {
-            Toast.makeText(this, "You're too far away, come closer to battle for participating!", Toast.LENGTH_SHORT).show();
-        } else {
+//        if (!LocationService.hasActualLocation()) {
+//            Toast.makeText(this, "There're problems with detecting your location. Try again later.", Toast.LENGTH_SHORT).show();
+//        } else if (LocationService.isTooFarFrom(State.chosenBattle)) {
+//            Toast.makeText(this, "You're too far away, come closer to battle for participating!", Toast.LENGTH_SHORT).show();
+//        } else {
             CameraActivity.gotHereFrom = BattleActivity.class;
             Intent participating = new Intent(this, CameraActivity.class);
             participating.putExtra("battleTitle", State.chosenBattle.getName());
             startActivity(participating);
-        }
+//        }
     }
 }

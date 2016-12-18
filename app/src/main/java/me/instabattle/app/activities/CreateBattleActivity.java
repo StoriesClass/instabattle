@@ -3,7 +3,6 @@ package me.instabattle.app.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -97,11 +96,11 @@ public class CreateBattleActivity extends Activity {
 
         final LatLng loc = LocationService.getCurrentLocation();
         BattleManager.createAndDo(State.currentUser.getId(),
-                newBattleTitle.getText().toString(),
+                getBattleTitle(),
                 loc.latitude,
                 loc.longitude,
-                newBattleDescription.getText().toString(),
-                Integer.parseInt(newBattleRadius.getText().toString()),
+                getBattleDescription(),
+                Integer.parseInt(getBattleRadius()),
                 new Callback<Battle>() {
                     @Override
                     public void onResponse(Call<Battle> call, Response<Battle> response) {

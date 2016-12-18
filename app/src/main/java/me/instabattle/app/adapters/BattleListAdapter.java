@@ -59,19 +59,20 @@ public class BattleListAdapter extends BaseAdapter {
 
         final Battle battle = battles.get(position);
 
-        battle.getWinnerAndDo(new Callback<Entry>() {
+        battle.getWinnerAndDo(new Callback<List<Entry>>() {
             @Override
-            public void onResponse(Call<Entry> call, Response<Entry> response) {
-                Entry winner = response.body();
+            public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
+                Entry winner = response.body().get(0);
                 if (winner != null) {
                     ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(winner.getPhoto());
                 } else {
+                    //FIXME
                     Log.e(TAG, "winner entry is null");
                 }
             }
 
             @Override
-            public void onFailure(Call<Entry> call, Throwable t) {
+            public void onFailure(Call<List<Entry>> call, Throwable t) {
                 //TODO
                 Log.e(TAG, "cant get entry: " + t);
             }
