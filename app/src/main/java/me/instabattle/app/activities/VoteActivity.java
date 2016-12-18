@@ -76,7 +76,7 @@ public class VoteActivity extends Activity {
             looserId = firstEntry.getId();
         }
 
-        EntryManager.voteAndDo(winnerId, looserId, new Callback<List<Entry>>() {
+        EntryManager.voteAndDo(State.chosenBattle.getId(), State.currentUser.getId(), winnerId, looserId, new Callback<List<Entry>>() {
             @Override
             public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
                 //TODO

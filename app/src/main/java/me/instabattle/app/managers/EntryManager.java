@@ -3,18 +3,15 @@ package me.instabattle.app.managers;
 import java.util.List;
 
 import me.instabattle.app.models.Entry;
+import me.instabattle.app.models.Vote;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.GsonConverterFactory;
-import retrofit2.Retrofit;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public class EntryManager {
-    private static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://instabattle2.herokuapp.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+public class EntryManager extends JSONManager {
     private static final EntryService service = retrofit.create(EntryService.class);
 
     public static void getByBattleAndDo(int battleId, Callback<List<Entry>> callback) {
@@ -27,14 +24,13 @@ public class EntryManager {
         call.enqueue(callback);
     }
 
-    public static void getAndDo(int entryId, Callback<Entry> callback) {
+    public static void getAndDo(Integer entryId, Callback<Entry> callback) {
         Call<Entry> call = service.get(entryId);
         call.enqueue(callback);
     }
 
-    public static void createAndDo(int battleId, int authorId, String createdOn, byte[] photo, Callback<Entry> callback) {
-        //FIXME
-        Call<Entry> call = service.get(0);
+    public static void createAndDo(Integer battleId, Integer userId, Callback<Entry> callback) {
+        Call<Entry> call = service.create(new Entry(battleId, userId));
         call.enqueue(callback);
     }
 
@@ -48,9 +44,9 @@ public class EntryManager {
         call.enqueue(callback);
     }
 
-    public static void voteAndDo(int winnerEntryId, int looserEntryId, Callback<List<Entry>> callback) {
-        //FIXME
-        Call<List<Entry>> call = service.getByBattle(0);
+    public static void voteAndDo(Integer battleId, Integer voterId, Integer winnerId, Integer loserId,
+                                 Callback<List<Entry>> callback) {
+        Call<List<Entry>> call = service.vote(battleId, new Vote(voterId, winnerId, loserId));
         call.enqueue(callback);
     }
 
@@ -66,5 +62,12 @@ public class EntryManager {
 
         @GET("battles/{battle_id}/voting")
         Call<List<Entry>> getVote(@Path("battle_id") Integer battleId);
+
+        @POST("battle/{battle_id}/entries")
+        Call<List<Entry>> vote(@Path("battle_id") Integer battleId,
+                               @Body Vote vote);
+
+        @POST("entries")
+        Call<Entry> create(@Body Entry entry);
     }
 }

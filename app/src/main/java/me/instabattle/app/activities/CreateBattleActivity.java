@@ -3,12 +3,15 @@ package me.instabattle.app.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import me.instabattle.app.R;
 import me.instabattle.app.managers.BattleManager;
@@ -92,24 +95,26 @@ public class CreateBattleActivity extends Activity {
             return;
         }
 
-        Battle newBattle = new Battle(
+        final LatLng loc = LocationService.getCurrentLocation();
+        BattleManager.createAndDo(State.currentUser.getId(),
                 newBattleTitle.getText().toString(),
+                loc.latitude,
+                loc.longitude,
                 newBattleDescription.getText().toString(),
-                LocationService.getCurrentLocation(),
-                Integer.parseInt(newBattleRadius.getText().toString()));
-        BattleManager.createAndDo(newBattle, new Callback<Battle>() {
-            @Override
-            public void onResponse(Call<Battle> call, Response<Battle> response) {
-                //TODO
-                Log.d(TAG, "new battle was sent");
-                addFirstEntry(response.body());
-            }
+                Integer.parseInt(newBattleRadius.getText().toString()),
+                new Callback<Battle>() {
+                    @Override
+                    public void onResponse(Call<Battle> call, Response<Battle> response) {
+                        //TODO
+                        Log.d(TAG, "new battle was sent");
+                        addFirstEntry(response.body());
+                    }
 
-            @Override
-            public void onFailure(Call<Battle> call, Throwable t) {
-                //TODO
-                Log.e(TAG, "can't send new battle: " + t);
-            }
+                    @Override
+                    public void onFailure(Call<Battle> call, Throwable t) {
+                        //TODO
+                        Log.e(TAG, "can't send new battle: " + t);
+                    }
         });
 
         State.creatingBattle = false;
@@ -120,7 +125,7 @@ public class CreateBattleActivity extends Activity {
     }
 
     private void addFirstEntry(Battle battle) {
-        battle.createEntryAndDo(photoBytes, new Callback<Entry>() {
+        battle.createEntryAndDo(new Callback<Entry>() {
             @Override
             public void onResponse(Call<Entry> call, Response<Entry> response) {
                 //TODO
