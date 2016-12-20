@@ -8,10 +8,51 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="me.instabattle.app.LoginActivity">
+    tools:context="me.instabattle.app.activities.LoginActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Purchase premium account for 4.99$ to get full version!" />
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:background="#000000">
+
+        <EditText
+            android:id="@+id/loginInput"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:layout_margin="7dp"/>
+
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:layout_margin="7dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:text="Sign In"
+                android:onClick="onSigninClick"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:text="Sign Up"
+                android:onClick="onSignupClick"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>
