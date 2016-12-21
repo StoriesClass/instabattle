@@ -2,6 +2,7 @@ package me.instabattle.app.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.DialogFragment;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import me.instabattle.app.R;
+import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.managers.EntryManager;
 import me.instabattle.app.models.Vote;
 import me.instabattle.app.settings.State;
@@ -52,10 +54,30 @@ public class VoteActivity extends Activity {
                 firstEntry = response.body().get(0);
                 secondEntry = response.body().get(1);
 
-                firstImage.setImageBitmap(firstEntry.getPhoto());
+                firstEntry.getPhotoAndDo(new BitmapCallback() {
+                    @Override
+                    public void onResponse(Bitmap photo) {
+                        firstImage.setImageBitmap(photo);
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.e(TAG, "can't get firstEntry photo");
+                    }
+                });
                 firstImage.invalidate();
 
-                secondImage.setImageBitmap(secondEntry.getPhoto());
+                secondEntry.getPhotoAndDo(new BitmapCallback() {
+                    @Override
+                    public void onResponse(Bitmap photo) {
+                        secondImage.setImageBitmap(photo);
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.e(TAG, "can't get secondEntry photo");
+                    }
+                });
                 secondImage.invalidate();
 
                 Log.d(TAG, "got vote");

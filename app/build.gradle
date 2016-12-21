@@ -1,6 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
+    // Just in case
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/MANIFEST.MF'
+        exclude 'META-INF/INDEX.LIST'
+    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -37,7 +48,11 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
     compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.google.android.gms:play-services-location:10.0.1'
+
+    compile 'com.cloudinary:cloudinary-android:1.2.2'
+
     testCompile 'junit:junit:4.12'
 }

@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 import me.instabattle.app.managers.BattleManager;
+import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.managers.PhotoManager;
 import me.instabattle.app.managers.UserManager;
 import retrofit2.Callback;
@@ -50,8 +51,8 @@ public class Entry {
         this.lng = lng;
     }
 
-    public Bitmap getPhoto() {
-        return PhotoManager.getPhoto(id);
+    public void getPhotoAndDo(BitmapCallback callback) {
+        PhotoManager.getPhotoAndDo(this.getImageName(), callback);
     }
 
     public void getAuthorAndDo(Callback<User> callback) {
@@ -64,6 +65,10 @@ public class Entry {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getImageName() {
+        return imageName;
     }
 
     public void getBattleAndDo(Callback<Battle> callback) {

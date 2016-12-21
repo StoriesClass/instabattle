@@ -2,6 +2,7 @@ package me.instabattle.app.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.R;
@@ -59,7 +61,17 @@ public class UserEntryListAdapter extends BaseAdapter {
 
         Entry entry = entries.get(position);
 
-        ((ImageView) res.findViewById(R.id.userEntryListItemImage)).setImageBitmap(entry.getPhoto());
+        entry.getPhotoAndDo(new BitmapCallback() {
+            @Override
+            public void onResponse(Bitmap photo) {
+                ((ImageView) res.findViewById(R.id.userEntryListItemImage)).setImageBitmap(photo);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(TAG, "Can't get entry photo");
+            }
+        });
         ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText("Posted on 28.11.16");
         ((TextView) res.findViewById(R.id.userEntryListItemUpvotes)).setText(entry.getRating() + " points");
 

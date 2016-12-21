@@ -2,6 +2,7 @@ package me.instabattle.app.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.R;
 import me.instabattle.app.settings.State;
@@ -71,7 +73,18 @@ public class BattleListAdapter extends BaseAdapter {
                 }
                 Entry winner = top.get(0);
                 if (winner != null) {
-                    ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(winner.getPhoto());
+                    winner.getPhotoAndDo(new BitmapCallback() {
+                        @Override
+                        public void onResponse(Bitmap photo) {
+                            ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(photo);
+                        }
+                        @Override
+                        public void onFailure(Exception e) {
+                            // FIXME
+                            Log.e(TAG, "Can't get winner's photo");
+                        }
+                    });
+
                 } else {
                     Log.e(TAG, "winner entry is null");
                 }

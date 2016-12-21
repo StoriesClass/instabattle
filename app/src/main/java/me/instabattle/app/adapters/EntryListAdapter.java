@@ -1,6 +1,7 @@
 package me.instabattle.app.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.R;
 import me.instabattle.app.models.User;
@@ -53,7 +55,17 @@ public class EntryListAdapter extends BaseAdapter {
                 inflater.inflate(R.layout.entry_list_item, parent, false);
 
         Entry entry = entries.get(position);
-        ((ImageView) res.findViewById(R.id.listEntryImage)).setImageBitmap(entry.getPhoto());
+        entry.getPhotoAndDo(new BitmapCallback() {
+            @Override
+            public void onResponse(Bitmap photo) {
+                ((ImageView) res.findViewById(R.id.listEntryImage)).setImageBitmap(photo);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(TAG, "Can't get entry photo");
+            }
+        });
         ((TextView) res.findViewById(R.id.listEntryUpvotes)).setText(entry.getRating() + " points");
         entry.getAuthorAndDo(new Callback<User>() {
             @Override

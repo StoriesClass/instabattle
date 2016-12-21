@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.instabattle.app.R;
+import me.instabattle.app.managers.PhotoManager;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.settings.State;
 import retrofit2.Call;
@@ -47,7 +48,7 @@ public class PhotoEditActivity extends Activity {
             State.chosenBattle.createEntryAndDo(new Callback<Entry>() {
                 @Override
                 public void onResponse(Call<Entry> call, Response<Entry> response) {
-                    // TODO
+                    PhotoManager.upload(response.body().getImageName(), photoBytes);
                 }
 
                 @Override
