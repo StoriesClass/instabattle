@@ -12,6 +12,7 @@ import java.util.List;
 
 import me.instabattle.app.R;
 import me.instabattle.app.managers.EntryManager;
+import me.instabattle.app.models.Vote;
 import me.instabattle.app.settings.State;
 import me.instabattle.app.dialogs.VotingEndDialog;
 import me.instabattle.app.models.Entry;
@@ -78,15 +79,17 @@ public class VoteActivity extends Activity {
             looserId = firstEntry.getId();
         }
 
-        EntryManager.voteAndDo(State.chosenBattle.getId(), State.currentUser.getId(), winnerId, looserId, new Callback<List<Entry>>() {
+        Log.e(TAG, "Vote info: " + State.chosenBattle.getId() + " " + State.currentUser.getId() + " " +
+                winnerId + " " + looserId);
+        EntryManager.voteAndDo(State.chosenBattle.getId(), State.currentUser.getId(), winnerId, looserId, new Callback<Vote>() {
             @Override
-            public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
-                //TODO
+            public void onResponse(Call<Vote> call, Response<Vote> response) {
+                Log.d(TAG, EntryManager.gson.toJson(call.request().body()));
                 Log.d(TAG, "vote sent");
             }
 
             @Override
-            public void onFailure(Call<List<Entry>> call, Throwable t) {
+            public void onFailure(Call<Vote> call, Throwable t) {
                 //TODO
                 Log.e(TAG, "failed to send vote");
             }

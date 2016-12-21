@@ -67,7 +67,7 @@ public class Entry {
     }
 
     public void getBattleAndDo(Callback<Battle> callback) {
-        BattleManager.getAndDo(id, callback);
+        BattleManager.getAndDo(battleId, callback);
     }
 
     public void setId(int id) {

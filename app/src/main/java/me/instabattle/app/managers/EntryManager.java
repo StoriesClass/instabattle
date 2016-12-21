@@ -51,8 +51,8 @@ public class EntryManager extends JSONManager {
     }
 
     public static void voteAndDo(Integer battleId, Integer voterId, Integer winnerId, Integer loserId,
-                                 Callback<List<Entry>> callback) {
-        Call<List<Entry>> call = service.vote(battleId, new Vote(voterId, winnerId, loserId));
+                                 Callback<Vote> callback) {
+        Call<Vote> call = service.vote(battleId, new Vote(voterId, winnerId, loserId));
         call.enqueue(callback);
     }
 
@@ -73,11 +73,12 @@ public class EntryManager extends JSONManager {
         @GET("battles/{battle_id}/voting")
         Call<List<Entry>> getVote(@Path("battle_id") Integer battleId);
 
-        @POST("battle/{battle_id}/entries")
-        Call<List<Entry>> vote(@Path("battle_id") Integer battleId,
+        @POST("battles/{battle_id}/voting")
+        Call<Vote> vote(@Path("battle_id") Integer battleId,
                                @Body Vote vote);
 
-        @POST("entries")
+
+        @POST("entries/")
         Call<Entry> create(@Body Entry entry);
     }
 }
