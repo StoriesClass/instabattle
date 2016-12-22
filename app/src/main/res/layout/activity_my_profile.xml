@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Log Out"
+            android:text="@string/log_out"
             android:textSize="40sp"
             android:onClick="logout"/>
     </LinearLayout>

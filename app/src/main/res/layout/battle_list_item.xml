@@ -51,14 +51,14 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="View Battle"
+            android:text="@string/view_battle"
             android:textSize="20sp"/>
         <Button
             android:id="@+id/battleListItemViewOnMapBtn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="View On Map"
+            android:text="@string/view_on_map"
             android:textSize="20sp"/>
     </LinearLayout>
 

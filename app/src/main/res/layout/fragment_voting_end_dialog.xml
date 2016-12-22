@@ -8,12 +8,12 @@
         android:id="@+id/voteAgainBtn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="Vote Again!"
+        android:text="@string/vote_again"
         android:textSize="20sp" />
     <Button
         android:id="@+id/goToBattleBtn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="Back to Battle!"
+        android:text="@string/back_to_battle"
         android:textSize="20sp" />
 </LinearLayout>

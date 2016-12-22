@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New participation in"
+        android:text="@string/new_participation_in"
         android:textSize="18sp"
         android:layout_gravity="center"
         android:layout_margin="10dp"/>
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_centerInParent="true"
-            android:text="Take photo!"
+            android:text="@string/take_photo"
             android:onClick="takePicture"/>
     </RelativeLayout>
 </LinearLayout>

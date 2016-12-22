@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:text="Near Battles"
+        android:text="@string/near_battles"
         android:gravity="center"
         android:textSize="40sp"/>
     <ListView

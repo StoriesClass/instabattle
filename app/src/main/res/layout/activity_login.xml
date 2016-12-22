@@ -42,7 +42,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
-                android:text="Sign In"
+                android:text="@string/sign_in"
                 android:onClick="onSigninClick"/>
 
             <Button
@@ -50,7 +50,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
-                android:text="Sign Up"
+                android:text="@string/sign_up"
                 android:onClick="onSignupClick"/>
         </LinearLayout>
     </LinearLayout>

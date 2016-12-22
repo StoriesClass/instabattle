@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New participation in"
+        android:text="@string/new_participation_in"
         android:textSize="18sp"
         android:layout_gravity="center"
         android:layout_margin="10dp"/>
@@ -25,7 +25,7 @@
         android:id="@+id/currentPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Editable photo"/>
+        android:contentDescription="@string/editable_photo"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -38,14 +38,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:text="Take a new one!"
+                android:text="@string/take_new_photo"
                 android:onClick="takeNewPhoto"/>
             <Button
                 android:id="@+id/usePictureBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:text="Use this one!!"
+                android:text="@string/use_this_photo"
                 android:onClick="useThisPhoto"/>
         </LinearLayout>
     </RelativeLayout>
