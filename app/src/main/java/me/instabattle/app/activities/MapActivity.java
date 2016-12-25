@@ -38,7 +38,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private static final String TAG = "MapActivity";
 
-    private static final int DEFAULT_ZOOM = 14;
+    private static final float DEFAULT_ZOOM = 14;
+    private static final LatLng DEFAULT_VIEW_POINT = new LatLng(59.930969, 30.352445);
 
     private GoogleMap googleMap;
 
@@ -49,8 +50,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     public static Class<?> gotHereFrom;
 
-    public static LatLng viewPoint = new LatLng(59.930969, 30.352445);
-    public static int viewZoom = 1;
+    public static LatLng viewPoint = DEFAULT_VIEW_POINT;
+    public static float viewZoom = DEFAULT_ZOOM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +77,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             googleMap.setMyLocationEnabled(true);
         } else {
             LocationService.askLocationPermission(this);
-        }
-
-        if (LocationService.hasActualLocation()) {
-            viewPoint = LocationService.getCurrentLocation();
-            viewZoom = DEFAULT_ZOOM;
         }
 
         UiSettings settings = googleMap.getUiSettings();
@@ -154,6 +150,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 Log.e(TAG, "cant get battles: " + t);
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        viewPoint = googleMap.getCameraPosition().target;
+        viewZoom = googleMap.getCameraPosition().zoom;
     }
 
     public void goCreateBattle(View v) {
