@@ -66,24 +66,23 @@ public class BattleListAdapter extends BaseAdapter {
             @Override
             public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
                 //FIXME pls
-                List<Entry> top = response.body();
-                if (top == null) {
-                    Log.e(TAG, "suck: " + response.code());
-                    return;
+                if (response.isSuccessful()) {
+                    List<Entry> top = response.body();
+                    Entry winner = top.get(0);
+                    if (winner != null) {
+                        winner.getPhotoAndDo(new BitmapCallback() {
+                            @Override
+                            public void onResponse(Bitmap photo) {
+                                ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(photo);
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                // FIXME
+                                Log.e(TAG, "Can't get winner's photo");
+                            }
+                        });
                 }
-                Entry winner = top.get(0);
-                if (winner != null) {
-                    winner.getPhotoAndDo(new BitmapCallback() {
-                        @Override
-                        public void onResponse(Bitmap photo) {
-                            ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(photo);
-                        }
-                        @Override
-                        public void onFailure(Exception e) {
-                            // FIXME
-                            Log.e(TAG, "Can't get winner's photo");
-                        }
-                    });
 
                 } else {
                     Log.e(TAG, "winner entry is null");

@@ -1,5 +1,6 @@
 package me.instabattle.app.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -63,8 +64,13 @@ public class UserEntryListAdapter extends BaseAdapter {
 
         entry.getPhotoAndDo(new BitmapCallback() {
             @Override
-            public void onResponse(Bitmap photo) {
-                ((ImageView) res.findViewById(R.id.userEntryListItemImage)).setImageBitmap(photo);
+            public void onResponse(final Bitmap photo) {
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((ImageView) res.findViewById(R.id.userEntryListItemImage)).setImageBitmap(photo);
+                    }
+                });
             }
 
             @Override
@@ -72,7 +78,7 @@ public class UserEntryListAdapter extends BaseAdapter {
                 Log.e(TAG, "Can't get entry photo");
             }
         });
-        ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText("Posted on 28.11.16");
+        ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText("Posted on" + entry.getCreatedOn().toString());
         ((TextView) res.findViewById(R.id.userEntryListItemUpvotes)).setText(entry.getRating() + " points");
 
         entry.getBattleAndDo(new Callback<Battle>() {

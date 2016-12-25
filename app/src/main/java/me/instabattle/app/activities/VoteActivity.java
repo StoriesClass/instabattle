@@ -56,8 +56,13 @@ public class VoteActivity extends Activity {
 
                 firstEntry.getPhotoAndDo(new BitmapCallback() {
                     @Override
-                    public void onResponse(Bitmap photo) {
-                        firstImage.setImageBitmap(photo);
+                    public void onResponse(final Bitmap photo) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                firstImage.setImageBitmap(photo);
+                            }
+                        });
                     }
 
                     @Override
@@ -69,8 +74,13 @@ public class VoteActivity extends Activity {
 
                 secondEntry.getPhotoAndDo(new BitmapCallback() {
                     @Override
-                    public void onResponse(Bitmap photo) {
-                        secondImage.setImageBitmap(photo);
+                    public void onResponse(final Bitmap photo) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                secondImage.setImageBitmap(photo);
+                            }
+                        });
                     }
 
                     @Override
@@ -106,7 +116,7 @@ public class VoteActivity extends Activity {
         EntryManager.voteAndDo(State.chosenBattle.getId(), State.currentUser.getId(), winnerId, looserId, new Callback<Vote>() {
             @Override
             public void onResponse(Call<Vote> call, Response<Vote> response) {
-                Log.d(TAG, EntryManager.gson.toJson(call.request().body()));
+                //Log.d(TAG, EntryManager.gson.toJson(call.request().body()));
                 Log.d(TAG, "vote sent");
             }
 

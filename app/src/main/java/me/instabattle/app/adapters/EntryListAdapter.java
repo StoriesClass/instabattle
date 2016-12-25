@@ -1,5 +1,6 @@
 package me.instabattle.app.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import me.instabattle.app.activities.LoginActivity;
 import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.R;
@@ -57,8 +59,13 @@ public class EntryListAdapter extends BaseAdapter {
         Entry entry = entries.get(position);
         entry.getPhotoAndDo(new BitmapCallback() {
             @Override
-            public void onResponse(Bitmap photo) {
-                ((ImageView) res.findViewById(R.id.listEntryImage)).setImageBitmap(photo);
+            public void onResponse(final Bitmap photo) {
+                ((Activity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((ImageView) res.findViewById(R.id.listEntryImage)).setImageBitmap(photo);
+                    }
+                });
             }
 
             @Override

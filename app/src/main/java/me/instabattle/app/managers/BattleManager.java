@@ -1,10 +1,12 @@
 package me.instabattle.app.managers;
 
 import android.location.Location;
+import android.util.Log;
 
 import java.util.List;
 
 import me.instabattle.app.models.Battle;
+import me.instabattle.app.settings.State;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
@@ -14,8 +16,9 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public class BattleManager extends JSONManager {
-    private static final BattleService service = retrofit.create(BattleService.class);
+public class BattleManager {
+    private static final String TAG = "BattleManager";
+    private static final BattleService service = ServiceGenerator.createService(BattleService.class);
 
     public static void getAllAndDo(Callback<List<Battle>> callback) {
         Call<List<Battle>> call = service.getAll();
@@ -36,7 +39,9 @@ public class BattleManager extends JSONManager {
 
     public static void createAndDo(Integer authorId, String name, Double latitude, Double longitude,
                                    String description, Integer radius, Callback<Battle> callback) {
-        Call<Battle> call = service.create(new Battle(authorId, name, description, latitude, longitude, radius));
+        BattleService tokenService = ServiceGenerator.createService(BattleService.class, State.token);
+        Log.d(TAG, "Sending token " + State.token);
+        Call<Battle> call = tokenService.create(new Battle(authorId, name, description, latitude, longitude, radius));
         // FIXME photo actions
         call.enqueue(callback);
     }

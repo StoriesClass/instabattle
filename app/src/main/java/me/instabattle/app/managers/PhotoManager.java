@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PhotoManager {
+    private static final String TAG = "PhotoManager";
     private static final Cloudinary cloudinary;
     private static final Map<String, String> config = new HashMap<>();
 
@@ -29,23 +30,25 @@ public class PhotoManager {
     public static void getPhotoAndDo(String name, final BitmapCallback callback) {
         final Exception exception;
         try {
-            final URL url = new URL(cloudinary.url().generate(name));
+            final URL url = new URL(cloudinary.url().generate(name) + ".jpg");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         final Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                         callback.onResponse(image);
+                        Log.d(TAG, "Got photo from " + url.toString());
                     } catch (IOException e) {
                         // FIXME
-                        Log.e("Bad URL", "can't establish connection by created URL");
+                        Log.e(TAG, "cannot establish connection with " + url.toString());
+                        callback.onFailure(e);
                         //exception = e;
                     }
                 }
             }).start();
             return;
         } catch (MalformedURLException e) {
-            Log.e("Bad URL", "can't create url from name");
+            Log.e(TAG, "can't create url from name");
             exception = e;
         }
         new Thread(new Runnable() {
