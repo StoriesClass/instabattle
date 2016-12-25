@@ -16,8 +16,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public class EntryManager extends JSONManager {
-    private static final EntryService service = retrofit.create(EntryService.class);
+public class EntryManager {
+    private static final EntryService service = ServiceGenerator.createService(EntryService.class);
 
     public static void getByBattleAndDo(int battleId, Callback<List<Entry>> callback) {
         Call<List<Entry>> call = service.getByBattle(battleId);

@@ -14,8 +14,8 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public class BattleManager extends JSONManager {
-    private static final BattleService service = retrofit.create(BattleService.class);
+public class BattleManager {
+    private static final BattleService service = ServiceGenerator.createService(BattleService.class);
 
     public static void getAllAndDo(Callback<List<Battle>> callback) {
         Call<List<Battle>> call = service.getAll();

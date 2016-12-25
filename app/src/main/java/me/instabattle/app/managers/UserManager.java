@@ -2,6 +2,7 @@ package me.instabattle.app.managers;
 
 import java.util.List;
 
+import me.instabattle.app.models.Token;
 import me.instabattle.app.models.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,9 +13,8 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public class UserManager extends JSONManager {
-    private static final UserService service = retrofit.create(UserService.class);
-
+public class UserManager {
+    private static final UserService service = ServiceGenerator.createService(UserService.class);
 
     public static void getAndDo(Integer userId, Callback<User> callback) {
         Call<User> call = service.get(userId);
@@ -40,6 +40,11 @@ public class UserManager extends JSONManager {
         call.enqueue(callback);
     }
 
+    public static void getToken(User user, Callback<Token> callback) {
+        Call<Token> call = service.getToken(user);
+        call.enqueue(callback);
+    }
+
     interface UserService {
         @GET("users/{user_id}")
         Call<User> get(@Path("user_id") Integer userId);
@@ -53,5 +58,8 @@ public class UserManager extends JSONManager {
 
         @POST("users/")
         Call<User> create(@Body User user);
+
+        @GET("token")
+        Call<Token> getToken(@Body User user);
     }
 }
