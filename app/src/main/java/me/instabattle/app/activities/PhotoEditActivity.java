@@ -22,7 +22,7 @@ public class PhotoEditActivity extends Activity {
 
     private static final String TAG = "PhotoEditActivity";
 
-    private byte[] photoBytes;
+    public static byte[] photoBytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,6 @@ public class PhotoEditActivity extends Activity {
 
         ((TextView) findViewById(R.id.editPhotoBattleTitle)).setText(battleTitle);
 
-        photoBytes = getIntent().getByteArrayExtra("photoBytes");
         Bitmap photoBitmap = BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.length);
         ((ImageView) findViewById(R.id.currentPhoto)).setImageBitmap(photoBitmap);
     }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.Entry;
+import me.instabattle.app.models.Vote;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -33,6 +34,7 @@ public class EntryManagerTest {
         });
     }
 
+    /*
     @Test
     public void createAndDo() throws Exception {
         final Integer battleId = 1;
@@ -49,6 +51,7 @@ public class EntryManagerTest {
                 });
 
     }
+    */
 
     @Test
     public void getEntriesAndDo() throws Exception {
@@ -78,12 +81,11 @@ public class EntryManagerTest {
                 final Integer entry1_id = entries.get(0).getId();
                 Integer entry2_id = entries.get(1).getId();
 
-                EntryManager.voteAndDo(battleId, voterId, entry1_id, entry2_id, new TestCallback<List<Entry>>() {
+                EntryManager.voteAndDo(battleId, voterId, entry1_id, entry2_id, new TestCallback<Vote>() {
                     @Override
-                    public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
-                        Entry entry = response.body().get(0);
-                        assertEquals(battleId, entry.getBattleId());
-                        assertEquals(entry1_id, entry.getId());
+                    public void onResponse(Call<Vote> call, Response<Vote> response) {
+                        Vote vote = response.body();
+                        assertEquals(battleId, vote.getBattleId());
                     }
                 });
             }

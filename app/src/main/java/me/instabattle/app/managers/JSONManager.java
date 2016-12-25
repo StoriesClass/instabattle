@@ -22,7 +22,7 @@ abstract class JSONManager {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         // add logging as last interceptor
-        httpClient.interceptors().add(logging);
+        //httpClient.interceptors().add(logging);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://instabattle2.herokuapp.com/")

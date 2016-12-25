@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_camera"
     android:orientation="vertical"
@@ -8,27 +8,26 @@
     tools:context="me.instabattle.app.activities.CameraActivity">
 
     <TextView
+        android:id="@+id/editPhotoBattleTitleTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_participation_in"
         android:textSize="18sp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"/>
     <TextView
         android:id="@+id/editPhotoBattleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="22sp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"/>
-    <ImageView
-        android:id="@+id/currentPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/editable_photo"/>
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/editPhotoBattleTitleTop"/>
     <RelativeLayout
+        android:id="@+id/participationButtonsLayout"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,4 +48,12 @@
                 android:onClick="useThisPhoto"/>
         </LinearLayout>
     </RelativeLayout>
-</LinearLayout>
+    <ImageView
+        android:id="@+id/currentPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/editable_photo"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/editPhotoBattleTitle"
+        android:layout_above="@id/participationButtonsLayout"/>
+</RelativeLayout>
