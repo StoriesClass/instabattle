@@ -1,4 +1,4 @@
-package me.instabattle.app.classes;
+package me.instabattle.app.uiwidgets;
 
 import android.content.Context;
 import android.util.AttributeSet;

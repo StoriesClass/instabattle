@@ -76,7 +76,7 @@ public class CreateBattleActivity extends Activity {
         newBattleRadius.setText(savedRadius);
     }
 
-    private boolean battleIsCorrect() {
+    private boolean validateBattle() {
         if (getBattleTitle().length() < BATTLE_TITLE_MINIMUM_LENGTH) {
             Toast.makeText(this, "Battle name should have at least " +
                     BATTLE_TITLE_MINIMUM_LENGTH + " characters!", Toast.LENGTH_SHORT).show();
@@ -90,7 +90,7 @@ public class CreateBattleActivity extends Activity {
     }
 
     public void sendBattle(View v) {
-        if (!battleIsCorrect()) {
+        if (!validateBattle()) {
             return;
         }
 

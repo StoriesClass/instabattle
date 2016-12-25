@@ -48,8 +48,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import me.instabattle.app.R;
-import me.instabattle.app.classes.AutoFitTextureView;
-import me.instabattle.app.settings.State;
+import me.instabattle.app.uiwidgets.AutoFitTextureView;
 
 public class CameraActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -140,10 +139,9 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
             Log.d(TAG, "got photo");
             Image image = reader.acquireLatestImage();
             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-            byte[] bytes = new byte[buffer.capacity()];
-            buffer.get(bytes);
+            PhotoEditActivity.photoBytes = new byte[buffer.capacity()];
+            buffer.get(PhotoEditActivity.photoBytes);
             Intent editPhoto = new Intent(CameraActivity.this, PhotoEditActivity.class);
-            editPhoto.putExtra("photoBytes", bytes);
             editPhoto.putExtra("battleTitle", battleTitle);
             startActivity(editPhoto);
         }
