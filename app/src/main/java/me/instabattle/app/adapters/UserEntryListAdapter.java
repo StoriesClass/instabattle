@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import me.instabattle.app.managers.BitmapCallback;
@@ -78,7 +79,9 @@ public class UserEntryListAdapter extends BaseAdapter {
                 Log.e(TAG, "Can't get entry photo");
             }
         });
-        ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText("Posted on" + entry.getCreatedOn().toString());
+
+        ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText(
+                (new SimpleDateFormat("dd/mm/yyyy")).format(entry.getCreatedOn()));
         ((TextView) res.findViewById(R.id.userEntryListItemUpvotes)).setText(entry.getRating() + " points");
 
         entry.getBattleAndDo(new Callback<Battle>() {

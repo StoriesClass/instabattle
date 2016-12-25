@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ffffff"
     tools:context="me.instabattle.app.activities.MenuActivity">
 
     <LinearLayout
@@ -15,7 +16,12 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:background="#000000">
+        android:background="#ffffff">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/instabattle_logo"/>
 
         <Button
             android:id="@+id/mapBtn"
@@ -31,14 +37,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="7dp"
             android:text="@string/battles"
-            android:onClick="onButtonClick"/>
-
-        <Button
-            android:id="@+id/ratingBtn"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            android:text="@string/rating"
             android:onClick="onButtonClick"/>
 
         <Button
