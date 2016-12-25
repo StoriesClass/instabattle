@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import me.instabattle.app.R;
@@ -22,7 +23,6 @@ public class MyProfileActivity extends Activity {
 
     private static final String TAG = "MyProfileActivity";
 
-    private TextView userName;
     private ListView userEntryList;
     private UserEntryListAdapter userEntryListAdapter;
 
@@ -31,8 +31,9 @@ public class MyProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
 
-        userName = (TextView) findViewById(R.id.currentUserName);
-        userName.setText(State.currentUser.getUsername());
+        ((TextView) findViewById(R.id.currentUserName)).setText(State.currentUser.getUsername());
+        ((TextView) findViewById(R.id.currentUserDate)).setText(
+                (new SimpleDateFormat("dd/mm/yyyy")).format(State.currentUser.getCreatedOn()));
 
         userEntryList = (ListView) findViewById(R.id.userEntryList);
 
@@ -53,6 +54,9 @@ public class MyProfileActivity extends Activity {
     }
 
     public void logout(View view) {
+        State.token = null;
+        State.currentUser = null;
+
         Intent login = new Intent(this, LoginActivity.class);
         startActivity(login);
     }

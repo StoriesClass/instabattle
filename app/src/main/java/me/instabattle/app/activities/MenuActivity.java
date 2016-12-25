@@ -28,9 +28,6 @@ public class MenuActivity extends Activity {
             case R.id.battlesBtn:
                 cls = BattleListActivity.class;
                 break;
-            case R.id.ratingBtn:
-                cls = RatingActivity.class;
-                break;
             case R.id.myProfileBtn:
                 cls = MyProfileActivity.class;
                 break;

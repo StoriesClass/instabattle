@@ -10,12 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="me.instabattle.app.activities.BattleListActivity">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="@string/near_battles"
-        android:gravity="center"
-        android:textSize="40sp"/>
+
     <ListView
         android:id="@+id/battleList"
         android:layout_width="match_parent"

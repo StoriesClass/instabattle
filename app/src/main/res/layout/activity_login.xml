@@ -15,8 +15,12 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:background="#000000">
+        android:background="#ffffff">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/instabattle_logo"/>
         <EditText
             android:id="@+id/loginInput"
             android:layout_width="250dp"
