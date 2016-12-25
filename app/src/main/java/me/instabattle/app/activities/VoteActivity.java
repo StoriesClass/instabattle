@@ -106,7 +106,7 @@ public class VoteActivity extends Activity {
         EntryManager.voteAndDo(State.chosenBattle.getId(), State.currentUser.getId(), winnerId, looserId, new Callback<Vote>() {
             @Override
             public void onResponse(Call<Vote> call, Response<Vote> response) {
-                Log.d(TAG, EntryManager.gson.toJson(call.request().body()));
+                //Log.d(TAG, EntryManager.gson.toJson(call.request().body()));
                 Log.d(TAG, "vote sent");
             }
 

@@ -40,8 +40,10 @@ public class UserManager {
         call.enqueue(callback);
     }
 
-    public static void getToken(User user, Callback<Token> callback) {
-        Call<Token> call = service.getToken(user);
+    public static void getTokenAndDo(String email, String password, Callback<Token> callback) {
+        UserService loginService = ServiceGenerator.createService(UserService.class,
+                email, password);
+        Call<Token> call = loginService.getToken();
         call.enqueue(callback);
     }
 
@@ -60,6 +62,6 @@ public class UserManager {
         Call<User> create(@Body User user);
 
         @GET("token")
-        Call<Token> getToken(@Body User user);
+        Call<Token> getToken();
     }
 }
