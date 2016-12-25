@@ -11,6 +11,7 @@ import android.widget.Toast;
 import me.instabattle.app.R;
 import me.instabattle.app.managers.UserManager;
 import me.instabattle.app.models.Token;
+import me.instabattle.app.models.User;
 import me.instabattle.app.settings.State;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,20 +34,36 @@ public class LoginActivity extends Activity {
     public void onSigninClick(View view) {
         final Intent menu = new Intent(this, MenuActivity.class);
 
-        String email = login.getText().toString();
-        String pass= password.getText().toString();
+        final String username = login.getText().toString();
+        final String pass= password.getText().toString();
 
-        Log.d(TAG, "email: " + email + "\t password: " + pass);
+        Log.d(TAG, "username: " + username + "\t password: " + pass);
 
-        UserManager.getTokenAndDo(email, pass, new Callback<Token>() {
+        UserManager.getTokenAndDo(username, pass, new Callback<Token>() {
                     @Override
                     public void onResponse(Call<Token> call, Response<Token> response) {
                         if (response.isSuccessful()) {
+                            UserManager.getAndDo(username, new Callback<User>() {
+                                @Override
+                                public void onResponse(Call<User> call, Response<User> response) {
+                                    if (response.isSuccessful()) {
+                                        State.currentUser = response.body();
+                                    } else {
+                                        Log.e(TAG, "Something strange");
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<User> call, Throwable t) {
+                                    Log.e(TAG, "Cannot GET user");
+                                }
+                            });
                             State.token = response.body().get();
                             Log.d(TAG, "Got token: " + State.token);
                             startActivity(menu);
                         } else {
-                            Toast.makeText(LoginActivity.this, "Wrong email/password combination", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Wrong email/password combination",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -55,8 +72,6 @@ public class LoginActivity extends Activity {
                         Log.e(TAG, "Cannot obtaining token");
                     }
                 });
-
-
     }
 
     public void onSignupClick(View view) {

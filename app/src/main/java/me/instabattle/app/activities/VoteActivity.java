@@ -56,8 +56,13 @@ public class VoteActivity extends Activity {
 
                 firstEntry.getPhotoAndDo(new BitmapCallback() {
                     @Override
-                    public void onResponse(Bitmap photo) {
-                        firstImage.setImageBitmap(photo);
+                    public void onResponse(final Bitmap photo) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                firstImage.setImageBitmap(photo);
+                            }
+                        });
                     }
 
                     @Override
@@ -69,8 +74,13 @@ public class VoteActivity extends Activity {
 
                 secondEntry.getPhotoAndDo(new BitmapCallback() {
                     @Override
-                    public void onResponse(Bitmap photo) {
-                        secondImage.setImageBitmap(photo);
+                    public void onResponse(final Bitmap photo) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                secondImage.setImageBitmap(photo);
+                            }
+                        });
                     }
 
                     @Override
