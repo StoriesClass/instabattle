@@ -78,7 +78,7 @@ public class UserEntryListAdapter extends BaseAdapter {
                 Log.e(TAG, "Can't get entry photo");
             }
         });
-        ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText("Posted on 28.11.16");
+        ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText("Posted on" + entry.getCreatedOn().toString());
         ((TextView) res.findViewById(R.id.userEntryListItemUpvotes)).setText(entry.getRating() + " points");
 
         entry.getBattleAndDo(new Callback<Battle>() {
