@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 
 import me.instabattle.app.R;
+import me.instabattle.app.images.Util;
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.managers.PhotoManager;
 import me.instabattle.app.models.Battle;
@@ -63,7 +64,7 @@ public class CreateBattleActivity extends Activity {
         newBattlePhoto = (ImageView) findViewById(R.id.newBattlePhoto);
 
         if (photoBytes != null) {
-            newBattlePhoto.setImageBitmap(BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.length));
+            newBattlePhoto.setImageBitmap(Util.decodeSampledBitmapFromBytes(photoBytes, 256, 256));
         }
     }
 

@@ -10,10 +10,13 @@ import com.cloudinary.utils.ObjectUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import me.instabattle.app.images.Util;
 
 public class PhotoManager {
     private static final String TAG = "PhotoManager";
@@ -35,14 +38,12 @@ public class PhotoManager {
                 @Override
                 public void run() {
                     try {
-                        final Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                        final Bitmap image = Util.decodeSampledBitmapFromURL(url, 256, 256);
                         callback.onResponse(image);
                         Log.d(TAG, "Got photo from " + url.toString());
                     } catch (IOException e) {
-                        // FIXME
                         Log.e(TAG, "cannot establish connection with " + url.toString());
                         callback.onFailure(e);
-                        //exception = e;
                     }
                 }
             }).start();

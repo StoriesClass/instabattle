@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import me.instabattle.app.R;
+import me.instabattle.app.images.Util;
 import me.instabattle.app.managers.PhotoManager;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.settings.State;
@@ -33,7 +34,7 @@ public class PhotoEditActivity extends Activity {
 
         ((TextView) findViewById(R.id.editPhotoBattleTitle)).setText(battleTitle);
 
-        Bitmap photoBitmap = BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.length);
+        Bitmap photoBitmap = Util.decodeSampledBitmapFromBytes(photoBytes, 256, 256);
         ((ImageView) findViewById(R.id.currentPhoto)).setImageBitmap(photoBitmap);
 
         Log.d(TAG, "Called onCreate");
