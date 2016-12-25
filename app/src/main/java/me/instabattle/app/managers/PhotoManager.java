@@ -61,7 +61,8 @@ public class PhotoManager {
             @Override
             public void run() {
                 try {
-                    cloudinary.uploader().upload(new ByteArrayInputStream(photo), ObjectUtils.emptyMap());
+                    Map params = ObjectUtils.asMap("public_id", name);
+                    cloudinary.uploader().upload(new ByteArrayInputStream(photo), params);
                 } catch (IOException e) {
                     Log.e("Cloudinary fail", "can't upload photo");
                 }
