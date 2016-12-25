@@ -35,6 +35,8 @@ public class PhotoEditActivity extends Activity {
 
         Bitmap photoBitmap = BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.length);
         ((ImageView) findViewById(R.id.currentPhoto)).setImageBitmap(photoBitmap);
+
+        Log.d(TAG, "Called onCreate");
     }
 
     public void takeNewPhoto(View v) {
@@ -60,7 +62,7 @@ public class PhotoEditActivity extends Activity {
             startActivity(goToBattle);
         } else {
             Intent goToNewBattle = new Intent(this, CreateBattleActivity.class);
-            goToNewBattle.putExtra("photoBytes", photoBytes);
+            CreateBattleActivity.photoBytes = photoBytes;
             startActivity(goToNewBattle);
         }
     }

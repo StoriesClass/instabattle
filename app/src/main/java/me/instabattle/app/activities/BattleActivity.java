@@ -60,8 +60,12 @@ public class BattleActivity extends Activity {
     }
 
     public void vote(View v) {
-        Intent voting = new Intent(this, VoteActivity.class);
-        startActivity(voting);
+        if (State.chosenBattle.getEntriesCount() > 1) {
+            Intent voting = new Intent(this, VoteActivity.class);
+            startActivity(voting);
+        } else {
+            Toast.makeText(this, "Only one entry in battle, you can't vote.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void participate(View v) {

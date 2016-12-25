@@ -154,6 +154,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     @Override
     public void onPause() {
+        super.onPause();
         viewPoint = googleMap.getCameraPosition().target;
         viewZoom = googleMap.getCameraPosition().zoom;
     }

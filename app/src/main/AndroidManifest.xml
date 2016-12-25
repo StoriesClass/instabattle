@@ -18,7 +18,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+        android:largeHeap="true" > <!-- FIXME ? -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCZcZq8LVZ2qIij1aNPe9rYR3f7n9i8ynk" />

@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import me.instabattle.app.R;
 import me.instabattle.app.managers.BattleManager;
+import me.instabattle.app.managers.PhotoManager;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.services.LocationService;
@@ -49,7 +50,7 @@ public class CreateBattleActivity extends Activity {
         return newBattleRadius.getText().toString();
     }
 
-    private byte[] photoBytes;
+    public static byte[] photoBytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,6 @@ public class CreateBattleActivity extends Activity {
         newBattleRadius = (TextView) findViewById(R.id.newBattleRadius);
         newBattlePhoto = (ImageView) findViewById(R.id.newBattlePhoto);
 
-        photoBytes = getIntent().getByteArrayExtra("photoBytes");
         if (photoBytes != null) {
             newBattlePhoto.setImageBitmap(BitmapFactory.decodeByteArray(photoBytes, 0, photoBytes.length));
         }
@@ -127,7 +127,7 @@ public class CreateBattleActivity extends Activity {
         battle.createEntryAndDo(new Callback<Entry>() {
             @Override
             public void onResponse(Call<Entry> call, Response<Entry> response) {
-                //TODO
+                PhotoManager.upload(response.body().getImageName(), photoBytes);
                 Log.d(TAG, "new entry was sent");
             }
 
