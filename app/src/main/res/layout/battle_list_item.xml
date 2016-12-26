@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:background="#202020">
+    android:background="#eee">
 
     <TextView
         android:id="@+id/battleListItemTitle"
@@ -43,6 +43,11 @@
                 android:textSize="20sp"/>
             <TextView
                 android:id="@+id/battleListItemCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/battleListItemAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"/>

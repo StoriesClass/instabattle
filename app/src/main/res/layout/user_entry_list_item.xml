@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:background="#202020">
+    android:background="#eee">
 
     <TextView
         android:id="@+id/userEntryListItemTitle"

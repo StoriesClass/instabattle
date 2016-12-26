@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import me.instabattle.app.managers.EntryManager;
+import me.instabattle.app.managers.UserManager;
 import me.instabattle.app.settings.State;
 import retrofit2.Callback;
 
@@ -73,7 +74,6 @@ public class Battle {
     }
 
     public int getRadius() {
-        radius = 20000000; // for example
         return radius;
     }
 
@@ -96,6 +96,10 @@ public class Battle {
     public void createEntryAndDo(Callback<Entry> callback) {
         //TODO: send photo
         EntryManager.createAndDo(id, State.currentUser.getId(), callback);
+    }
+
+    public void getAuthorAndDo(Callback<User> callback) {
+        UserManager.getAndDo(userId, callback);
     }
 
     public Integer getId() {

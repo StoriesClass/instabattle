@@ -33,7 +33,7 @@ public class MyProfileActivity extends Activity {
 
         ((TextView) findViewById(R.id.currentUserName)).setText(State.currentUser.getUsername());
         ((TextView) findViewById(R.id.currentUserDate)).setText(
-                (new SimpleDateFormat("dd/mm/yyyy")).format(State.currentUser.getCreatedOn()));
+                (new SimpleDateFormat("dd/MM/yyyy")).format(State.currentUser.getCreatedOn()));
 
         userEntryList = (ListView) findViewById(R.id.userEntryList);
 
@@ -56,6 +56,9 @@ public class MyProfileActivity extends Activity {
     public void logout(View view) {
         State.token = null;
         State.currentUser = null;
+
+        MapActivity.viewPoint = MapActivity.DEFAULT_VIEW_POINT;
+        MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM;
 
         Intent login = new Intent(this, LoginActivity.class);
         startActivity(login);

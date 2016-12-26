@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ffffff"
     tools:context="me.instabattle.app.activities.LoginActivity">
 
     <LinearLayout
@@ -27,15 +28,16 @@
             android:layout_height="50dp"
             android:hint="Username"
             android:inputType="textEmailAddress"
-            android:layout_margin="7dp"/>
-
+            android:layout_margin="7dp"
+            />
         <EditText
             android:id="@+id/passwordInput"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:hint="Password"
             android:inputType="textPassword"
-            android:layout_margin="7dp"/>
+            android:layout_margin="7dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

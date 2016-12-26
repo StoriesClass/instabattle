@@ -81,7 +81,7 @@ public class UserEntryListAdapter extends BaseAdapter {
         });
 
         ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText(
-                (new SimpleDateFormat("dd/mm/yyyy")).format(entry.getCreatedOn()));
+                (new SimpleDateFormat("dd/MM/yyyy")).format(entry.getCreatedOn()));
         ((TextView) res.findViewById(R.id.userEntryListItemUpvotes)).setText(entry.getRating() + " points");
 
         entry.getBattleAndDo(new Callback<Battle>() {
@@ -105,6 +105,7 @@ public class UserEntryListAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         MapActivity.viewPoint = battle.getLocation();
+                        MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM;
                         MapActivity.gotHereFrom = MyProfileActivity.class;
                         Intent viewMap = new Intent(context, MapActivity.class);
                         context.startActivity(viewMap);

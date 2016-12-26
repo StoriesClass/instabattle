@@ -35,6 +35,7 @@ public class BattleActivity extends Activity {
         setContentView(R.layout.activity_battle);
 
         ((TextView) findViewById(R.id.battle_title)).setText(State.chosenBattle.getName());
+        ((TextView) findViewById(R.id.battle_description)).setText(State.chosenBattle.getDescription());
 
         entryList = (ListView) findViewById(R.id.entryList);
 

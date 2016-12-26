@@ -38,8 +38,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private static final String TAG = "MapActivity";
 
-    private static final float DEFAULT_ZOOM = 14;
-    private static final LatLng DEFAULT_VIEW_POINT = new LatLng(59.930969, 30.352445);
+    public static final float DEFAULT_ZOOM = 14;
+    public static final LatLng DEFAULT_VIEW_POINT = new LatLng(59.930969, 30.352445);
 
     private GoogleMap googleMap;
 

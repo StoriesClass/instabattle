@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ffffff"
     tools:context="me.instabattle.app.activities.LoginActivity">
 
     <LinearLayout
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:background="#000000">
+        android:background="#ffffff">
 
         <EditText
             android:id="@+id/signUpLoginInput"
@@ -23,7 +24,8 @@
             android:layout_height="50dp"
             android:hint="Username"
             android:inputType="text"
-            android:layout_margin="7dp"/>
+            android:layout_margin="7dp"
+            android:textColorHighlight="#88b04b"/>
 
         <EditText
             android:id="@+id/signUpEmailInput"
@@ -31,7 +33,9 @@
             android:layout_height="50dp"
             android:hint="E-mail"
             android:inputType="textEmailAddress"
-            android:layout_margin="7dp"/>
+            android:layout_margin="7dp"
+            android:textColorHighlight="#88b04b"
+            />
 
         <EditText
             android:id="@+id/signUpPasswordInput"
@@ -39,7 +43,8 @@
             android:layout_height="50dp"
             android:hint="Password"
             android:inputType="textPassword"
-            android:layout_margin="7dp"/>
+            android:layout_margin="7dp"
+            android:textColorHighlight="#88b04b"/>
 
         <LinearLayout
             android:layout_width="match_parent"

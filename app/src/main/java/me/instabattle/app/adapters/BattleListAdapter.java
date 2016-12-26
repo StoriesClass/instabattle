@@ -1,5 +1,6 @@
 package me.instabattle.app.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import java.util.List;
 import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.R;
+import me.instabattle.app.models.User;
 import me.instabattle.app.settings.State;
 import me.instabattle.app.activities.BattleActivity;
 import me.instabattle.app.activities.BattleListActivity;
@@ -72,8 +74,13 @@ public class BattleListAdapter extends BaseAdapter {
                     if (winner != null) {
                         winner.getPhotoAndDo(new BitmapCallback() {
                             @Override
-                            public void onResponse(Bitmap photo) {
-                                ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(photo);
+                            public void onResponse(final Bitmap photo) {
+                                ((Activity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(photo);
+                                    }
+                                });
                             }
 
                             @Override
@@ -98,7 +105,7 @@ public class BattleListAdapter extends BaseAdapter {
 
         ((TextView) res.findViewById(R.id.battleListItemTitle)).setText(battle.getName());
         ((TextView) res.findViewById(R.id.battleListItemDate)).setText(
-                (new SimpleDateFormat("dd/mm/yyyy")).format(battle.getCreatedOn()));
+                (new SimpleDateFormat("dd/MM/yyyy")).format(battle.getCreatedOn()));
         ((TextView) res.findViewById(R.id.battleListItemCount)).setText(battle.getEntriesCount() + " photos");
         res.findViewById(R.id.battleListItemViewBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,9 +120,21 @@ public class BattleListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 MapActivity.viewPoint = battle.getLocation();
+                MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM;
                 MapActivity.gotHereFrom = BattleListActivity.class;
                 Intent viewMap = new Intent(context, MapActivity.class);
                 context.startActivity(viewMap);
+            }
+        });
+        battle.getAuthorAndDo(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                ((TextView) res.findViewById(R.id.battleListItemAuthor)).setText(response.body().getUsername());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d(TAG, "cant get battle author");
             }
         });
         return res;

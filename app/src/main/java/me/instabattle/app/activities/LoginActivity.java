@@ -78,4 +78,9 @@ public class LoginActivity extends Activity {
         Intent signup = new Intent(this, SignupActivity.class);
         startActivity(signup);
     }
+
+    @Override
+    public void onBackPressed() {
+        // nothing
+    }
 }
