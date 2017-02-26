@@ -8,6 +8,7 @@ import android.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class VoteActivity extends Activity {
     private ImageView firstImage;
     private ImageView secondImage;
 
-    private Entry firstEntry;
-    private Entry secondEntry;
+    public static Entry firstEntry;
+    public static Entry secondEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,61 +45,45 @@ public class VoteActivity extends Activity {
         firstImage = (ImageView) findViewById(R.id.firstImage);
         secondImage = (ImageView) findViewById(R.id.secondImage);
 
-        initNewVoting();
+        setPhotos();
     }
 
-    public void initNewVoting() {
-        State.chosenBattle.getVoteAndDo(new Callback<List<Entry>>() {
+    public void setPhotos() {
+        firstEntry.getPhotoAndDo(new BitmapCallback() {
             @Override
-            public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
-                firstEntry = response.body().get(0);
-                secondEntry = response.body().get(1);
-
-                firstEntry.getPhotoAndDo(new BitmapCallback() {
+            public void onResponse(final Bitmap photo) {
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onResponse(final Bitmap photo) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                firstImage.setImageBitmap(photo);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.e(TAG, "can't get firstEntry photo");
+                    public void run() {
+                        firstImage.setImageBitmap(photo);
                     }
                 });
-                firstImage.invalidate();
-
-                secondEntry.getPhotoAndDo(new BitmapCallback() {
-                    @Override
-                    public void onResponse(final Bitmap photo) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                secondImage.setImageBitmap(photo);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.e(TAG, "can't get secondEntry photo");
-                    }
-                });
-                secondImage.invalidate();
-
-                Log.d(TAG, "got vote");
             }
 
             @Override
-            public void onFailure(Call<List<Entry>> call, Throwable t) {
-                //TODO
-                Log.e(TAG, "cant get vote: " + t);
+            public void onFailure(Exception e) {
+                Log.e(TAG, "can't get firstEntry photo");
             }
         });
+        firstImage.invalidate();
+
+        secondEntry.getPhotoAndDo(new BitmapCallback() {
+            @Override
+            public void onResponse(final Bitmap photo) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        secondImage.setImageBitmap(photo);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(TAG, "can't get secondEntry photo");
+            }
+        });
+        secondImage.invalidate();
     }
 
     public void vote(View v) {
@@ -113,10 +98,12 @@ public class VoteActivity extends Activity {
 
         Log.e(TAG, "Vote info: " + State.chosenBattle.getId() + " " + State.currentUser.getId() + " " +
                 winnerId + " " + looserId);
+
         EntryManager.voteAndDo(State.chosenBattle.getId(), State.currentUser.getId(), winnerId, looserId, new Callback<Vote>() {
             @Override
             public void onResponse(Call<Vote> call, Response<Vote> response) {
-                //Log.d(TAG, EntryManager.gson.toJson(call.request().body()));
+                Toast.makeText(VoteActivity.this, "Nice vote, " + State.currentUser.getUsername() + "!", Toast.LENGTH_SHORT).show();
+                onBackPressed();
                 Log.d(TAG, "vote sent");
             }
 
@@ -126,8 +113,6 @@ public class VoteActivity extends Activity {
                 Log.e(TAG, "failed to send vote");
             }
         });
-
-        voteEnd.show(getFragmentManager(), "voteEnd");
     }
 
     @Override

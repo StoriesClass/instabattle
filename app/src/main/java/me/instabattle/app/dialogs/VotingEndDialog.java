@@ -25,7 +25,7 @@ public class VotingEndDialog extends DialogFragment implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId() == R.id.voteAgainBtn) {
             VoteActivity parent = (VoteActivity) getActivity();
-            parent.initNewVoting();
+            parent.setPhotos();
             dismiss();
         } else {
             Intent battle = new Intent(getActivity(), BattleActivity.class);

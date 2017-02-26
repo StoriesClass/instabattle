@@ -8,6 +8,7 @@ import me.instabattle.app.models.Entry;
 import me.instabattle.app.models.User;
 import me.instabattle.app.models.Vote;
 import me.instabattle.app.services.LocationService;
+import me.instabattle.app.settings.State;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
@@ -46,7 +47,7 @@ public class EntryManager {
     }
 
     public static void getVoteAndDo(Integer battleId, Callback<List<Entry>> callback) {
-        Call<List<Entry>> call = service.getVote(battleId);
+        Call<List<Entry>> call = service.getVote(battleId, State.currentUser.getId());
         call.enqueue(callback);
     }
 
@@ -71,7 +72,8 @@ public class EntryManager {
                                          @Query("count") Integer count);
 
         @GET("battles/{battle_id}/voting")
-        Call<List<Entry>> getVote(@Path("battle_id") Integer battleId);
+        Call<List<Entry>> getVote(@Path("battle_id") Integer battleId,
+                                  @Query("user_id") Integer userId);
 
         @POST("battles/{battle_id}/voting")
         Call<Vote> vote(@Path("battle_id") Integer battleId,
