@@ -59,5 +59,7 @@ dependencies {
 
     compile 'com.cloudinary:cloudinary-android:1.2.2'
 
+    compile 'com.github.boxme:squarecamera:1.1.0'
+
     testCompile 'junit:junit:4.12'
 }

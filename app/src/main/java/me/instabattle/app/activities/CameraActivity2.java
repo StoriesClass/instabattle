@@ -36,7 +36,6 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -51,9 +50,9 @@ import me.instabattle.app.R;
 import me.instabattle.app.uiwidgets.AutoFitTextureView;
 import me.instabattle.app.utils.Utils;
 
-public class CameraActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class CameraActivity2 extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private static final String TAG = "CameraActivity";
+    private static final String TAG = "CameraActivity2";
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int REQUEST_CAMERA_PERMISSION = 1;
@@ -142,7 +141,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
             PhotoEditActivity.photoBytes = new byte[buffer.capacity()];
             buffer.get(PhotoEditActivity.photoBytes);
-            Intent editPhoto = new Intent(CameraActivity.this, PhotoEditActivity.class);
+            Intent editPhoto = new Intent(CameraActivity2.this, PhotoEditActivity.class);
             editPhoto.putExtra("battleTitle", battleTitle);
             startActivity(editPhoto);
         }
@@ -473,7 +472,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
                         @Override
                         public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                            Utils.showToast(CameraActivity.this, "Camera configuration failed, try again later.");
+                            Utils.showToast(CameraActivity2.this, "Camera configuration failed, try again later.");
                             onBackPressed();
                         }
                     }, null

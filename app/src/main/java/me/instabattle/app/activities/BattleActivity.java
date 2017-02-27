@@ -96,9 +96,8 @@ public class BattleActivity extends Activity {
         } else if (LocationService.isTooFarFrom(State.chosenBattle)) {
             Utils.showToast(BattleActivity.this, "You're too far away, come closer to battle for participating!");
         } else {
-            CameraActivity.gotHereFrom = BattleActivity.class;
-            Intent participating = new Intent(this, CameraActivity.class);
-            participating.putExtra("battleTitle", State.chosenBattle.getName());
+            ParticipatingActivity.gotHereFrom = BattleActivity.class;
+            Intent participating = new Intent(this, ParticipatingActivity.class);
             startActivity(participating);
         }
     }

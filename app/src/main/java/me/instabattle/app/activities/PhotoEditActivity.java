@@ -3,7 +3,6 @@ package me.instabattle.app.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +40,7 @@ public class PhotoEditActivity extends Activity {
     }
 
     public void takeNewPhoto(View v) {
-        Intent camera = new Intent(this, CameraActivity.class);
+        Intent camera = new Intent(this, CameraActivity2.class);
         startActivity(camera);
     }
 
