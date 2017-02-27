@@ -34,6 +34,8 @@ public class MyProfileActivity extends Activity {
         ((TextView) findViewById(R.id.currentUserName)).setText(State.currentUser.getUsername());
         ((TextView) findViewById(R.id.currentUserDate)).setText("Registration date: " +
                 (new SimpleDateFormat("dd/MM/yyyy")).format(State.currentUser.getCreatedOn()));
+        ((TextView) findViewById(R.id.userBattleLimit)).setText("I can create " +
+                State.currentUser.getBattleCreationLimit() + " more battles.");
 
         userEntryList = (ListView) findViewById(R.id.userEntryList);
 

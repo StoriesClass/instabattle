@@ -25,10 +25,12 @@ public class User {
     @SerializedName("username")
     @Expose
     private String username;
-    // FIXME
     @SerializedName("password")
     @Expose
     private String password;
+    @SerializedName("battle_creation_limit")
+    @Expose
+    private Integer battleCreationLimit;
 
     //FIXME: made for example
     public User(String username) {
@@ -60,5 +62,9 @@ public class User {
 
     public Date getCreatedOn() {
         return createdOn;
+    }
+
+    public int getBattleCreationLimit() {
+        return battleCreationLimit;
     }
 }

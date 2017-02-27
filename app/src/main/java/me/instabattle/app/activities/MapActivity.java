@@ -161,6 +161,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     public void goCreateBattle(View v) {
+        if (State.currentUser.getBattleCreationLimit() == 0) {
+            Utils.showToast(this, "Sorry, you've spent all of your battle creations for this week.");
+            return;
+        }
         State.creatingBattle = true;
         Intent createBattle = new Intent(this, CreateBattleActivity.class);
         startActivity(createBattle);
