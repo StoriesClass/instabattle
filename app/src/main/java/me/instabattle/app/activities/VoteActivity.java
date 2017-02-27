@@ -8,9 +8,7 @@ import android.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.util.List;
 
 import me.instabattle.app.R;
 import me.instabattle.app.managers.BitmapCallback;
@@ -19,6 +17,7 @@ import me.instabattle.app.models.Vote;
 import me.instabattle.app.settings.State;
 import me.instabattle.app.dialogs.VotingEndDialog;
 import me.instabattle.app.models.Entry;
+import me.instabattle.app.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,7 +61,9 @@ public class VoteActivity extends Activity {
 
             @Override
             public void onFailure(Exception e) {
+                Utils.showToast(VoteActivity.this, "Failed to get first photo, try again later.");
                 Log.e(TAG, "can't get firstEntry photo");
+                onBackPressed();
             }
         });
         firstImage.invalidate();
@@ -80,7 +81,9 @@ public class VoteActivity extends Activity {
 
             @Override
             public void onFailure(Exception e) {
+                Utils.showToast(VoteActivity.this, "Failed to get first photo, try again later.");
                 Log.e(TAG, "can't get secondEntry photo");
+                onBackPressed();
             }
         });
         secondImage.invalidate();
@@ -102,14 +105,14 @@ public class VoteActivity extends Activity {
         EntryManager.voteAndDo(State.chosenBattle.getId(), State.currentUser.getId(), winnerId, looserId, new Callback<Vote>() {
             @Override
             public void onResponse(Call<Vote> call, Response<Vote> response) {
-                Toast.makeText(VoteActivity.this, "Nice vote, " + State.currentUser.getUsername() + "!", Toast.LENGTH_SHORT).show();
+                Utils.showToast(VoteActivity.this, "Nice vote, " + State.currentUser.getUsername() + "!");
                 onBackPressed();
                 Log.d(TAG, "vote sent");
             }
 
             @Override
             public void onFailure(Call<Vote> call, Throwable t) {
-                //TODO
+                Utils.showToast(VoteActivity.this, "Failed to vote, try again later.");
                 Log.e(TAG, "failed to send vote");
             }
         });

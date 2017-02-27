@@ -107,6 +107,7 @@ public class BattleListAdapter extends BaseAdapter {
         ((TextView) res.findViewById(R.id.battleListItemDate)).setText(
                 (new SimpleDateFormat("dd/MM/yyyy")).format(battle.getCreatedOn()));
         ((TextView) res.findViewById(R.id.battleListItemCount)).setText(battle.getEntriesCount() + " photos");
+
         res.findViewById(R.id.battleListItemViewBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,15 +127,17 @@ public class BattleListAdapter extends BaseAdapter {
                 context.startActivity(viewMap);
             }
         });
+
         battle.getAuthorAndDo(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                ((TextView) res.findViewById(R.id.battleListItemAuthor)).setText(response.body().getUsername());
+                ((TextView) res.findViewById(R.id.battleListItemAuthor)).setText("by " + response.body().getUsername());
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.d(TAG, "cant get battle author");
+                //TODO
+                Log.e(TAG, "cant get battle author");
             }
         });
         return res;

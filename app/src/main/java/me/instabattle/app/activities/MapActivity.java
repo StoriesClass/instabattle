@@ -30,6 +30,7 @@ import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.R;
 import me.instabattle.app.services.LocationService;
 import me.instabattle.app.settings.State;
+import me.instabattle.app.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -146,7 +147,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             @Override
             public void onFailure(Call<List<Battle>> call, Throwable t) {
-                //TODO
+                Utils.showToast(MapActivity.this, "Failed to get battles, try to reload map.");
                 Log.e(TAG, "cant get battles: " + t);
             }
         });
@@ -175,7 +176,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         if (requestCode == LocationService.REQUEST_LOCATION_PERMISSION) {
             if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                //TODO: cant participate message
+                Utils.showToast(this, "If you decide to participate, grant this permission later in settings.");
                 Log.d(TAG, "didn't get location permission");
             } else {
                 Log.d(TAG, "got location permission");

@@ -49,6 +49,7 @@ import java.util.concurrent.TimeUnit;
 
 import me.instabattle.app.R;
 import me.instabattle.app.uiwidgets.AutoFitTextureView;
+import me.instabattle.app.utils.Utils;
 
 public class CameraActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -281,7 +282,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "You can't participate without granting permission :(", Toast.LENGTH_SHORT).show();
+                Utils.showToast(this, "You can't participate without granting permission :(");
                 onBackPressed();
             }
         } else {
@@ -375,7 +376,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
         } catch (CameraAccessException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            Toast.makeText(this, "Sorry, this device doesn't support camera2 api, you can't participate :(", Toast.LENGTH_SHORT).show();
+            Utils.showToast(this, "Sorry, this device doesn't support camera2 api, you can't participate :(");
             onBackPressed();
         }
     }
@@ -472,7 +473,7 @@ public class CameraActivity extends Activity implements ActivityCompat.OnRequest
 
                         @Override
                         public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                            Toast.makeText(CameraActivity.this, "Camera configuration failed, try again later.", Toast.LENGTH_SHORT).show();
+                            Utils.showToast(CameraActivity.this, "Camera configuration failed, try again later.");
                             onBackPressed();
                         }
                     }, null

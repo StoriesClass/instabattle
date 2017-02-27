@@ -25,24 +25,47 @@
             android:value="AIzaSyCZcZq8LVZ2qIij1aNPe9rYR3f7n9i8ynk" />
 
         <activity
-            android:name=".activities.LoginActivity">
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignupActivity" />
-        <activity android:name=".activities.MenuActivity" />
-        <activity android:name=".activities.MyProfileActivity" />
-        <activity android:name=".activities.MapActivity" />
-        <activity android:name=".activities.RatingActivity" />
-        <activity android:name=".activities.BattleListActivity" />
-        <activity android:name=".activities.CreateBattleActivity" />
-        <activity android:name=".activities.BattleActivity" />
-        <activity android:name=".activities.VoteActivity" />
-        <activity android:name=".activities.CameraActivity" />
-        <activity android:name=".activities.PhotoEditActivity" />
+        <activity
+            android:name=".activities.SignupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RatingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.BattleListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CreateBattleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.BattleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.VoteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CameraActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.PhotoEditActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".services.LocationService" />
     </application>

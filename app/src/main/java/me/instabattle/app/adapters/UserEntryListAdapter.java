@@ -76,6 +76,7 @@ public class UserEntryListAdapter extends BaseAdapter {
 
             @Override
             public void onFailure(Exception e) {
+                //TODO
                 Log.e(TAG, "Can't get entry photo");
             }
         });

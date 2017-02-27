@@ -94,7 +94,6 @@ public class Battle {
     }
 
     public void createEntryAndDo(Callback<Entry> callback) {
-        //TODO: send photo
         EntryManager.createAndDo(id, State.currentUser.getId(), callback);
     }
 

@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_marginBottom="16dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +25,7 @@
             android:id="@+id/battleListItemImage"
             android:layout_width="160dp"
             android:layout_height="160dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="Top battle photo"/>
 
         <LinearLayout
@@ -35,22 +37,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Created on:"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
             <TextView
                 android:id="@+id/battleListItemDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
             <TextView
                 android:id="@+id/battleListItemCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
             <TextView
                 android:id="@+id/battleListItemAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:layout_marginTop="20dp"
+                android:textSize="15sp"/>
         </LinearLayout>
     </LinearLayout>
 

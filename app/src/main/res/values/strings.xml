@@ -63,11 +63,12 @@
     <string name="use_this_photo">Use this photo</string>
 
     <!-- battle_list_item -->
-    <string name="view_battle">View battle</string>
+    <string name="view_battle">View</string>
     <string name="view_on_map">On map</string>
 
     <!-- fragment_voting_end_dialog and user_entry_list_item-->
     <string name="vote_again">Vote again</string>
     <string name="back_to_battle">Back</string>
     <string name="takePhoto">Take photo</string>
+    <string name="my_participations">My participations</string>
 </resources>

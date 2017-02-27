@@ -73,6 +73,5 @@ public class BattleManager {
 
         @POST("battles/")
         Call<Battle> create(@Body Battle battle);
-
     }
 }

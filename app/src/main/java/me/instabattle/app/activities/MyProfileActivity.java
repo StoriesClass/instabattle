@@ -32,7 +32,7 @@ public class MyProfileActivity extends Activity {
         setContentView(R.layout.activity_my_profile);
 
         ((TextView) findViewById(R.id.currentUserName)).setText(State.currentUser.getUsername());
-        ((TextView) findViewById(R.id.currentUserDate)).setText(
+        ((TextView) findViewById(R.id.currentUserDate)).setText("Registration date: " +
                 (new SimpleDateFormat("dd/MM/yyyy")).format(State.currentUser.getCreatedOn()));
 
         userEntryList = (ListView) findViewById(R.id.userEntryList);

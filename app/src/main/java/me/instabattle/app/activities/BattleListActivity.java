@@ -12,6 +12,7 @@ import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.R;
 import me.instabattle.app.adapters.BattleListAdapter;
 import me.instabattle.app.models.Battle;
+import me.instabattle.app.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,7 +40,7 @@ public class BattleListActivity extends Activity {
 
             @Override
             public void onFailure(Call<List<Battle>> call, Throwable t) {
-                //TODO
+                Utils.showToast(BattleListActivity.this, "Failed to get battles, try again later.");
                 Log.e(TAG, "cant get battles:" + t);
             }
         });

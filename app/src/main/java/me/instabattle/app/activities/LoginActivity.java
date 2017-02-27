@@ -13,6 +13,7 @@ import me.instabattle.app.managers.UserManager;
 import me.instabattle.app.models.Token;
 import me.instabattle.app.models.User;
 import me.instabattle.app.settings.State;
+import me.instabattle.app.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,6 +56,7 @@ public class LoginActivity extends Activity {
 
                                 @Override
                                 public void onFailure(Call<User> call, Throwable t) {
+                                    //TODO
                                     Log.e(TAG, "Cannot GET user");
                                 }
                             });
@@ -62,13 +64,13 @@ public class LoginActivity extends Activity {
                             Log.d(TAG, "Got token: " + State.token);
                             startActivity(menu);
                         } else {
-                            Toast.makeText(LoginActivity.this, "Wrong email/password combination",
-                                    Toast.LENGTH_SHORT).show();
+                            Utils.showToast(LoginActivity.this, "Wrong nickname/password combination");
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Token> call, Throwable t) {
+                        Utils.showToast(LoginActivity.this, "Failed to sign in, try again later.");
                         Log.e(TAG, "Cannot obtaining token");
                     }
                 });

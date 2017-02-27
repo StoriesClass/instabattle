@@ -11,28 +11,46 @@
     android:orientation="vertical"
     tools:context="me.instabattle.app.activities.MyProfileActivity">
 
-    <TextView
-        android:id="@+id/currentUserName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="30sp"/>
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/currentUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/currentUserDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/log_out"
+            android:textSize="20sp"
+            android:onClick="logout"/>
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/currentUserDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="30sp"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/log_out"
-        android:textSize="20sp"
-        android:onClick="logout"/>
-
+        android:text="@string/my_participations"
+        android:textSize="25sp"/>
     <ListView
         android:id="@+id/userEntryList"
         android:layout_width="match_parent"

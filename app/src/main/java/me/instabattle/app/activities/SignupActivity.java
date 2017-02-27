@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import me.instabattle.app.R;
 import me.instabattle.app.managers.UserManager;
 import me.instabattle.app.models.User;
 import me.instabattle.app.settings.State;
+import me.instabattle.app.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,13 +49,13 @@ public class SignupActivity extends Activity {
                     UserManager.getTokenAndSet(_login, _password);
                     startActivity(menuActivity);
                 } else {
-                    Toast.makeText(SignupActivity.this, "Username or email is taken",
-                            Toast.LENGTH_SHORT).show();
+                    Utils.showToast(SignupActivity.this, "Username or email is taken.");
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                Utils.showToast(SignupActivity.this, "Failed to sign up, try again later.");
                 Log.e(TAG, "Cannot POST user");
             }
         });

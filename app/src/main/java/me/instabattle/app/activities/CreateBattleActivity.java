@@ -20,6 +20,7 @@ import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.services.LocationService;
 import me.instabattle.app.settings.State;
+import me.instabattle.app.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,12 +80,12 @@ public class CreateBattleActivity extends Activity {
 
     private boolean validateBattle() {
         if (getBattleTitle().length() < BATTLE_TITLE_MINIMUM_LENGTH) {
-            Toast.makeText(this, "Battle name should have at least " +
-                    BATTLE_TITLE_MINIMUM_LENGTH + " characters!", Toast.LENGTH_SHORT).show();
+            Utils.showToast(this, "Battle name should have at least " +
+                    BATTLE_TITLE_MINIMUM_LENGTH + " characters!");
             return false;
         }
         if (photoBytes == null) {
-            Toast.makeText(this, "You should take a first photo in battle!", Toast.LENGTH_SHORT).show();
+            Utils.showToast(this, "You should take a first photo in battle!");
             return false;
         }
         return true;
@@ -105,14 +106,13 @@ public class CreateBattleActivity extends Activity {
                 new Callback<Battle>() {
                     @Override
                     public void onResponse(Call<Battle> call, Response<Battle> response) {
-                        //TODO
                         Log.d(TAG, "new battle was sent");
                         addFirstEntry(response.body());
                     }
 
                     @Override
                     public void onFailure(Call<Battle> call, Throwable t) {
-                        //TODO
+                        Utils.showToast(CreateBattleActivity.this, "Failed to send battle to server, try again later.");
                         Log.e(TAG, "can't send new battle: " + t);
                     }
         });
@@ -124,7 +124,7 @@ public class CreateBattleActivity extends Activity {
         startActivity(goToMap);
     }
 
-    private void addFirstEntry(Battle battle) {
+    private void addFirstEntry(final Battle battle) {
         battle.createEntryAndDo(new Callback<Entry>() {
             @Override
             public void onResponse(Call<Entry> call, Response<Entry> response) {
@@ -134,7 +134,7 @@ public class CreateBattleActivity extends Activity {
 
             @Override
             public void onFailure(Call<Entry> call, Throwable t) {
-                //TODO
+                addFirstEntry(battle);
                 Log.e(TAG, "can't send first entry: " + t);
             }
         });
