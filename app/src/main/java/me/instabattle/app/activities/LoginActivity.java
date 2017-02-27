@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import me.instabattle.app.R;
+import me.instabattle.app.managers.ServiceGenerator;
 import me.instabattle.app.managers.UserManager;
 import me.instabattle.app.models.Token;
 import me.instabattle.app.models.User;
@@ -62,6 +63,7 @@ public class LoginActivity extends Activity {
                             });
                             State.token = response.body().get();
                             Log.d(TAG, "Got token: " + State.token);
+                            ServiceGenerator.initTokenServices();
                             startActivity(menu);
                         } else {
                             Utils.showToast(LoginActivity.this, "Wrong nickname/password combination");

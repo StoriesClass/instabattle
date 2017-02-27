@@ -21,12 +21,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/instabattle_logo"/>
+            android:src="@drawable/instabattle_logo"
+            android:contentDescription="@string/logo"/>
         <EditText
             android:id="@+id/loginInput"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:hint="Username"
+            android:hint="@string/username"
             android:inputType="textEmailAddress"
             android:layout_margin="7dp"
             />
@@ -34,7 +35,7 @@
             android:id="@+id/passwordInput"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:layout_margin="7dp"
             />

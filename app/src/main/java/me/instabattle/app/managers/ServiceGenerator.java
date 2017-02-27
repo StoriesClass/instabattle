@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
+import me.instabattle.app.settings.State;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -67,5 +68,11 @@ public class ServiceGenerator {
 
     public static <S> S createService(Class<S> serviceClass, final String authToken) {
         return createService(serviceClass, authToken, "");
+    }
+
+    public static void initTokenServices() {
+        BattleManager.initTokenService();
+        EntryManager.initTokenService();
+        UserManager.initTokenService();
     }
 }

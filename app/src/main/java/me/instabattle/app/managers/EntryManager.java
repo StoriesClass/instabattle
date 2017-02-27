@@ -5,7 +5,6 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
 
 import me.instabattle.app.models.Entry;
-import me.instabattle.app.models.User;
 import me.instabattle.app.models.Vote;
 import me.instabattle.app.services.LocationService;
 import me.instabattle.app.settings.State;
@@ -19,6 +18,11 @@ import retrofit2.http.Query;
 
 public class EntryManager {
     private static final EntryService service = ServiceGenerator.createService(EntryService.class);
+    private static EntryService tokenService;
+
+    public static void initTokenService() {
+        tokenService = ServiceGenerator.createService(EntryService.class, State.token);
+    }
 
     public static void getByBattleAndDo(int battleId, Callback<List<Entry>> callback) {
         Call<List<Entry>> call = service.getByBattle(battleId);
@@ -42,7 +46,7 @@ public class EntryManager {
 
     public static void createAndDo(Integer battleId, Integer userId, Callback<Entry> callback) {
         LatLng loc = LocationService.getCurrentLocation();
-        Call<Entry> call = service.create(new Entry(battleId, userId, loc.latitude, loc.longitude));
+        Call<Entry> call = tokenService.create(new Entry(battleId, userId, loc.latitude, loc.longitude));
         call.enqueue(callback);
     }
 
@@ -53,7 +57,7 @@ public class EntryManager {
 
     public static void voteAndDo(Integer battleId, Integer voterId, Integer winnerId, Integer loserId,
                                  Callback<Vote> callback) {
-        Call<Vote> call = service.vote(battleId, new Vote(voterId, winnerId, loserId));
+        Call<Vote> call = tokenService.vote(battleId, new Vote(voterId, winnerId, loserId));
         call.enqueue(callback);
     }
 
@@ -78,7 +82,6 @@ public class EntryManager {
         @POST("battles/{battle_id}/voting")
         Call<Vote> vote(@Path("battle_id") Integer battleId,
                                @Body Vote vote);
-
 
         @POST("entries/")
         Call<Entry> create(@Body Entry entry);

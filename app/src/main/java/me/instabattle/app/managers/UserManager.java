@@ -20,6 +20,11 @@ import retrofit2.http.Query;
 public class UserManager {
     private static final String TAG = "UserManager";
     private static final UserService service = ServiceGenerator.createService(UserService.class);
+    private static UserService tokenService;
+
+    public static void initTokenService() {
+        tokenService = ServiceGenerator.createService(UserService.class, State.token);
+    }
 
     public static void getAndDo(Integer userId, Callback<User> callback) {
         Call<User> call = service.get(userId);
@@ -41,12 +46,12 @@ public class UserManager {
     }
 
     public static void updateAndDo(Integer userId, User user, Callback<User> callback) {
-        Call<User> call = service.update(userId, user);
+        Call<User> call = tokenService.update(userId, user);
         call.enqueue(callback);
     }
 
     public static void createAndDo(String username, String email, String password, Callback<User> callback) {
-        Call<User> call = service.create(new User(username, email, password));
+        Call<User> call = tokenService.create(new User(username, email, password));
         call.enqueue(callback);
     }
 

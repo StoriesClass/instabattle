@@ -19,6 +19,11 @@ import retrofit2.http.Query;
 public class BattleManager {
     private static final String TAG = "BattleManager";
     private static final BattleService service = ServiceGenerator.createService(BattleService.class);
+    private static BattleService tokenService;
+
+    public static void initTokenService() {
+        tokenService = ServiceGenerator.createService(BattleService.class, State.token);
+    }
 
     public static void getAllAndDo(Callback<List<Battle>> callback) {
         Call<List<Battle>> call = service.getAll();
@@ -39,10 +44,7 @@ public class BattleManager {
 
     public static void createAndDo(Integer authorId, String name, Double latitude, Double longitude,
                                    String description, Integer radius, Callback<Battle> callback) {
-        BattleService tokenService = ServiceGenerator.createService(BattleService.class, State.token);
-        Log.d(TAG, "Sending token " + State.token);
         Call<Battle> call = tokenService.create(new Battle(authorId, name, description, latitude, longitude, radius));
-        // FIXME photo actions
         call.enqueue(callback);
     }
 
@@ -50,7 +52,7 @@ public class BattleManager {
 
     public static void updateAndDo(Integer battleId, String name,
                                    String description, Callback<Battle> callback) {
-        Call<Battle> call = service.update(battleId, name, description);
+        Call<Battle> call = tokenService.update(battleId, name, description);
         call.enqueue(callback);
     }
 

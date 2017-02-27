@@ -48,11 +48,15 @@
     <!-- activity_login -->
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="logo">Instabattle logo</string>
 
     <!-- activity_menu -->
     <string name="battles">Battles</string>
     <string name="rating">Rating</string>
     <string name="my_profile">My Profile</string>
+    <string name="map">Map</string>
 
     <!-- activity_my_profile -->
     <string name="log_out">Log Out</string>
