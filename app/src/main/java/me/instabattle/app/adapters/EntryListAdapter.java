@@ -55,9 +55,9 @@ public class EntryListAdapter extends BaseAdapter {
         final View res = convertView != null ? convertView :
                 inflater.inflate(R.layout.entry_list_item, parent, false);
 
-        final ImageView listEntryImage = ((ImageView) res.findViewById(R.id.listEntryImage));
+        final ImageView listEntryImage = (ImageView) res.findViewById(R.id.listEntryImage);
+        final Entry entry = entries.get(position);
 
-        Entry entry = entries.get(position);
         if (listEntryImage.getDrawable() == null) {
             entry.getPhotoAndDo(new BitmapCallback() {
                 @Override

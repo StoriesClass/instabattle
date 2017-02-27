@@ -111,6 +111,7 @@ public class CreateBattleActivity extends Activity {
                             State.creatingBattle = false;
                             Intent viewBattle = new Intent(CreateBattleActivity.this, BattleActivity.class);
                             clearFields();
+                            BattleActivity.gotHereFrom = MapActivity.class;
                             startActivity(viewBattle);
                         } else {
                             Log.d(TAG, "Couldn't create battle");

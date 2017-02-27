@@ -62,46 +62,49 @@ public class BattleListAdapter extends BaseAdapter {
         final View res = convertView != null ? convertView :
                 inflater.inflate(R.layout.battle_list_item, parent, false);
 
+        final ImageView battleListItemImage = (ImageView) res.findViewById(R.id.battleListItemImage);
         final Battle battle = battles.get(position);
 
-        battle.getWinnerAndDo(new Callback<List<Entry>>() {
-            @Override
-            public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
-                //FIXME pls
-                if (response.isSuccessful()) {
-                    List<Entry> top = response.body();
-                    Entry winner = top.get(0);
-                    if (winner != null) {
-                        winner.getPhotoAndDo(new BitmapCallback() {
-                            @Override
-                            public void onResponse(final Bitmap photo) {
-                                ((Activity) context).runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        ((ImageView) res.findViewById(R.id.battleListItemImage)).setImageBitmap(photo);
-                                    }
-                                });
-                            }
+        if (battleListItemImage.getDrawable() == null) {
+            battle.getWinnerAndDo(new Callback<List<Entry>>() {
+                @Override
+                public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
+                    //FIXME pls
+                    if (response.isSuccessful()) {
+                        List<Entry> top = response.body();
+                        Entry winner = top.get(0);
+                        if (winner != null) {
+                            winner.getPhotoAndDo(new BitmapCallback() {
+                                @Override
+                                public void onResponse(final Bitmap photo) {
+                                    ((Activity) context).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            battleListItemImage.setImageBitmap(photo);
+                                        }
+                                    });
+                                }
 
-                            @Override
-                            public void onFailure(Exception e) {
-                                // FIXME
-                                Log.e(TAG, "Can't get winner's photo");
-                            }
-                        });
+                                @Override
+                                public void onFailure(Exception e) {
+                                    // FIXME
+                                    Log.e(TAG, "Can't get winner's photo");
+                                }
+                            });
+                        }
+
+                    } else {
+                        Log.e(TAG, "winner entry is null");
+                    }
                 }
 
-                } else {
-                    Log.e(TAG, "winner entry is null");
+                @Override
+                public void onFailure(Call<List<Entry>> call, Throwable t) {
+                    //TODO
+                    Log.e(TAG, "cant get entry: " + t);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<List<Entry>> call, Throwable t) {
-                //TODO
-                Log.e(TAG, "cant get entry: " + t);
-            }
-        });
+            });
+        }
 
         ((TextView) res.findViewById(R.id.battleListItemTitle)).setText(battle.getName());
         ((TextView) res.findViewById(R.id.battleListItemDate)).setText(
@@ -137,7 +140,7 @@ public class BattleListAdapter extends BaseAdapter {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 //TODO
-                Log.e(TAG, "cant get battle author");
+                Log.e(TAG, "cant get battle author", t);
             }
         });
         return res;

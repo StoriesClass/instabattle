@@ -38,21 +38,21 @@ public class Battle {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("user_id")
+    @SerializedName("creator_id")
     @Expose
-    private Integer userId;
+    private Integer creatorId;
 
 
-    public Battle(Integer userId, String name, String description,
+    public Battle(Integer creatorId, String name, String description,
                   Double lat, Double lng, Integer radius) {
-        this.userId = userId;
+        this.creatorId = creatorId;
         this.name = name;
         this.description = description;
         this.latitude = lat;
         this.longitude = lng;
         this.radius = radius;
 
-        this.userId = State.currentUser.getId();
+        this.creatorId = State.currentUser.getId();
         this.entriesCount = 1;
         this.createdOn = new Date();
     }
@@ -98,7 +98,7 @@ public class Battle {
     }
 
     public void getAuthorAndDo(Callback<User> callback) {
-        UserManager.getAndDo(userId, callback);
+        UserManager.getAndDo(creatorId, callback);
     }
 
     public Integer getId() {
