@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 
@@ -29,6 +30,10 @@ import android.support.v7.app.AppCompatActivity;
 import com.desmond.squarecamera.CameraActivity;
 import com.desmond.squarecamera.ImageUtility;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.nio.ByteBuffer;
 
 
@@ -56,32 +61,38 @@ public class ParticipatingActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult calleed with result code " + resultCode);
         if (resultCode != RESULT_OK) return;
 
         if (requestCode == REQUEST_CAMERA) {
             Uri photoUri = data.getData();
-            Bitmap bitmap = ImageUtility.decodeSampledBitmapFromPath(photoUri.getPath(), mSize.x, mSize.x);
-            int byteCount = bitmap.getByteCount();
-            ByteBuffer buffer = ByteBuffer.allocate(byteCount);
-            bitmap.copyPixelsToBuffer(buffer);
-            final byte[] photoBytes = buffer.array();
-            if (!State.creatingBattle) {
-                State.chosenBattle.createEntryAndDo(new Callback<Entry>() {
-                    @Override
-                    public void onResponse(Call<Entry> call, Response<Entry> response) {
-                        PhotoManager.upload(response.body().getImageName(), photoBytes);
-                    }
+            Bitmap bitmap;
+            final ByteArrayOutputStream bytes;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
+                bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+                final byte[] photoBytes = bytes.toByteArray();
+                if (!State.creatingBattle) {
+                    State.chosenBattle.createEntryAndDo(new Callback<Entry>() {
+                        @Override
+                        public void onResponse(Call<Entry> call, Response<Entry> response) {
+                            PhotoManager.upload(response.body().getImageName(), photoBytes);
+                        }
 
-                    @Override
-                    public void onFailure(Call<Entry> call, Throwable t) {
-                        //TODO
-                        Log.e(TAG, "failed to add new entry: " + t);
-                    }
-                });
-            } else {
-                CreateBattleActivity.photoBytes = photoBytes;
+                        @Override
+                        public void onFailure(Call<Entry> call, Throwable t) {
+                            //TODO
+                            Log.e(TAG, "failed to add new entry: " + t);
+                        }
+                    });
+                } else {
+                    CreateBattleActivity.photoBytes = photoBytes;
+                }
+                Utils.showToast(this, "Nice photo, " + State.currentUser.getUsername() + "!");
+            } catch (IOException e) {
+                Log.e(TAG, "failed to load picture from MediaStore"); // FIXME no handling
             }
-            Utils.showToast(this, "Nice photo, " + State.currentUser.getUsername() + "!");
             onBackPressed();
         }
         super.onActivityResult(requestCode, resultCode, data);

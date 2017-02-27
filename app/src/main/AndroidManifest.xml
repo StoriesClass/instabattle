@@ -25,7 +25,7 @@
         tools:replace="android:theme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCZcZq8LVZ2qIij1aNPe9rYR3f7n9i8ynk" />
+            android:value="AIzaSyDIl7UBTB9EFljv6a0gEgdEFlOjvMpxkh0" />
 
         <activity
             android:name=".activities.LoginActivity"

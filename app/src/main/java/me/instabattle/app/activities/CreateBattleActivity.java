@@ -105,7 +105,16 @@ public class CreateBattleActivity extends Activity {
                     @Override
                     public void onResponse(Call<Battle> call, Response<Battle> response) {
                         Log.d(TAG, "new battle was sent");
-                        addFirstEntry(response.body());
+                        if (response.isSuccessful()) {
+                            State.chosenBattle = response.body();
+                            addFirstEntry(State.chosenBattle);
+                            State.creatingBattle = false;
+                            Intent viewBattle = new Intent(CreateBattleActivity.this, BattleActivity.class);
+                            clearFields();
+                            startActivity(viewBattle);
+                        } else {
+                            Log.d(TAG, "Couldn't create battle");
+                        }
                     }
 
                     @Override
@@ -114,12 +123,6 @@ public class CreateBattleActivity extends Activity {
                         Log.e(TAG, "can't send new battle: " + t);
                     }
         });
-
-        State.creatingBattle = false;
-        Intent goToMap = new Intent(this, MapActivity.class);
-
-        clearFields();
-        startActivity(goToMap);
     }
 
     private void addFirstEntry(final Battle battle) {

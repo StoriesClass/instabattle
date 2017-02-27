@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 
 import me.instabattle.app.R;
+import me.instabattle.app.managers.ServiceGenerator;
 import me.instabattle.app.managers.UserManager;
+import me.instabattle.app.models.Token;
 import me.instabattle.app.models.User;
 import me.instabattle.app.settings.State;
 import me.instabattle.app.utils.Utils;
@@ -46,8 +48,25 @@ public class SignupActivity extends Activity {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "User created successfully");
                     State.currentUser = response.body();
-                    UserManager.getTokenAndSet(_login, _password);
-                    startActivity(menuActivity);
+                    UserManager.getTokenAndDo(_login, _password, new Callback<Token>() {
+                        @Override
+                        public void onResponse(Call<Token> call, Response<Token> response) {
+                            if (response.isSuccessful()) {
+                                State.token = response.body().get();
+                                Log.d(TAG, "Got token");
+                                ServiceGenerator.initTokenServices();
+                                startActivity(menuActivity);
+                            } else {
+                                Log.e(TAG, "Failed to obtain token");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Token> call, Throwable t) {
+                            // TODO
+                            Log.e(TAG, "No response");
+                        }
+                    });
                 } else {
                     Utils.showToast(SignupActivity.this, "Username or email is taken.");
                 }

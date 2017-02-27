@@ -51,7 +51,7 @@ public class UserManager {
     }
 
     public static void createAndDo(String username, String email, String password, Callback<User> callback) {
-        Call<User> call = tokenService.create(new User(username, email, password));
+        Call<User> call = service.create(new User(username, email, password));
         call.enqueue(callback);
     }
 
@@ -60,25 +60,6 @@ public class UserManager {
                 email, password);
         Call<Token> call = loginService.getToken();
         call.enqueue(callback);
-    }
-
-    // FIXME unused ATM
-    public static void getTokenAndSet(String email, String password) {
-        UserService loginService = ServiceGenerator.createService(UserService.class,
-                email, password);
-        Call<Token> call = loginService.getToken();
-        call.enqueue(new Callback<Token>() {
-                         @Override
-                         public void onResponse(Call<Token> call, Response<Token> response) {
-                             State.token = response.body().get();
-                             Log.d(TAG, "Got token: " + State.token);
-                         }
-
-                         @Override
-                         public void onFailure(Call<Token> call, Throwable t) {
-                             Log.e(TAG, "Cannot obtain token");
-                         }
-                     });
     }
 
     interface UserService {

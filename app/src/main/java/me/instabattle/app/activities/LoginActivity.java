@@ -62,7 +62,7 @@ public class LoginActivity extends Activity {
                                 }
                             });
                             State.token = response.body().get();
-                            Log.d(TAG, "Got token: " + State.token);
+                            Log.d(TAG, "Got token: ");
                             ServiceGenerator.initTokenServices();
                             startActivity(menu);
                         } else {
@@ -73,7 +73,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onFailure(Call<Token> call, Throwable t) {
                         Utils.showToast(LoginActivity.this, "Failed to sign in, try again later.");
-                        Log.e(TAG, "Cannot obtaining token");
+                        Log.e(TAG, "Failed to obtain token");
                     }
                 });
     }

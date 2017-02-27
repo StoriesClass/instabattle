@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import me.instabattle.app.activities.LoginActivity;
 import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.R;
@@ -56,24 +55,29 @@ public class EntryListAdapter extends BaseAdapter {
         final View res = convertView != null ? convertView :
                 inflater.inflate(R.layout.entry_list_item, parent, false);
 
-        Entry entry = entries.get(position);
-        entry.getPhotoAndDo(new BitmapCallback() {
-            @Override
-            public void onResponse(final Bitmap photo) {
-                ((Activity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ((ImageView) res.findViewById(R.id.listEntryImage)).setImageBitmap(photo);
-                    }
-                });
-            }
+        final ImageView listEntryImage = ((ImageView) res.findViewById(R.id.listEntryImage));
 
-            @Override
-            public void onFailure(Exception e) {
-                //TODO
-                Log.e(TAG, "Can't get entry photo");
-            }
-        });
+        Entry entry = entries.get(position);
+        if (listEntryImage.getDrawable() == null) {
+            entry.getPhotoAndDo(new BitmapCallback() {
+                @Override
+                public void onResponse(final Bitmap photo) {
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            listEntryImage.setImageBitmap(photo);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    //TODO
+                    Log.e(TAG, "Can't get entry photo");
+                }
+            });
+        }
+
         ((TextView) res.findViewById(R.id.listEntryUpvotes)).setText(entry.getRating() + " points");
         entry.getAuthorAndDo(new Callback<User>() {
             @Override
