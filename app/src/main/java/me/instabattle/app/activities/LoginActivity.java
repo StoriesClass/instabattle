@@ -29,8 +29,8 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        login = (EditText) findViewById(R.id.loginInput);
-        password = (EditText) findViewById(R.id.passwordInput);
+        login = findViewById(R.id.loginInput);
+        password = findViewById(R.id.passwordInput);
     }
 
     public void onSigninClick(View view) {
@@ -66,13 +66,13 @@ public class LoginActivity extends Activity {
                             ServiceGenerator.initTokenServices();
                             startActivity(menu);
                         } else {
-                            Utils.showToast(LoginActivity.this, "Wrong nickname/password combination");
+                            Utils.INSTANCE.showToast(LoginActivity.this, "Wrong nickname/password combination");
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Token> call, Throwable t) {
-                        Utils.showToast(LoginActivity.this, "Failed to sign in, try again later.");
+                        Utils.INSTANCE.showToast(LoginActivity.this, "Failed to sign in, try again later.");
                         Log.e(TAG, "Failed to obtain token");
                     }
                 });

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">InstaBattle</string>
-    <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
+    <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -14,6 +14,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="username_hint">Username</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
 
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
@@ -75,4 +78,8 @@
     <string name="back_to_battle">Back</string>
     <string name="takePhoto">Take photo</string>
     <string name="my_participations">My participations</string>
+
+    <!-- user_entry_list_item -->
+    <string name="user_entry_list_image_description">A photo of user</string>
+    <string name="posted_on">Posted on:</string>
 </resources>

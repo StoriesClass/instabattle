@@ -1,62 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#ffffff"
-    tools:context="me.instabattle.app.activities.LoginActivity">
+    tools:context="me.instabattle.app.activities.SignupActivity"
+    tools:layout_editor_absoluteY="81dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:background="#ffffff">
+    <EditText
+        android:id="@+id/signUpPasswordInput"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:textColorHighlight="#88b04b"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUpEmailInput" />
 
-        <EditText
-            android:id="@+id/signUpLoginInput"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:hint="Username"
-            android:inputType="text"
-            android:layout_margin="7dp"
-            android:textColorHighlight="#88b04b"/>
+    <EditText
+        android:id="@+id/signUpLoginInput"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:hint="@string/username_hint"
+        android:inputType="text"
+        android:textColorHighlight="#88b04b"
+        app:layout_constraintBottom_toTopOf="@+id/signUpEmailInput"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <EditText
-            android:id="@+id/signUpEmailInput"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress"
-            android:layout_margin="7dp"
-            android:textColorHighlight="#88b04b"
-            />
+    <EditText
+        android:id="@+id/signUpEmailInput"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:textColorHighlight="#88b04b"
+        app:layout_constraintBottom_toTopOf="@+id/signUpPasswordInput"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUpLoginInput" />
 
-        <EditText
-            android:id="@+id/signUpPasswordInput"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:layout_margin="7dp"
-            android:textColorHighlight="#88b04b"/>
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:onClick="onSignUpClick"
+        android:text="@string/sign_up"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUpPasswordInput" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_margin="7dp"
-                android:text="@string/sign_up"
-                android:onClick="onSignUpClick"/>
-        </LinearLayout>
-    </LinearLayout>
- </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

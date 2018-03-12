@@ -246,7 +246,7 @@ public class CameraActivity2 extends Activity implements ActivityCompat.OnReques
 
         setContentView(R.layout.activity_camera);
 
-        mTextureView = (AutoFitTextureView) findViewById(R.id.photoPreview);
+        mTextureView = findViewById(R.id.photoPreview);
 
         battleTitle = getIntent().getStringExtra("battleTitle");
 
@@ -281,7 +281,7 @@ public class CameraActivity2 extends Activity implements ActivityCompat.OnReques
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Utils.showToast(this, "You can't participate without granting permission :(");
+                Utils.INSTANCE.showToast(this, "You can't participate without granting permission :(");
                 onBackPressed();
             }
         } else {
@@ -289,6 +289,7 @@ public class CameraActivity2 extends Activity implements ActivityCompat.OnReques
         }
     }
 
+    @SuppressWarnings("SuspiciousNameCombination")
     private void setUpCameraOutputs(int width, int height) {
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
@@ -375,7 +376,7 @@ public class CameraActivity2 extends Activity implements ActivityCompat.OnReques
         } catch (CameraAccessException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            Utils.showToast(this, "Sorry, this device doesn't support camera2 api, you can't participate :(");
+            Utils.INSTANCE.showToast(this, "Sorry, this device doesn't support camera2 api, you can't participate :(");
             onBackPressed();
         }
     }
@@ -472,7 +473,7 @@ public class CameraActivity2 extends Activity implements ActivityCompat.OnReques
 
                         @Override
                         public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                            Utils.showToast(CameraActivity2.this, "Camera configuration failed, try again later.");
+                            Utils.INSTANCE.showToast(CameraActivity2.this, "Camera configuration failed, try again later.");
                             onBackPressed();
                         }
                     }, null

@@ -37,7 +37,7 @@ public class BattleActivity extends Activity {
         ((TextView) findViewById(R.id.battle_title)).setText(State.chosenBattle.getName());
         ((TextView) findViewById(R.id.battle_description)).setText(State.chosenBattle.getDescription());
 
-        entryList = (ListView) findViewById(R.id.entryList);
+        entryList = findViewById(R.id.entryList);
 
         State.chosenBattle.getEntriesAndDo(new Callback<List<Entry>>() {
             @Override
@@ -48,7 +48,7 @@ public class BattleActivity extends Activity {
 
             @Override
             public void onFailure(Call<List<Entry>> call, Throwable t) {
-                Utils.showToast(BattleActivity.this, "Failed to get battle entries, try again later.");
+                Utils.INSTANCE.showToast(BattleActivity.this, "Failed to get battle entries, try again later.");
                 Log.e(TAG, "cant get entries: " + t);
             }
         });
@@ -66,7 +66,7 @@ public class BattleActivity extends Activity {
                 @Override
                 public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
                     if (response.code() == 400) {
-                        Utils.showToast(BattleActivity.this, "You've already voted for all pairs of photos.");
+                        Utils.INSTANCE.showToast(BattleActivity.this, "You've already voted for all pairs of photos.");
                         return;
                     }
 
@@ -81,20 +81,20 @@ public class BattleActivity extends Activity {
 
                 @Override
                 public void onFailure(Call<List<Entry>> call, Throwable t) {
-                    Utils.showToast(BattleActivity.this, "Failed to set new vote, try again later.");
+                    Utils.INSTANCE.showToast(BattleActivity.this, "Failed to set new vote, try again later.");
                     Log.e(TAG, "cant get vote: " + t);
                 }
             });
         } else {
-            Utils.showToast(BattleActivity.this, "Only one entry in battle, you can't vote.");
+            Utils.INSTANCE.showToast(BattleActivity.this, "Only one entry in battle, you can't vote.");
         }
     }
 
     public void participate(View v) {
         if (!LocationService.hasActualLocation()) {
-            Utils.showToast(BattleActivity.this, "There're problems with detecting your location. Try again later.");
+            Utils.INSTANCE.showToast(BattleActivity.this, "There're problems with detecting your location. Try again later.");
         } else if (LocationService.isTooFarFrom(State.chosenBattle)) {
-            Utils.showToast(BattleActivity.this, "You're too far away, come closer to battle for participating!");
+            Utils.INSTANCE.showToast(BattleActivity.this, "You're too far away, come closer to battle for participating!");
         } else {
             ParticipatingActivity.gotHereFrom = BattleActivity.class;
             Intent participating = new Intent(this, ParticipatingActivity.class);

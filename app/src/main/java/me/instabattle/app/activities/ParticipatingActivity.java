@@ -89,7 +89,7 @@ public class ParticipatingActivity extends AppCompatActivity {
                 } else {
                     CreateBattleActivity.photoBytes = photoBytes;
                 }
-                Utils.showToast(this, "Nice photo, " + State.currentUser.getUsername() + "!");
+                Utils.INSTANCE.showToast(this, "Nice photo, " + State.currentUser.getUsername() + "!");
             } catch (IOException e) {
                 Log.e(TAG, "failed to load picture from MediaStore"); // FIXME no handling
             }
@@ -114,17 +114,9 @@ public class ParticipatingActivity extends AppCompatActivity {
     private void showPermissionRationaleDialog(final String message, final String permission) {
         new AlertDialog.Builder(ParticipatingActivity.this)
                 .setMessage(message)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ParticipatingActivity.this.requestForPermission(permission);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton("Ok", (dialog, which) -> ParticipatingActivity.this.requestForPermission(permission))
+                .setNegativeButton("Cancel", (dialog, which) -> {
 
-                    }
                 })
                 .create()
                 .show();

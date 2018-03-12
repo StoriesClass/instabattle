@@ -29,7 +29,7 @@ public class BattleListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_list);
 
-        battleList = (ListView) findViewById(R.id.battleList);
+        battleList = findViewById(R.id.battleList);
 
         BattleManager.getAllAndDo(new Callback<List<Battle>>() {
             @Override
@@ -40,7 +40,7 @@ public class BattleListActivity extends Activity {
 
             @Override
             public void onFailure(Call<List<Battle>> call, Throwable t) {
-                Utils.showToast(BattleListActivity.this, "Failed to get battles, try again later.");
+                Utils.INSTANCE.showToast(BattleListActivity.this, "Failed to get battles, try again later.");
                 Log.e(TAG, "cant get battles:" + t);
             }
         });

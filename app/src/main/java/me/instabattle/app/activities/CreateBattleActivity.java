@@ -57,10 +57,10 @@ public class CreateBattleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_battle);
 
-        newBattleTitle = (TextView) findViewById(R.id.newBattleTitle);
-        newBattleDescription = (TextView) findViewById(R.id.newBattleDescription);
-        newBattleRadius = (TextView) findViewById(R.id.newBattleRadius);
-        newBattlePhoto = (ImageView) findViewById(R.id.newBattlePhoto);
+        newBattleTitle = findViewById(R.id.newBattleTitle);
+        newBattleDescription = findViewById(R.id.newBattleDescription);
+        newBattleRadius = findViewById(R.id.newBattleRadius);
+        newBattlePhoto = findViewById(R.id.newBattlePhoto);
 
         if (photoBytes != null) {
             newBattlePhoto.setImageBitmap(Util.decodeSampledBitmapFromBytes(photoBytes, 256, 256));
@@ -78,12 +78,12 @@ public class CreateBattleActivity extends Activity {
 
     private boolean validateBattle() {
         if (getBattleTitle().length() < BATTLE_TITLE_MINIMUM_LENGTH) {
-            Utils.showToast(this, "Battle name should have at least " +
+            Utils.INSTANCE.showToast(this, "Battle name should have at least " +
                     BATTLE_TITLE_MINIMUM_LENGTH + " characters!");
             return false;
         }
         if (photoBytes == null) {
-            Utils.showToast(this, "You should take a first photo in battle!");
+            Utils.INSTANCE.showToast(this, "You should take a first photo in battle!");
             return false;
         }
         return true;
@@ -120,7 +120,7 @@ public class CreateBattleActivity extends Activity {
 
                     @Override
                     public void onFailure(Call<Battle> call, Throwable t) {
-                        Utils.showToast(CreateBattleActivity.this, "Failed to send battle to server, try again later.");
+                        Utils.INSTANCE.showToast(CreateBattleActivity.this, "Failed to send battle to server, try again later.");
                         Log.e(TAG, "can't send new battle: " + t);
                     }
         });

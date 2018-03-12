@@ -1,7 +1,5 @@
 package me.instabattle.app.managers;
 
-import android.util.Log;
-
 import java.util.List;
 
 import me.instabattle.app.models.Token;
@@ -9,7 +7,6 @@ import me.instabattle.app.models.User;
 import me.instabattle.app.settings.State;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -22,23 +19,20 @@ public class UserManager {
     private static final UserService service = ServiceGenerator.createService(UserService.class);
     private static UserService tokenService;
 
-    public static void initTokenService() {
+    static void initTokenService() {
         tokenService = ServiceGenerator.createService(UserService.class, State.token);
     }
 
     public static void getAndDo(Integer userId, Callback<User> callback) {
-        Call<User> call = service.get(userId);
-        call.enqueue(callback);
+        service.get(userId).enqueue(callback);
     }
 
     public static void getAndDo(String username, Callback<User> callback) {
-        Call<User> call = service.get(username);
-        call.enqueue(callback);
+        service.get(username).enqueue(callback);
     }
 
-    public static void getCountAndDo(Integer count, Callback<List<User>> callback) {
-        Call<List<User>> call = service.getCount(count);
-        call.enqueue(callback);
+    private static void getCountAndDo(Integer count, Callback<List<User>> callback) {
+        service.getCount(count).enqueue(callback);
     }
 
     public static void getAllAndDo(Callback<List<User>> callback) {
@@ -46,20 +40,17 @@ public class UserManager {
     }
 
     public static void updateAndDo(Integer userId, User user, Callback<User> callback) {
-        Call<User> call = tokenService.update(userId, user);
-        call.enqueue(callback);
+        tokenService.update(userId, user).enqueue(callback);
     }
 
     public static void createAndDo(String username, String email, String password, Callback<User> callback) {
-        Call<User> call = service.create(new User(username, email, password));
-        call.enqueue(callback);
+        service.create(new User(username, email, password)).enqueue(callback);
     }
 
     public static void getTokenAndDo(String email, String password, Callback<Token> callback) {
         UserService loginService = ServiceGenerator.createService(UserService.class,
                 email, password);
-        Call<Token> call = loginService.getToken();
-        call.enqueue(callback);
+        loginService.getToken().enqueue(callback);
     }
 
     interface UserService {

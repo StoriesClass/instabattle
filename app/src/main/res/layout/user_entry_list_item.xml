@@ -1,74 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout6"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#eee"
+    android:orientation="vertical"
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:background="#eee">
+    tools:layout_editor_absoluteY="81dp">
+
+    <ImageView
+        android:id="@+id/userEntryListItemImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/user_entry_list_image_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userEntryListItemTitle"
+        tools:layout_conversion_absoluteHeight="160dp"
+        tools:layout_conversion_absoluteWidth="160dp" />
 
     <TextView
         android:id="@+id/userEntryListItemTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:textSize="20sp"
-        android:layout_marginBottom="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="27dp"
+        tools:layout_conversion_absoluteWidth="39dp"
+        tools:text="Title" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/userEntryListItemImage"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginBottom="5dp"
-            android:contentDescription="Photo in user entries list"/>
+        android:layout_marginStart="8dp"
+        android:text="@string/posted_on"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/userEntryListItemDate"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userEntryListItemImage"
+        app:layout_constraintTop_toBottomOf="@+id/userEntryListItemTitle"
+        app:layout_constraintVertical_bias="0.13"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:layout_conversion_absoluteHeight="20dp"
+        tools:layout_conversion_absoluteWidth="71dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Posted on:"
-                android:textSize="15sp"/>
-            <TextView
-                android:id="@+id/userEntryListItemDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"/>
-            <TextView
-                android:id="@+id/userEntryListItemUpvotes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"/>
-        </LinearLayout>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/userEntryListItemDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/userEntryListItemUpvotes"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:layout_conversion_absoluteHeight="20dp"
+        tools:layout_conversion_absoluteWidth="66dp"
+        tools:text="January 3" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/userEntryListItemViewBtn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="@string/view_battle"
-            android:textSize="20sp"/>
-        <Button
-            android:id="@+id/userEntryListItemViewOnMapBtn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="@string/view_on_map"
-            android:textSize="20sp"/>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/userEntryListItemUpvotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/userEntryListItemDate"
+        app:layout_constraintTop_toBottomOf="@+id/userEntryListItemDate"
+        tools:layout_conversion_absoluteHeight="20dp"
+        tools:layout_conversion_absoluteWidth="17dp"
+        tools:text="10" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/userEntryListItemViewBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/view_battle"
+        android:textSize="20sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/userEntryListItemViewOnMapBtn"
+        app:layout_constraintStart_toEndOf="@+id/userEntryListItemImage"
+        tools:layout_conversion_absoluteHeight="50dp"
+        tools:layout_conversion_absoluteWidth="190dp" />
+
+    <Button
+        android:id="@+id/userEntryListItemViewOnMapBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/view_on_map"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/userEntryListItemImage"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userEntryListItemViewBtn"
+        tools:layout_conversion_absoluteHeight="50dp"
+        tools:layout_conversion_absoluteWidth="190dp" />
+
+</android.support.constraint.ConstraintLayout>

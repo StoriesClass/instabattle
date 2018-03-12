@@ -87,36 +87,27 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewPoint, viewZoom));
 
-        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                State.chosenBattle = battleByMarker.get(marker.getId());
-                BattleActivity.gotHereFrom = MapActivity.class;
-                Intent viewBattle = new Intent(MapActivity.this, BattleActivity.class);
-                startActivity(viewBattle);
+        googleMap.setOnInfoWindowClickListener(marker -> {
+            State.chosenBattle = battleByMarker.get(marker.getId());
+            BattleActivity.gotHereFrom = MapActivity.class;
+            Intent viewBattle = new Intent(MapActivity.this, BattleActivity.class);
+            startActivity(viewBattle);
+        });
+
+        googleMap.setOnMapClickListener(latLng -> {
+            if (visibleCircle != null) {
+                visibleCircle.setVisible(false);
+                visibleCircle = null;
             }
         });
 
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                if (visibleCircle != null) {
-                    visibleCircle.setVisible(false);
-                    visibleCircle = null;
-                }
+        googleMap.setOnMarkerClickListener(marker -> {
+            if (visibleCircle != null) {
+                visibleCircle.setVisible(false);
             }
-        });
-
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                if (visibleCircle != null) {
-                    visibleCircle.setVisible(false);
-                }
-                visibleCircle = circleByMarker.get(marker.getId());
-                visibleCircle.setVisible(true);
-                return false;
-            }
+            visibleCircle = circleByMarker.get(marker.getId());
+            visibleCircle.setVisible(true);
+            return false;
         });
 
         placeMarkers();
@@ -147,7 +138,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             @Override
             public void onFailure(Call<List<Battle>> call, Throwable t) {
-                Utils.showToast(MapActivity.this, "Failed to get battles, try to reload map.");
+                Utils.INSTANCE.showToast(MapActivity.this, "Failed to get battles, try to reload map.");
                 Log.e(TAG, "cant get battles: " + t);
             }
         });
@@ -162,7 +153,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     public void goCreateBattle(View v) {
         if (State.currentUser.getBattleCreationLimit() == 0) {
-            Utils.showToast(this, "Sorry, you've spent all of your battle creations for this week.");
+            Utils.INSTANCE.showToast(this, "Sorry, you've spent all of your battle creations for this week.");
             return;
         }
         State.creatingBattle = true;
@@ -180,7 +171,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         if (requestCode == LocationService.REQUEST_LOCATION_PERMISSION) {
             if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Utils.showToast(this, "If you decide to participate, grant this permission later in settings.");
+                Utils.INSTANCE.showToast(this, "If you decide to participate, grant this permission later in settings.");
                 Log.d(TAG, "didn't get location permission");
             } else {
                 Log.d(TAG, "got location permission");

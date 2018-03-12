@@ -37,7 +37,9 @@ public class ServiceGenerator {
     }
 
     public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, null, null);
+        OkHttpClient client = httpClient.build();
+        Retrofit retrofit = builder.client(client).build();
+        return retrofit.create(serviceClass);
     }
 
     public static <S> S createService(Class<S> serviceClass, String email, String password) {

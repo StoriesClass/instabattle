@@ -1,19 +1,16 @@
 package me.instabattle.app.images;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
 public class Util {
     private static final String TAG = "images.Util";
-    public static int calculateInSampleSize(
+    private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
@@ -36,7 +33,7 @@ public class Util {
         return inSampleSize;
     }
 
-    public static Bitmap decodeSampledBitmapFromBytes(byte[] bytes, int offset, int reqWidth, int reqHeight) {
+    private static Bitmap decodeSampledBitmapFromBytes(byte[] bytes, int offset, int reqWidth, int reqHeight) {
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;

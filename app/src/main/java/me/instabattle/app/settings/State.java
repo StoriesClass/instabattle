@@ -3,6 +3,7 @@ package me.instabattle.app.settings;
 import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.User;
 
+// FIXME
 public class State {
     public static Battle chosenBattle;
 

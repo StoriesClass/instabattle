@@ -41,8 +41,8 @@ public class VoteActivity extends Activity {
 
         voteEnd = new VotingEndDialog();
 
-        firstImage = (ImageView) findViewById(R.id.firstImage);
-        secondImage = (ImageView) findViewById(R.id.secondImage);
+        firstImage = findViewById(R.id.firstImage);
+        secondImage = findViewById(R.id.secondImage);
 
         setPhotos();
     }
@@ -51,17 +51,12 @@ public class VoteActivity extends Activity {
         firstEntry.getPhotoAndDo(new BitmapCallback() {
             @Override
             public void onResponse(final Bitmap photo) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        firstImage.setImageBitmap(photo);
-                    }
-                });
+                runOnUiThread(() -> firstImage.setImageBitmap(photo));
             }
 
             @Override
             public void onFailure(Exception e) {
-                Utils.showToast(VoteActivity.this, "Failed to get first photo, try again later.");
+                Utils.INSTANCE.showToast(VoteActivity.this, "Failed to get first photo, try again later.");
                 Log.e(TAG, "can't get firstEntry photo");
                 onBackPressed();
             }
@@ -71,17 +66,12 @@ public class VoteActivity extends Activity {
         secondEntry.getPhotoAndDo(new BitmapCallback() {
             @Override
             public void onResponse(final Bitmap photo) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        secondImage.setImageBitmap(photo);
-                    }
-                });
+                runOnUiThread(() -> secondImage.setImageBitmap(photo));
             }
 
             @Override
             public void onFailure(Exception e) {
-                Utils.showToast(VoteActivity.this, "Failed to get first photo, try again later.");
+                Utils.INSTANCE.showToast(VoteActivity.this, "Failed to get first photo, try again later.");
                 Log.e(TAG, "can't get secondEntry photo");
                 onBackPressed();
             }
@@ -105,14 +95,14 @@ public class VoteActivity extends Activity {
         EntryManager.voteAndDo(State.chosenBattle.getId(), State.currentUser.getId(), winnerId, looserId, new Callback<Vote>() {
             @Override
             public void onResponse(Call<Vote> call, Response<Vote> response) {
-                Utils.showToast(VoteActivity.this, "Nice vote, " + State.currentUser.getUsername() + "!");
+                Utils.INSTANCE.showToast(VoteActivity.this, "Nice vote, " + State.currentUser.getUsername() + "!");
                 onBackPressed();
                 Log.d(TAG, "vote sent");
             }
 
             @Override
             public void onFailure(Call<Vote> call, Throwable t) {
-                Utils.showToast(VoteActivity.this, "Failed to vote, try again later.");
+                Utils.INSTANCE.showToast(VoteActivity.this, "Failed to vote, try again later.");
                 Log.e(TAG, "failed to send vote");
             }
         });
