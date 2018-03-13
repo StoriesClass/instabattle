@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-import me.instabattle.app.models.Battle;
 import me.instabattle.app.models.Entry;
 import me.instabattle.app.models.Vote;
 import retrofit2.Call;
@@ -46,7 +45,7 @@ public class EntryManagerTest {
                     public void onResponse(Call<Entry> call, Response<Entry> response) {
                         Entry entry = response.body();
                         assertEquals(battleId, entry.getBattleId());
-                        assertEquals(authorId, entry.getAuhtorId());
+                        assertEquals(authorId, entry.getAuthorId());
                     }
                 });
 

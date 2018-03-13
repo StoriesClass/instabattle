@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.models.Battle;
@@ -66,12 +67,7 @@ public class UserEntryListAdapter extends BaseAdapter {
         entry.getPhotoAndDo(new BitmapCallback() {
             @Override
             public void onResponse(final Bitmap photo) {
-                ((Activity)context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ((ImageView) res.findViewById(R.id.userEntryListItemImage)).setImageBitmap(photo);
-                    }
-                });
+                ((Activity)context).runOnUiThread(() -> ((ImageView) res.findViewById(R.id.userEntryListItemImage)).setImageBitmap(photo));
             }
 
             @Override
@@ -82,7 +78,7 @@ public class UserEntryListAdapter extends BaseAdapter {
         });
 
         ((TextView) res.findViewById(R.id.userEntryListItemDate)).setText(
-                (new SimpleDateFormat("dd/MM/yyyy")).format(entry.getCreatedOn()));
+                (new SimpleDateFormat("dd/MM/yyyy", Locale.US)).format(entry.getCreatedOn()));
         ((TextView) res.findViewById(R.id.userEntryListItemUpvotes)).setText(entry.getRating() + " points");
 
         entry.getBattleAndDo(new Callback<Battle>() {
@@ -92,25 +88,19 @@ public class UserEntryListAdapter extends BaseAdapter {
 
                 ((TextView) res.findViewById(R.id.userEntryListItemTitle)).setText(battle.getName());
 
-                res.findViewById(R.id.userEntryListItemViewBtn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        State.chosenBattle = battle;
-                        BattleActivity.gotHereFrom = MyProfileActivity.class;
-                        Intent viewBattle = new Intent(context, BattleActivity.class);
-                        context.startActivity(viewBattle);
-                    }
+                res.findViewById(R.id.userEntryListItemViewBtn).setOnClickListener(v -> {
+                    State.chosenBattle = battle;
+                    BattleActivity.Companion.setGotHereFrom(MyProfileActivity.class);
+                    Intent viewBattle = new Intent(context, BattleActivity.class);
+                    context.startActivity(viewBattle);
                 });
 
-                res.findViewById(R.id.userEntryListItemViewOnMapBtn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MapActivity.viewPoint = battle.getLocation();
-                        MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM;
-                        MapActivity.gotHereFrom = MyProfileActivity.class;
-                        Intent viewMap = new Intent(context, MapActivity.class);
-                        context.startActivity(viewMap);
-                    }
+                res.findViewById(R.id.userEntryListItemViewOnMapBtn).setOnClickListener(v -> {
+                    MapActivity.viewPoint = battle.getLocation();
+                    MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM;
+                    MapActivity.gotHereFrom = MyProfileActivity.class;
+                    Intent viewMap = new Intent(context, MapActivity.class);
+                    context.startActivity(viewMap);
                 });
             }
 

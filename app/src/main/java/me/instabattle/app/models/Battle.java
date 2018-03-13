@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 import me.instabattle.app.managers.EntryManager;
-import me.instabattle.app.managers.UserManager;
 import me.instabattle.app.settings.State;
 import retrofit2.Callback;
 

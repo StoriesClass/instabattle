@@ -1,16 +1,13 @@
 package me.instabattle.app.managers;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -34,17 +31,14 @@ public class PhotoManager {
         final Exception exception;
         try {
             final URL url = new URL(cloudinary.url().generate(name) + ".jpg");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        final Bitmap image = Util.decodeSampledBitmapFromURL(url, 256, 256);
-                        callback.onResponse(image);
-                        Log.d(TAG, "Got photo from " + url.toString());
-                    } catch (IOException e) {
-                        Log.e(TAG, "cannot establish connection with " + url.toString());
-                        callback.onFailure(e);
-                    }
+            new Thread(() -> {
+                try {
+                    final Bitmap image = Util.decodeSampledBitmapFromURL(url, 256, 256);
+                    callback.onResponse(image);
+                    Log.d(TAG, "Got photo from " + url.toString());
+                } catch (IOException e) {
+                    Log.e(TAG, "cannot establish connection with " + url.toString());
+                    callback.onFailure(e);
                 }
             }).start();
             return;

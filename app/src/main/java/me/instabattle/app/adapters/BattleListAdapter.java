@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.models.Battle;
@@ -62,7 +63,7 @@ public class BattleListAdapter extends BaseAdapter {
         final View res = convertView != null ? convertView :
                 inflater.inflate(R.layout.battle_list_item, parent, false);
 
-        final ImageView battleListItemImage = (ImageView) res.findViewById(R.id.battleListItemImage);
+        final ImageView battleListItemImage = res.findViewById(R.id.battleListItemImage);
         final Battle battle = battles.get(position);
 
         if (battleListItemImage.getDrawable() == null) {
@@ -77,12 +78,7 @@ public class BattleListAdapter extends BaseAdapter {
                             winner.getPhotoAndDo(new BitmapCallback() {
                                 @Override
                                 public void onResponse(final Bitmap photo) {
-                                    ((Activity) context).runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            battleListItemImage.setImageBitmap(photo);
-                                        }
-                                    });
+                                    ((Activity) context).runOnUiThread(() -> battleListItemImage.setImageBitmap(photo));
                                 }
 
                                 @Override
@@ -108,27 +104,21 @@ public class BattleListAdapter extends BaseAdapter {
 
         ((TextView) res.findViewById(R.id.battleListItemTitle)).setText(battle.getName());
         ((TextView) res.findViewById(R.id.battleListItemDate)).setText(
-                (new SimpleDateFormat("dd/MM/yyyy")).format(battle.getCreatedOn()));
+                (new SimpleDateFormat("dd/MM/yyyy", Locale.US)).format(battle.getCreatedOn()));
         ((TextView) res.findViewById(R.id.battleListItemCount)).setText(battle.getEntriesCount() + " photos");
 
-        res.findViewById(R.id.battleListItemViewBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                State.chosenBattle = battle;
-                BattleActivity.gotHereFrom = BattleListActivity.class;
-                Intent viewBattle = new Intent(context, BattleActivity.class);
-                context.startActivity(viewBattle);
-            }
+        res.findViewById(R.id.battleListItemViewBtn).setOnClickListener(v -> {
+            State.chosenBattle = battle;
+            BattleActivity.Companion.setGotHereFrom(BattleListActivity.class);
+            Intent viewBattle = new Intent(context, BattleActivity.class);
+            context.startActivity(viewBattle);
         });
-        res.findViewById(R.id.battleListItemViewOnMapBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MapActivity.viewPoint = battle.getLocation();
-                MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM;
-                MapActivity.gotHereFrom = BattleListActivity.class;
-                Intent viewMap = new Intent(context, MapActivity.class);
-                context.startActivity(viewMap);
-            }
+        res.findViewById(R.id.battleListItemViewOnMapBtn).setOnClickListener(v -> {
+            MapActivity.viewPoint = battle.getLocation();
+            MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM;
+            MapActivity.gotHereFrom = BattleListActivity.class;
+            Intent viewMap = new Intent(context, MapActivity.class);
+            context.startActivity(viewMap);
         });
 
         battle.getAuthorAndDo(new Callback<User>() {

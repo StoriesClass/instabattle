@@ -14,7 +14,7 @@ object ServiceGenerator {
     private val API_BASE_URL = "https://instabattle2.herokuapp.com/"
     private val logging = HttpLoggingInterceptor()
     private val httpClient = OkHttpClient.Builder()
-    val gson = GsonBuilder()
+    private val gson = GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ")
             .create()
     private val builder = Retrofit.Builder()

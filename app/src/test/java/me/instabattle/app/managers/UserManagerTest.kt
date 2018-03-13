@@ -1,10 +1,7 @@
 package me.instabattle.app.managers
 
-import io.reactivex.functions.Consumer
+
 import org.junit.Test
-
-
-import org.junit.Assert.*
 
 class UserManagerTest {
     @Test

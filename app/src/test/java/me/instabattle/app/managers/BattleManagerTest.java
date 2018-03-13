@@ -3,7 +3,6 @@ package me.instabattle.app.managers;
 import org.junit.Test;
 
 import me.instabattle.app.models.Battle;
-import me.instabattle.app.models.User;
 import retrofit2.Call;
 import retrofit2.Response;
 

@@ -55,19 +55,14 @@ public class EntryListAdapter extends BaseAdapter {
         final View res = convertView != null ? convertView :
                 inflater.inflate(R.layout.entry_list_item, parent, false);
 
-        final ImageView listEntryImage = (ImageView) res.findViewById(R.id.listEntryImage);
+        final ImageView listEntryImage = res.findViewById(R.id.listEntryImage);
         final Entry entry = entries.get(position);
 
         if (listEntryImage.getDrawable() == null) {
             entry.getPhotoAndDo(new BitmapCallback() {
                 @Override
                 public void onResponse(final Bitmap photo) {
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            listEntryImage.setImageBitmap(photo);
-                        }
-                    });
+                    ((Activity) context).runOnUiThread(() -> listEntryImage.setImageBitmap(photo));
                 }
 
                 @Override

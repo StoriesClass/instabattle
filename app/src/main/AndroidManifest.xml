@@ -73,7 +73,7 @@
 
         <service android:name=".services.LocationService" />
 
-        <activity android:name=".activities.ParticipatingActivity"></activity>
+        <activity android:name=".activities.ParticipatingActivity" />
     </application>
 
 </manifest>

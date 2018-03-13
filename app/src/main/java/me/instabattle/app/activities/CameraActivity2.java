@@ -139,8 +139,8 @@ public class CameraActivity2 extends Activity implements ActivityCompat.OnReques
             Log.d(TAG, "got photo");
             Image image = reader.acquireLatestImage();
             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-            PhotoEditActivity.photoBytes = new byte[buffer.capacity()];
-            buffer.get(PhotoEditActivity.photoBytes);
+            PhotoEditActivity.Companion.setPhotoBytes(new byte[buffer.capacity()]);
+            buffer.get(PhotoEditActivity.Companion.getPhotoBytes());
             Intent editPhoto = new Intent(CameraActivity2.this, PhotoEditActivity.class);
             editPhoto.putExtra("battleTitle", battleTitle);
             startActivity(editPhoto);

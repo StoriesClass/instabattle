@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -33,8 +34,8 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
 
     public static final int REQUEST_LOCATION_PERMISSION = 123;
 
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 4000;
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 4000;
 
     private static GoogleApiClient googleApiClient;
     private static LocationRequest locationRequest;
@@ -107,7 +108,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         }
     };
 
-    public void startLocationUpdates() {
+    private void startLocationUpdates() {
         if (!requestingUpdates && ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) { // if required by API 23 and higher
 
@@ -155,7 +156,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         return new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
     }
 
-    public static float getDistanceFromMeTo(LatLng point) {
+    private static float getDistanceFromMeTo(LatLng point) {
         float[] res = new float[1];
         Location.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(),
                                 point.latitude, point.longitude, res);

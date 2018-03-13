@@ -1,7 +1,6 @@
 package me.instabattle.app.managers;
 
 import android.location.Location;
-import android.util.Log;
 
 import java.util.List;
 

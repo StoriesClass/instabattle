@@ -1,20 +1,12 @@
 package me.instabattle.app.managers
 
-import android.util.Log
 import io.reactivex.Single
-
 import me.instabattle.app.models.Token
 import me.instabattle.app.models.User
 import me.instabattle.app.settings.State
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 object UserManager {
     private val TAG = "UserManager"

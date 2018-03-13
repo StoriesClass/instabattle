@@ -89,7 +89,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         googleMap.setOnInfoWindowClickListener(marker -> {
             State.chosenBattle = battleByMarker.get(marker.getId());
-            BattleActivity.gotHereFrom = MapActivity.class;
+            BattleActivity.Companion.setGotHereFrom(MapActivity.class);
             Intent viewBattle = new Intent(MapActivity.this, BattleActivity.class);
             startActivity(viewBattle);
         });

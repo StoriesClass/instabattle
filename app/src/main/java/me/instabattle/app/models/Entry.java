@@ -1,7 +1,5 @@
 package me.instabattle.app.models;
 
-import android.graphics.Bitmap;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +8,6 @@ import java.util.Date;
 import me.instabattle.app.managers.BattleManager;
 import me.instabattle.app.managers.BitmapCallback;
 import me.instabattle.app.managers.PhotoManager;
-import me.instabattle.app.managers.UserManager;
 import retrofit2.Callback;
 
 public class Entry {
@@ -87,7 +84,7 @@ public class Entry {
         return battleId;
     }
 
-    public Integer getAuhtorId() {
+    public Integer getAuthorId() {
         return authorId;
     }
 }

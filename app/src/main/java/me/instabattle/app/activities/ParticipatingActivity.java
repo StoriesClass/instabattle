@@ -1,7 +1,6 @@
 package me.instabattle.app.activities;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -28,14 +27,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.desmond.squarecamera.CameraActivity;
-import com.desmond.squarecamera.ImageUtility;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.ByteBuffer;
-
 
 public class ParticipatingActivity extends AppCompatActivity {
 
@@ -43,7 +37,6 @@ public class ParticipatingActivity extends AppCompatActivity {
 
     private static final int REQUEST_CAMERA = 0;
     private static final int REQUEST_CAMERA_PERMISSION = 1;
-    private Point mSize;
 
     public static Class<?> gotHereFrom;
 
@@ -52,9 +45,9 @@ public class ParticipatingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_test);
 
+        // FIXME ?
         Display display = getWindowManager().getDefaultDisplay();
-        mSize = new Point();
-        display.getSize(mSize);
+        display.getSize(new Point());
 
         requestForCameraPermission();
     }
@@ -87,7 +80,7 @@ public class ParticipatingActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    CreateBattleActivity.photoBytes = photoBytes;
+                    CreateBattleActivity.Companion.setPhotoBytes(photoBytes);
                 }
                 Utils.INSTANCE.showToast(this, "Nice photo, " + State.currentUser.getUsername() + "!");
             } catch (IOException e) {
