@@ -52,24 +52,16 @@ public class PhotoManager {
             Log.e(TAG, "can't create url from name");
             exception = e;
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                callback.onFailure(exception);
-            }
-        }).start();
+        new Thread(() -> callback.onFailure(exception)).start();
     }
 
     public static void upload(final String name, final byte[] photo) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Map params = ObjectUtils.asMap("public_id", name);
-                    cloudinary.uploader().upload(new ByteArrayInputStream(photo), params);
-                } catch (IOException e) {
-                    Log.e("Cloudinary fail", "can't upload photo");
-                }
+        new Thread(() -> {
+            try {
+                Map params = ObjectUtils.asMap("public_id", name);
+                cloudinary.uploader().upload(new ByteArrayInputStream(photo), params);
+            } catch (IOException e) {
+                Log.e("Cloudinary fail", "can't upload photo");
             }
         }).start();
     }

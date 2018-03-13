@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import me.instabattle.app.R;
 import me.instabattle.app.managers.ServiceGenerator;
@@ -41,11 +40,11 @@ public class LoginActivity extends Activity {
 
         Log.d(TAG, "username: " + username + "\t password: " + pass);
 
-        UserManager.getTokenAndDo(username, pass, new Callback<Token>() {
+        UserManager.INSTANCE.getTokenAndDo(username, pass, new Callback<Token>() {
                     @Override
                     public void onResponse(Call<Token> call, Response<Token> response) {
                         if (response.isSuccessful()) {
-                            UserManager.getAndDo(username, new Callback<User>() {
+                            UserManager.INSTANCE.getAndDo(username, new Callback<User>() {
                                 @Override
                                 public void onResponse(Call<User> call, Response<User> response) {
                                     if (response.isSuccessful()) {
@@ -63,7 +62,7 @@ public class LoginActivity extends Activity {
                             });
                             State.token = response.body().get();
                             Log.d(TAG, "Got token: ");
-                            ServiceGenerator.initTokenServices();
+                            ServiceGenerator.INSTANCE.initTokenServices();
                             startActivity(menu);
                         } else {
                             Utils.INSTANCE.showToast(LoginActivity.this, "Wrong nickname/password combination");
@@ -79,7 +78,7 @@ public class LoginActivity extends Activity {
     }
 
     public void onSignupClick(View view) {
-        Intent signup = new Intent(this, SignupActivity.class);
+        Intent signup = new Intent(this, SignUpActivity.class);
         startActivity(signup);
     }
 

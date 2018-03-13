@@ -61,7 +61,7 @@ public class ParticipatingActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult calleed with result code " + resultCode);
+        Log.d(TAG, "onActivityResult called with result code " + resultCode);
         if (resultCode != RESULT_OK) return;
 
         if (requestCode == REQUEST_CAMERA) {

@@ -56,7 +56,7 @@ public class Entry {
     }
 
     public void getAuthorAndDo(Callback<User> callback) {
-        UserManager.getAndDo(authorId, callback);
+        //UserManager.getAndDo(authorId, callback);
     }
 
     public int getRating() {

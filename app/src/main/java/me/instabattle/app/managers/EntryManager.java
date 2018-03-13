@@ -17,11 +17,11 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class EntryManager {
-    private static final EntryService service = ServiceGenerator.createService(EntryService.class);
+    private static final EntryService service = ServiceGenerator.INSTANCE.createService(EntryService.class);
     private static EntryService tokenService;
 
     public static void initTokenService() {
-        tokenService = ServiceGenerator.createService(EntryService.class, State.token);
+        tokenService = ServiceGenerator.INSTANCE.createService(EntryService.class, State.token);
     }
 
     public static void getByBattleAndDo(int battleId, Callback<List<Entry>> callback) {

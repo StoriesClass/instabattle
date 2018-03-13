@@ -98,7 +98,7 @@ public class Battle {
     }
 
     public void getAuthorAndDo(Callback<User> callback) {
-        UserManager.getAndDo(creatorId, callback);
+        //UserManager.getAndDo(creatorId, callback);
     }
 
     public Integer getId() {

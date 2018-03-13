@@ -18,11 +18,11 @@ import retrofit2.http.Query;
 
 public class BattleManager {
     private static final String TAG = "BattleManager";
-    private static final BattleService service = ServiceGenerator.createService(BattleService.class);
+    private static final BattleService service = ServiceGenerator.INSTANCE.createService(BattleService.class);
     private static BattleService tokenService;
 
     public static void initTokenService() {
-        tokenService = ServiceGenerator.createService(BattleService.class, State.token);
+        tokenService = ServiceGenerator.INSTANCE.createService(BattleService.class, State.token);
     }
 
     public static void getAllAndDo(Callback<List<Battle>> callback) {
