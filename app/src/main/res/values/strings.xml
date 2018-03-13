@@ -69,6 +69,10 @@
     <string name="take_new_photo">Take a new one</string>
     <string name="use_this_photo">Use this photo</string>
 
+    <!-- activity_vote -->
+    <string name="first_photo_description">First photo</string>
+    <string name="second_photo_description">Second photo</string>
+
     <!-- battle_list_item -->
     <string name="view_battle">View</string>
     <string name="view_on_map">On map</string>
