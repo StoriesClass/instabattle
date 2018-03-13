@@ -69,8 +69,9 @@ object UserManager {
 
     fun get(id: Int): Single<User> = service.getPromise(id)
 
-    internal interface UserService {
+    fun get(username: String): Single<User> = service.getPromise(username)
 
+    internal interface UserService {
         @get:GET("token")
         val promiseToken: Single<Token>
 
@@ -79,6 +80,9 @@ object UserManager {
 
         @GET("users/{user_id}")
         fun getPromise(@Path("user_id") userId: Int?): Single<User>
+
+        @GET("users/{username}")
+        fun getPromise(@Path("username") username: String): Single<User>
 
         @get:GET("token")
         val token: Call<Token>

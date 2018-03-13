@@ -10,46 +10,44 @@ import me.instabattle.app.R
 import me.instabattle.app.managers.ServiceGenerator
 import me.instabattle.app.managers.UserManager
 import me.instabattle.app.settings.State
+import org.jetbrains.anko.debug
 import org.jetbrains.anko.getStackTraceString
-import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
 
-class SignUpActivity : DefaultActivity() {
-    private lateinit var login: EditText
-    private lateinit var email: EditText
-    private lateinit var password: EditText
+class LoginActivity : DefaultActivity() {
+    private var login: EditText? = null
+    private var password: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
+        setContentView(R.layout.activity_login)
 
-        login = findViewById(R.id.signUpLoginInput)
-        email = findViewById(R.id.signUpEmailInput)
-        password = findViewById(R.id.signUpPasswordInput)
+        login = findViewById(R.id.loginInput)
+        password = findViewById(R.id.passwordInput)
     }
 
-    fun onSignUpClick(view: View) {
-        val loginText = login.text.toString()
-        val emailText = email.text.toString()
-        val passwordText = password.text.toString()
+    fun onSignInClick(view: View) {
+        val username = login!!.text.toString()
+        val pass = password!!.text.toString()
 
-        UserManager.create(loginText, emailText, passwordText)
-                .subscribeOn(Schedulers.io()) // “work” on io thread
+        debug("username: $username\t password: $pass")
+
+        UserManager.getToken(username, pass)
+                .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .flatMap { u ->
-                        info("User was created successfully")
-                        State.currentUser = u
-                        UserManager.getToken(loginText, passwordText)
-                }
-                .observeOn(AndroidSchedulers.mainThread()) // “listen” on UIThread
-                .subscribe({
+                .flatMap {
                     State.token = it.get()
-                    info("Token was received successfully")
+                    debug("Got token: %s".format(State.token))
                     ServiceGenerator.initTokenServices()
+                    UserManager.get(username)
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    State.currentUser = it
                     startActivity<MenuActivity>()
                 }, {
                     when (it) {
@@ -59,7 +57,7 @@ class SignUpActivity : DefaultActivity() {
                                 error("Server returned unsuccessful response with empty error and code: %d".format(it.response().code()))
                             } else {
                                 //val errorMessage = JSONObject(errorBody.string()).getString("error")
-                                toast("Couldn't create user")
+                                toast("Couldn't login")
                                 errorBody.close()
                             }
                         }
@@ -71,7 +69,10 @@ class SignUpActivity : DefaultActivity() {
                             error(it.getStackTraceString())
                         }
                     }
-                }
-            )
+                })
     }
+
+    fun onSignUpClick(view: View) = startActivity<SignUpActivity>()
+
+    override fun onBackPressed() { }
 }
