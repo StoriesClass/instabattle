@@ -26,7 +26,7 @@ class BattleListActivity : DefaultActivity() {
 
         BattleManager.getAllAndDo(object : Callback<List<Battle>> {
             override fun onResponse(call: Call<List<Battle>>, response: Response<List<Battle>>) {
-                battleListAdapter = BattleListAdapter(this@BattleListActivity, response.body())
+                battleListAdapter = BattleListAdapter(this@BattleListActivity, response.body()!!)
                 battleList.adapter = battleListAdapter
             }
 

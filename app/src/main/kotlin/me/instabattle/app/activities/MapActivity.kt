@@ -24,8 +24,8 @@ import me.instabattle.app.models.Battle
 import me.instabattle.app.managers.BattleManager
 import me.instabattle.app.R
 import me.instabattle.app.services.LocationService
+import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
-import me.instabattle.app.utils.Utils
 import org.jetbrains.anko.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -117,7 +117,7 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
             }
 
             override fun onFailure(call: Call<List<Battle>>, t: Throwable) {
-                Utils.showToast(this@MapActivity, "Failed to get battles, try to reload map.")
+                toast("Failed to get battles, try to reload map.")
                 error("cant get battles: $t")
             }
         })
@@ -134,7 +134,7 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
             toast("Sorry, you've spent all of your battle creations for this week.")
             return
         }
-        State.creatingBattle = true
+        KState.creatingBattle = true
         startActivity<CreateBattleActivity>()
     }
 

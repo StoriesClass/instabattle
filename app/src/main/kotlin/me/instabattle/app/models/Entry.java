@@ -49,7 +49,7 @@ public class Entry {
     }
 
     public void getPhotoAndDo(BitmapCallback callback) {
-        PhotoManager.getPhotoAndDo(this.getImageName(), callback);
+        PhotoManager.INSTANCE.getPhotoAndDo(this.getImageName(), callback);
     }
 
     public void getAuthorAndDo(Callback<User> callback) {

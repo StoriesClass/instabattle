@@ -32,10 +32,10 @@ class PhotoEditActivity : DefaultActivity() {
     fun takeNewPhoto(v: View) = startActivity<CameraViewActivity>()
 
     fun useThisPhoto(v: View) {
-        if (!State.creatingBattle) {
+        if (!KState.creatingBattle) {
             State.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
                 override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
-                    PhotoManager.upload(response.body()!!.imageName, photoBytes)
+                    PhotoManager.upload(response.body()!!.imageName, photoBytes!!)
                 }
 
                 override fun onFailure(call: Call<Entry>, t: Throwable) {

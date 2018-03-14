@@ -36,7 +36,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.desmond.squarecamera.CameraActivity"/>
         <activity
             android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait" />
@@ -63,9 +62,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.VoteActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.CameraActivity2"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.PhotoEditActivity"

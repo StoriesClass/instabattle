@@ -36,10 +36,10 @@ class MyProfileActivity : DefaultActivity() {
 
         userEntryList = findViewById(R.id.userEntryList)
 
-        State.currentUser!!.getEntriesAndDo(object : Callback<List<Entry>> {
+        State.currentUser.getEntriesAndDo(object : Callback<List<Entry>> {
             override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {
                 info("got user entries")
-                userEntryListAdapter = UserEntryListAdapter(this@MyProfileActivity, response.body())
+                userEntryListAdapter = UserEntryListAdapter(this@MyProfileActivity, response.body()!!)
                 userEntryList.adapter = userEntryListAdapter
             }
 

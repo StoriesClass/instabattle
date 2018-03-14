@@ -33,7 +33,7 @@ class BattleActivity : DefaultActivity() {
 
         State.chosenBattle!!.getEntriesAndDo(object : Callback<List<Entry>> {
             override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {
-                entryListAdapter = EntryListAdapter(this@BattleActivity, response.body())
+                entryListAdapter = EntryListAdapter(this@BattleActivity, response.body()!!)
                 entryList.adapter = entryListAdapter
             }
 

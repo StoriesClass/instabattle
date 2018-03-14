@@ -10,6 +10,7 @@ import com.otaliastudios.cameraview.CameraView
 import me.instabattle.app.R
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
+import me.instabattle.app.settings.KState
 import java.io.ByteArrayOutputStream
 import me.instabattle.app.settings.State
 import org.jetbrains.anko.toast
@@ -28,10 +29,10 @@ class CameraViewActivity: DefaultActivity() {
         cameraView.addCameraListener(object: CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
                 try {
-                    if (!State.creatingBattle) {
+                    if (!KState.creatingBattle) {
                         State.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
                             override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
-                                PhotoManager.upload(response.body()!!.imageName, jpeg)
+                                PhotoManager.upload(response.body()!!.imageName, jpeg!!)
                             }
 
                             override fun onFailure(call: Call<Entry>, t: Throwable) {
@@ -56,17 +57,17 @@ class CameraViewActivity: DefaultActivity() {
     }
 
     override fun onResume() {
-        super.onResume();
-        cameraView.start();
+        super.onResume()
+        cameraView.start()
     }
 
     override fun onPause() {
-        super.onPause();
-        cameraView.stop();
+        super.onPause()
+        cameraView.stop()
     }
 
     override fun onDestroy() {
-        super.onDestroy();
-        cameraView.destroy();
+        super.onDestroy()
+        cameraView.destroy()
     }
 }

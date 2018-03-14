@@ -7,9 +7,7 @@ import me.instabattle.app.models.User
 // FIXME
 object State {
     var chosenBattle: Battle? = null
-
     lateinit var currentUser: User
-    var creatingBattle: Boolean = false
 }
 
 object KState: KotprefModel() {
@@ -19,11 +17,8 @@ object KState: KotprefModel() {
 
 /*object UserInfo : KotprefModel() {
     var gameLevel by enumValuePref(GameLevel.NORMAL)
-    var name by stringPref()
     var code by nullableStringPref()
     var age by intPref(default = 14)
-    var highScore by longPref()
-    var rate by floatPref()
     val prizes by stringSetPref {
         val set = TreeSet<String>()
         set.add("Beginner")

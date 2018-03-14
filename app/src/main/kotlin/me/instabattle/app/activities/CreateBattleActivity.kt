@@ -13,6 +13,7 @@ import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Battle
 import me.instabattle.app.models.Entry
 import me.instabattle.app.services.LocationService
+import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
 import org.jetbrains.anko.info
 import org.jetbrains.anko.error
@@ -89,7 +90,7 @@ class CreateBattleActivity : DefaultActivity() {
                         if (response.isSuccessful) {
                             State.chosenBattle = response.body()
                             addFirstEntry(State.chosenBattle!!)
-                            State.creatingBattle = false
+                            KState.creatingBattle = false
                             clearFields()
                             BattleActivity.gotHereFrom = MapActivity::class.java
                             startActivity<BattleActivity>()
@@ -108,7 +109,7 @@ class CreateBattleActivity : DefaultActivity() {
     private fun addFirstEntry(battle: Battle) {
         battle.createEntryAndDo(object : Callback<Entry> {
             override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
-                PhotoManager.upload(response.body()!!.imageName, photoBytes)
+                PhotoManager.upload(response.body()!!.imageName, photoBytes!!)
                  info {"new entry was sent"}
             }
 
@@ -141,7 +142,7 @@ class CreateBattleActivity : DefaultActivity() {
 
     override fun onBackPressed() {
         clearFields()
-        State.creatingBattle = false
+        KState.creatingBattle = false
         startActivity<MapActivity>()
     }
 
