@@ -17,7 +17,7 @@ public class BattleManagerTest {
     @Test
     public void getAndDo() throws Exception {
         final Integer id = 1;
-        BattleManager.getAndDo(id, new TestCallback<Battle>() {
+        BattleManager.INSTANCE.getAndDo(id, new TestCallback<Battle>() {
             @Override
             public void onResponse(Call<Battle> call, Response<Battle> response) {
                 assertEquals((Integer)1, response.body().getId());
@@ -38,7 +38,7 @@ public class BattleManagerTest {
         final Double latitude = 13d;
         final Double longitude = 37d;
         final Integer radius = 100;
-        BattleManager.createAndDo(authorId, name, latitude, longitude, description, radius,
+        BattleManager.INSTANCE.createAndDo(authorId, name, latitude, longitude, description, radius,
                 new TestCallback<Battle>() {
             @Override
             public void onResponse(Call<Battle> call, Response<Battle> response) {

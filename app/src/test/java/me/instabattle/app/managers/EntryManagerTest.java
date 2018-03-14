@@ -25,7 +25,7 @@ public class EntryManagerTest {
     @Test
     public void getAndDo() throws Exception {
         final Integer id = 1;
-        EntryManager.getAndDo(id, new TestCallback<Entry>() {
+        EntryManager.INSTANCE.getAndDo(id, new TestCallback<Entry>() {
             @Override
             public void onResponse(Call<Entry> call, Response<Entry> response) {
                 assertEquals((Integer)1, response.body().getId());
@@ -60,7 +60,7 @@ public class EntryManagerTest {
     @Test
     public void getVotingAndDo() throws Exception {
         final Integer battleId = 1;
-        EntryManager.getVoteAndDo(battleId, new TestCallback<List<Entry>>() {
+        EntryManager.INSTANCE.getVoteAndDo(battleId, new TestCallback<List<Entry>>() {
             @Override
             public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
                 assertEquals((Integer)1, response.body().get(0).getBattleId());
@@ -73,14 +73,14 @@ public class EntryManagerTest {
         // FIXME rating change
         final Integer battleId = 1;
         final Integer voterId = 1;
-        EntryManager.getVoteAndDo(battleId, new TestCallback<List<Entry>>() {
+        EntryManager.INSTANCE.getVoteAndDo(battleId, new TestCallback<List<Entry>>() {
             @Override
             public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
                 List<Entry> entries = response.body();
                 final Integer entry1_id = entries.get(0).getId();
                 Integer entry2_id = entries.get(1).getId();
 
-                EntryManager.voteAndDo(battleId, voterId, entry1_id, entry2_id, new TestCallback<Vote>() {
+                EntryManager.INSTANCE.voteAndDo(battleId, voterId, entry1_id, entry2_id, new TestCallback<Vote>() {
                     @Override
                     public void onResponse(Call<Vote> call, Response<Vote> response) {
                         Vote vote = response.body();
