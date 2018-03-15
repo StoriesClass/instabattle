@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_photo_edit.*
 import me.instabattle.app.R
 import me.instabattle.app.images.Util
 import me.instabattle.app.managers.PhotoManager
@@ -23,10 +24,10 @@ class PhotoEditActivity : DefaultActivity() {
 
         val battleTitle = intent.getStringExtra("battleTitle")
 
-        (findViewById<TextView>(R.id.editPhotoBattleTitle)).text = battleTitle
+        editPhotoBattleTitle.text = battleTitle
 
         val photoBitmap = Util.decodeSampledBitmapFromBytes(photoBytes, 256, 256)
-        (findViewById<ImageView>(R.id.currentPhoto)).setImageBitmap(photoBitmap)
+        currentPhoto.setImageBitmap(photoBitmap)
     }
 
     fun takeNewPhoto(v: View) = startActivity<CameraViewActivity>()

@@ -2,8 +2,7 @@ package me.instabattle.app.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ListView
-import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_my_profile.*
 
 import java.text.SimpleDateFormat
 
@@ -21,7 +20,6 @@ import retrofit2.Response
 import java.util.*
 
 class MyProfileActivity : DefaultActivity() {
-    private lateinit var userEntryList: ListView
     private var userEntryListAdapter: UserEntryListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +28,9 @@ class MyProfileActivity : DefaultActivity() {
 
         val registrationDate = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(State.currentUser.createdOn)
 
-        (findViewById<TextView>(R.id.currentUserName)).text = State.currentUser.username
-        (findViewById<TextView>(R.id.currentUserDate)).text = "Registration date: $registrationDate"
-        (findViewById<TextView>(R.id.userBattleLimit)).text = "You can create ${State.currentUser.battleCreationLimit} more battles."
-
-        userEntryList = findViewById(R.id.userEntryList)
+        currentUserName.text = State.currentUser.username
+        currentUserDate.text = "Registration date: $registrationDate"
+        userBattleLimit.text = "You can create ${State.currentUser.battleCreationLimit} more battles."
 
         State.currentUser.getEntriesAndDo(object : Callback<List<Entry>> {
             override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {

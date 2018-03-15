@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_create_battle.*
 
 import me.instabattle.app.R
 import me.instabattle.app.images.Util
@@ -24,11 +25,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CreateBattleActivity : DefaultActivity() {
-    private lateinit var newBattleTitle: TextView
-    private lateinit var newBattleDescription: TextView
-    private lateinit var newBattleRadius: TextView
-    private lateinit var newBattlePhoto: ImageView
-
     private val battleTitle: String
         get() = newBattleTitle.text.toString()
 
@@ -42,11 +38,6 @@ class CreateBattleActivity : DefaultActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_battle)
 
-        newBattleTitle = findViewById(R.id.newBattleTitle)
-        newBattleDescription = findViewById(R.id.newBattleDescription)
-        newBattleRadius = findViewById(R.id.newBattleRadius)
-        newBattlePhoto = findViewById(R.id.newBattlePhoto)
-
         if (photoBytes != null) {
             newBattlePhoto.setImageBitmap(Util.decodeSampledBitmapFromBytes(photoBytes, 256, 256))
         }
@@ -55,9 +46,9 @@ class CreateBattleActivity : DefaultActivity() {
     public override fun onResume() {
         super.onResume()
 
-        newBattleTitle.text = savedTitle
-        newBattleDescription.text = savedDescription
-        newBattleRadius.text = savedRadius
+        newBattleTitle.setText(savedTitle)
+        newBattleDescription.setText(savedDescription)
+        newBattleRadius.setText(savedRadius)
     }
 
     private fun validateBattle(): Boolean {

@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraUtils
 import com.otaliastudios.cameraview.CameraView
+import kotlinx.android.synthetic.main.activity_camera_view.*
 import me.instabattle.app.R
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
@@ -50,7 +51,7 @@ class CameraViewActivity: DefaultActivity() {
                 onBackPressed()
             }
         })
-        findViewById<ImageButton>(R.id.capturePhoto).setOnClickListener {
+        capturePhoto.setOnClickListener {
             cameraView.capturePicture()
 
         }

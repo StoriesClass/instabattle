@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.EditText
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_signup.*
 
 import me.instabattle.app.R
 import me.instabattle.app.managers.ServiceGenerator
@@ -20,23 +21,15 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 
 class SignUpActivity : DefaultActivity() {
-    private lateinit var login: EditText
-    private lateinit var email: EditText
-    private lateinit var password: EditText
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-
-        login = findViewById(R.id.signUpLoginInput)
-        email = findViewById(R.id.signUpEmailInput)
-        password = findViewById(R.id.signUpPasswordInput)
     }
 
     fun onSignUpClick(view: View) {
-        val loginText = login.text.toString()
-        val emailText = email.text.toString()
-        val passwordText = password.text.toString()
+        val loginText = signUpLoginInput.text.toString()
+        val emailText = signUpEmailInput.text.toString()
+        val passwordText = signUpPasswordInput.text.toString()
 
         UserManager.create(loginText, emailText, passwordText)
                 .subscribeOn(Schedulers.io()) // “work” on io thread

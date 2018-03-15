@@ -51,7 +51,6 @@ class EntryListAdapter(private val context: Context, private val entries: List<E
                 }
             })
         }
-
         res.findViewById<TextView>(R.id.listEntryUpvotes).text = entry.rating.toString() + " points"
         entry.getAuthorAndDo(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {

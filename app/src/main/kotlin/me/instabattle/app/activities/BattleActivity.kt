@@ -3,8 +3,7 @@ package me.instabattle.app.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ListView
-import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_battle.*
 import me.instabattle.app.R
 import me.instabattle.app.adapters.EntryListAdapter
 import me.instabattle.app.models.Entry
@@ -20,16 +19,13 @@ import retrofit2.Response
 
 class BattleActivity : DefaultActivity() {
     private var entryListAdapter: EntryListAdapter? = null
-    private lateinit var entryList: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_battle)
 
-        (findViewById<TextView>(R.id.battle_title)).text = State.chosenBattle!!.name
-        (findViewById<TextView>(R.id.battle_description)).text = State.chosenBattle!!.description
-
-        entryList = findViewById(R.id.entryList)
+        battle_title.text = State.chosenBattle!!.name
+        battle_description.text = State.chosenBattle!!.description
 
         State.chosenBattle!!.getEntriesAndDo(object : Callback<List<Entry>> {
             override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.app.DialogFragment
 import android.view.View
 import android.widget.ImageView
+import kotlinx.android.synthetic.main.activity_vote.*
 
 import me.instabattle.app.R
 import me.instabattle.app.managers.BitmapCallback
@@ -24,17 +25,11 @@ import retrofit2.Response
 class VoteActivity : DefaultActivity() {
     private var voteEnd: DialogFragment? = null
 
-    private lateinit var firstImage: ImageView
-    private lateinit var secondImage: ImageView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vote)
 
         voteEnd = VotingEndDialog()
-
-        firstImage = findViewById(R.id.firstImage)
-        secondImage = findViewById(R.id.secondImage)
 
         setPhotos()
     }
