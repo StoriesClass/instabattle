@@ -3,9 +3,7 @@ package me.instabattle.app.managers
 import android.location.Location
 
 import me.instabattle.app.models.Battle
-import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
-import org.jetbrains.anko.AnkoLogger
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.http.Body
@@ -20,7 +18,7 @@ object BattleManager {
     private var tokenService: BattleService? = null
 
     fun initTokenService() {
-        tokenService = ServiceGenerator.createService(BattleService::class.java, KState.token)
+        tokenService = ServiceGenerator.createService(BattleService::class.java, State.token)
     }
 
     fun getAllAndDo(callback: Callback<List<Battle>>) {

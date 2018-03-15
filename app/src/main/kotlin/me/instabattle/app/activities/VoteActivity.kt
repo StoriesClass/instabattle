@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.app.DialogFragment
 import android.view.View
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_vote.*
 
 import me.instabattle.app.R

@@ -1,18 +1,12 @@
 package me.instabattle.app.activities
 
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.ImageButton
 import com.otaliastudios.cameraview.CameraListener
-import com.otaliastudios.cameraview.CameraUtils
 import com.otaliastudios.cameraview.CameraView
 import kotlinx.android.synthetic.main.activity_camera_view.*
 import me.instabattle.app.R
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
-import me.instabattle.app.settings.KState
-import java.io.ByteArrayOutputStream
 import me.instabattle.app.settings.State
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -30,7 +24,7 @@ class CameraViewActivity: DefaultActivity() {
         cameraView.addCameraListener(object: CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
                 try {
-                    if (!KState.creatingBattle) {
+                    if (!State.creatingBattle) {
                         State.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
                             override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
                                 PhotoManager.upload(response.body()!!.imageName, jpeg!!)

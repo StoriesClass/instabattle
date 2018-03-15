@@ -10,7 +10,6 @@ import me.instabattle.app.R
 import me.instabattle.app.settings.State
 import me.instabattle.app.adapters.UserEntryListAdapter
 import me.instabattle.app.models.Entry
-import me.instabattle.app.settings.KState
 import org.jetbrains.anko.info
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
@@ -47,7 +46,7 @@ class MyProfileActivity : DefaultActivity() {
     }
 
     fun logout(view: View) {
-        KState.token = "" // FIXME check
+        State.token = "" // FIXME check
         //State.currentUser = null
 
         MapActivity.viewPoint = MapActivity.DEFAULT_VIEW_POINT

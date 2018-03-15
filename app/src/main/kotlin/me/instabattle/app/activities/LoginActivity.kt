@@ -2,7 +2,6 @@ package me.instabattle.app.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
@@ -10,7 +9,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 import me.instabattle.app.R
 import me.instabattle.app.managers.ServiceGenerator
 import me.instabattle.app.managers.UserManager
-import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.getStackTraceString
@@ -36,8 +34,8 @@ class LoginActivity : DefaultActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .flatMap {
-                    KState.token = it.get()!!
-                    debug("Got token: %s".format(KState.token))
+                    State.token = it.get()!!
+                    debug("Got token: %s".format(State.token))
                     ServiceGenerator.initTokenServices()
                     UserManager.get(username)
                 }

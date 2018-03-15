@@ -3,11 +3,13 @@ package me.instabattle.app.activities
 import android.os.Bundle
 import android.widget.ListView
 import kotlinx.android.synthetic.main.activity_battle_list.*
+import kotlinx.android.synthetic.main.battle_list_item.*
 
 import me.instabattle.app.managers.BattleManager
 import me.instabattle.app.R
 import me.instabattle.app.adapters.BattleListAdapter
 import me.instabattle.app.models.Battle
+import org.jetbrains.anko.contentView
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast

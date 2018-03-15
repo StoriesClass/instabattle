@@ -3,7 +3,6 @@ package me.instabattle.app.managers
 import io.reactivex.Single
 import me.instabattle.app.models.Token
 import me.instabattle.app.models.User
-import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,7 +14,7 @@ object UserManager {
     private var tokenService: UserService? = null
 
     fun initTokenService() {
-        tokenService = ServiceGenerator.createService(UserService::class.java, KState.token)
+        tokenService = ServiceGenerator.createService(UserService::class.java, State.token)
     }
 
     fun getAndDo(userId: Int?, callback: Callback<User>) {

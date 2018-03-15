@@ -24,7 +24,6 @@ import me.instabattle.app.models.Battle
 import me.instabattle.app.managers.BattleManager
 import me.instabattle.app.R
 import me.instabattle.app.services.LocationService
-import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
 import org.jetbrains.anko.*
 import retrofit2.Call
@@ -134,7 +133,7 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
             toast("Sorry, you've spent all of your battle creations for this week.")
             return
         }
-        KState.creatingBattle = true
+        State.creatingBattle = true
         startActivity<CreateBattleActivity>()
     }
 

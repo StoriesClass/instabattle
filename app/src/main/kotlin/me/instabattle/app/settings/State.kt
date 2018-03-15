@@ -1,33 +1,14 @@
 package me.instabattle.app.settings
 
 import com.chibatching.kotpref.KotprefModel
+import com.chibatching.kotpref.gsonpref.gsonNullablePref
+import com.chibatching.kotpref.gsonpref.gsonPref
 import me.instabattle.app.models.Battle
 import me.instabattle.app.models.User
 
-// FIXME
-object State {
-    var chosenBattle: Battle? = null
-    lateinit var currentUser: User
-}
-
-object KState: KotprefModel() {
+object State: KotprefModel() {
+    var chosenBattle by gsonNullablePref<Battle>()
+    var currentUser by gsonPref<User>(default = User("EMPTY_USER"))
     var token by stringPref()
     var creatingBattle by booleanPref()
 }
-
-/*object UserInfo : KotprefModel() {
-    var gameLevel by enumValuePref(GameLevel.NORMAL)
-    var code by nullableStringPref()
-    var age by intPref(default = 14)
-    val prizes by stringSetPref {
-        val set = TreeSet<String>()
-        set.add("Beginner")
-        return@stringSetPref set
-    }
-}
-
-enum class GameLevel {
-    EASY,
-    NORMAL,
-    HARD
-}*/

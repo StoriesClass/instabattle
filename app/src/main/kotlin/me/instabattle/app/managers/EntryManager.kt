@@ -3,7 +3,6 @@ package me.instabattle.app.managers
 import me.instabattle.app.models.Entry
 import me.instabattle.app.models.Vote
 import me.instabattle.app.services.LocationService
-import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,7 +17,7 @@ object EntryManager {
     private var tokenService: EntryService? = null
 
     fun initTokenService() {
-        tokenService = ServiceGenerator.createService(EntryService::class.java, KState.token)
+        tokenService = ServiceGenerator.createService(EntryService::class.java, State.token)
     }
 
     fun getByBattleAndDo(battleId: Int, callback: Callback<List<Entry>>) {

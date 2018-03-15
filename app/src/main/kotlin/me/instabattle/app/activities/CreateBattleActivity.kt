@@ -3,8 +3,6 @@ package me.instabattle.app.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_create_battle.*
 
 import me.instabattle.app.R
@@ -14,7 +12,6 @@ import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Battle
 import me.instabattle.app.models.Entry
 import me.instabattle.app.services.LocationService
-import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
 import org.jetbrains.anko.info
 import org.jetbrains.anko.error
@@ -81,7 +78,7 @@ class CreateBattleActivity : DefaultActivity() {
                         if (response.isSuccessful) {
                             State.chosenBattle = response.body()
                             addFirstEntry(State.chosenBattle!!)
-                            KState.creatingBattle = false
+                            State.creatingBattle = false
                             clearFields()
                             BattleActivity.gotHereFrom = MapActivity::class.java
                             startActivity<BattleActivity>()
@@ -133,7 +130,7 @@ class CreateBattleActivity : DefaultActivity() {
 
     override fun onBackPressed() {
         clearFields()
-        KState.creatingBattle = false
+        State.creatingBattle = false
         startActivity<MapActivity>()
     }
 

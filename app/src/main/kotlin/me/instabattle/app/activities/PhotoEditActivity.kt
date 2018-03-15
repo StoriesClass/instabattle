@@ -2,14 +2,11 @@ package me.instabattle.app.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_photo_edit.*
 import me.instabattle.app.R
 import me.instabattle.app.images.Util
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
-import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
@@ -33,7 +30,7 @@ class PhotoEditActivity : DefaultActivity() {
     fun takeNewPhoto(v: View) = startActivity<CameraViewActivity>()
 
     fun useThisPhoto(v: View) {
-        if (!KState.creatingBattle) {
+        if (!State.creatingBattle) {
             State.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
                 override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
                     PhotoManager.upload(response.body()!!.imageName, photoBytes!!)

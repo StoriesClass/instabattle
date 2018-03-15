@@ -2,7 +2,6 @@ package me.instabattle.app.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -10,7 +9,6 @@ import kotlinx.android.synthetic.main.activity_signup.*
 import me.instabattle.app.R
 import me.instabattle.app.managers.ServiceGenerator
 import me.instabattle.app.managers.UserManager
-import me.instabattle.app.settings.KState
 import me.instabattle.app.settings.State
 import org.jetbrains.anko.getStackTraceString
 import org.jetbrains.anko.info
@@ -41,7 +39,7 @@ class SignUpActivity : DefaultActivity() {
                 }
                 .observeOn(AndroidSchedulers.mainThread()) // “listen” on UIThread
                 .subscribe({
-                    KState.token = it.get()!!
+                    State.token = it.get()!!
                     info("Token was received successfully")
                     ServiceGenerator.initTokenServices()
                     startActivity<MenuActivity>()
