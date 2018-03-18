@@ -20,6 +20,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
@@ -43,6 +50,7 @@ android {
     }
     sourceSets {
         main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
     }
 }
 
@@ -74,6 +82,7 @@ dependencies {
     compile 'com.cloudinary:cloudinary-android:1.2.2'
 
     testCompile 'junit:junit:4.12'
+    //testCompile 'org.junit.jupiter:junit-jupiter-api:5.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta5'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     compile "org.jetbrains.anko:anko-commons:$anko_version"
@@ -93,6 +102,8 @@ dependencies {
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
+    testImplementation "org.robolectric:robolectric:3.8"
 }
 repositories {
     mavenCentral()

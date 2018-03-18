@@ -63,7 +63,7 @@ public class EntryManagerTest {
         EntryManager.INSTANCE.getVoteAndDo(battleId, new TestCallback<List<Entry>>() {
             @Override
             public void onResponse(Call<List<Entry>> call, Response<List<Entry>> response) {
-                assertEquals((Integer)1, response.body().get(0).getBattleId());
+                assertEquals(1, response.body().get(0).getBattleId());
             }
         });
     }

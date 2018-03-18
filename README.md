@@ -9,7 +9,11 @@ The Next Big Thing.
 5. Make retrofit usage promise-like (via RxJava?)
 6. Fix layouts to make them look beautiful (OK, not very bad) at all screen sizes.
 7. Use android data binding.
+8. Clear up for RxJava disposables.
 
 ### Libs to consider
 1. Icepick
-2. Roboelectric
+2. Glide
+3. Dagger 2
+4. EventBus
+5. AndroidAnnotations
