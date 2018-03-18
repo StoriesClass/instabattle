@@ -54,6 +54,4 @@ class MyProfileActivity : DefaultActivity() {
 
         startActivity<LoginActivity>()
     }
-
-    override fun onBackPressed() = startActivity<MenuActivity>()
 }

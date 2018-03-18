@@ -90,7 +90,6 @@ class BattleListAdapter(private val ctx: Context, private val battles: List<Batt
         res.findViewById<View>(R.id.battleListItemViewOnMapBtn).setOnClickListener { v ->
             MapActivity.viewPoint = battle.location
             MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM
-            MapActivity.gotHereFrom = BattleListActivity::class.java
             ctx.startActivity<MapActivity>()
         }
 

@@ -36,6 +36,4 @@ class BattleListActivity : DefaultActivity() {
             }
         })
     }
-
-    override fun onBackPressed() = startActivity<MenuActivity>()
 }

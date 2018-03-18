@@ -49,7 +49,6 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
         circleByMarker = HashMap()
     }
 
-
     override fun onMapReady(map: GoogleMap) {
         info("map is ready")
 
@@ -137,11 +136,6 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
         startActivity<CreateBattleActivity>()
     }
 
-    override fun onBackPressed() {
-        val intent = Intent(this, gotHereFrom)
-        startActivity(intent)
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == LocationService.REQUEST_LOCATION_PERMISSION) {
             if (grantResults.size != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
@@ -164,8 +158,6 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
     companion object {
         const val DEFAULT_ZOOM = 14f
         val DEFAULT_VIEW_POINT = LatLng(59.930969, 30.352445)
-
-        var gotHereFrom: Class<*>? = null
 
         var viewPoint = DEFAULT_VIEW_POINT
         var viewZoom = DEFAULT_ZOOM

@@ -76,7 +76,6 @@ class UserEntryListAdapter(private val ctx: Context, private val entries: List<E
                 res.findViewById<View>(R.id.userEntryListItemViewOnMapBtn).setOnClickListener { v ->
                     MapActivity.viewPoint = battle.location
                     MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM
-                    MapActivity.gotHereFrom = MyProfileActivity::class.java
                     ctx.startActivity<MapActivity>()
                 }
             }

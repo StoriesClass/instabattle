@@ -19,7 +19,6 @@ class MenuActivity : DefaultActivity() {
     fun onButtonClick(view: View) {
         when (view.id) {
             R.id.mapBtn -> {
-                MapActivity.gotHereFrom = MenuActivity::class.java
                 startActivity<MapActivity>()
             }
             R.id.battlesBtn -> startActivity<BattleListActivity>()

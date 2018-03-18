@@ -54,11 +54,10 @@ class BattleActivity : DefaultActivity() {
                         return
                     }
 
-                    VoteActivity.firstEntry = response.body()!![0]
-                    VoteActivity.secondEntry = response.body()!![1]
-
-                    val voting = Intent(this@BattleActivity, VoteActivity::class.java)
-                    startActivity(voting)
+                    startActivity<VoteActivity>(
+                            "firstEntry" to response.body()!![0],
+                            "secondEntry" to response.body()!![1]
+                    )
 
                     info { "got vote" }
                 }
@@ -79,8 +78,7 @@ class BattleActivity : DefaultActivity() {
         } else if (LocationService.isTooFarFrom(State.chosenBattle)) {
             toast("You're too far away, come closer to battle for participating!")
         } else {
-            ParticipatingActivity.gotHereFrom = BattleActivity::class.java
-            startActivity<ParticipatingActivity>()
+            startActivity<CameraViewActivity>()
         }
     }
 

@@ -1,6 +1,9 @@
 package me.instabattle.app.activities
 
+import android.media.Image
 import android.os.Bundle
+import android.widget.ImageButton
+import com.otaliastudios.cameraview.CameraException
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import kotlinx.android.synthetic.main.activity_camera_view.*
@@ -8,6 +11,9 @@ import me.instabattle.app.R
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
 import me.instabattle.app.settings.State
+import org.jetbrains.anko.getStackTraceString
+import org.jetbrains.anko.info
+import org.jetbrains.anko.error
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,11 +29,12 @@ class CameraViewActivity: DefaultActivity() {
         cameraView = findViewById(R.id.camera)
         cameraView.addCameraListener(object: CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
+                info("onPictureTaken has been called")
                 try {
                     if (!State.creatingBattle) {
                         State.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
                             override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
-                                PhotoManager.upload(response.body()!!.imageName, jpeg!!)
+                                PhotoManager.upload(response.body()!!.imageName!!, jpeg!!)
                             }
 
                             override fun onFailure(call: Call<Entry>, t: Throwable) {
@@ -44,10 +51,13 @@ class CameraViewActivity: DefaultActivity() {
 
                 onBackPressed()
             }
+            override fun onCameraError(err: CameraException) {
+                error { err.getStackTraceString() }
+            }
         })
-        capturePhoto.setOnClickListener {
+        findViewById<ImageButton>(R.id.capturePhoto).setOnClickListener {
+            info("Photo has been captured")
             cameraView.capturePicture()
-
         }
     }
 

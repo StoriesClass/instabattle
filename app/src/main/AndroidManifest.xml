@@ -39,13 +39,14 @@
         </activity>
         <activity
             android:name=".activities.SignUpActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.MenuActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MyProfileActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.MenuActivity"/>
         <activity
             android:name=".activities.MapActivity"
             android:screenOrientation="portrait" />
@@ -54,7 +55,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.BattleListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.MenuActivity"/>
         <activity
             android:name=".activities.CreateBattleActivity"
             android:screenOrientation="portrait" />
@@ -63,7 +65,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.VoteActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.VoteActivity"/>
         <activity
             android:name=".activities.PhotoEditActivity"
             android:screenOrientation="portrait" />
@@ -72,8 +75,6 @@
             android:screenOrientation="portrait" />
 
         <service android:name=".services.LocationService" />
-
-        <activity android:name=".activities.ParticipatingActivity" />
     </application>
 
 </manifest>

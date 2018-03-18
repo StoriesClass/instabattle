@@ -97,7 +97,7 @@ class CreateBattleActivity : DefaultActivity() {
     private fun addFirstEntry(battle: Battle) {
         battle.createEntryAndDo(object : Callback<Entry> {
             override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
-                PhotoManager.upload(response.body()!!.imageName, photoBytes!!)
+                PhotoManager.upload(response.body()!!.imageName!!, photoBytes!!)
                  info {"new entry was sent"}
             }
 
@@ -109,11 +109,8 @@ class CreateBattleActivity : DefaultActivity() {
     }
 
     fun takeBattlePhoto(v: View) {
-        ParticipatingActivity.gotHereFrom = CreateBattleActivity::class.java
-        val takePhoto = Intent(this, ParticipatingActivity::class.java)
-
         saveFields()
-        startActivity(takePhoto)
+        startActivity<CameraViewActivity>()
     }
 
     private fun saveFields() {

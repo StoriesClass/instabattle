@@ -23,10 +23,15 @@ import retrofit2.Response
 
 class VoteActivity : DefaultActivity() {
     private var voteEnd: DialogFragment? = null
+    private lateinit var firstEntry: Entry
+    private lateinit var secondEntry: Entry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vote)
+
+        firstEntry = intent.getParcelableExtra<Entry>("firstEntry")
+        secondEntry = intent.getParcelableExtra<Entry>("secondEntry")
 
         voteEnd = VotingEndDialog()
 
@@ -34,7 +39,7 @@ class VoteActivity : DefaultActivity() {
     }
 
     fun setPhotos() {
-        firstEntry!!.getPhotoAndDo(object : BitmapCallback {
+        firstEntry.getPhotoAndDo(object : BitmapCallback {
             override fun onResponse(photo: Bitmap) {
                 runOnUiThread { firstImage.setImageBitmap(photo) }
             }
@@ -47,7 +52,7 @@ class VoteActivity : DefaultActivity() {
         })
         firstImage.invalidate()
 
-        secondEntry!!.getPhotoAndDo(object : BitmapCallback {
+        secondEntry.getPhotoAndDo(object : BitmapCallback {
             override fun onResponse(photo: Bitmap) {
                 runOnUiThread { secondImage.setImageBitmap(photo) }
             }
@@ -65,11 +70,11 @@ class VoteActivity : DefaultActivity() {
         val winnerId: Int
         val loserId: Int
         if (v.id == R.id.voteFirstBtn) {
-            winnerId = firstEntry!!.id!!
-            loserId = secondEntry!!.id!!
+            winnerId = firstEntry.id!!
+            loserId = secondEntry.id!!
         } else {
-            winnerId = secondEntry!!.id!!
-            loserId = firstEntry!!.id!!
+            winnerId = secondEntry.id!!
+            loserId = firstEntry.id!!
         }
 
         error {"Vote info: ${State.chosenBattle!!.id} ${State.currentUser.id} $winnerId  $loserId"}
@@ -86,12 +91,5 @@ class VoteActivity : DefaultActivity() {
                 error("failed to send vote")
             }
         })
-    }
-
-    override fun onBackPressed() = startActivity<BattleActivity>()
-
-    companion object {
-        var firstEntry: Entry? = null
-        var secondEntry: Entry? = null
     }
 }
