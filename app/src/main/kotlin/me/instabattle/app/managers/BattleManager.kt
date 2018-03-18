@@ -40,7 +40,7 @@ object BattleManager {
 
     fun createAndDo(authorId: Int?, name: String, latitude: Double?, longitude: Double?,
                     description: String, radius: Int?, callback: Callback<Battle>) {
-        val call = tokenService!!.create(Battle(authorId, name, description, latitude, longitude, radius))
+        val call = tokenService!!.create(Battle(authorId!!, name, description, latitude, longitude, radius))
         call.enqueue(callback)
     }
 

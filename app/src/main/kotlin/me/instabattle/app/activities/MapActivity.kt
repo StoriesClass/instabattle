@@ -105,7 +105,7 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
 
                     val newCircle = googleMap.addCircle(CircleOptions()
                             .center(nearBattle.location)
-                            .radius(nearBattle.radius.toDouble())
+                            .radius(nearBattle.radius!!.toDouble())
                             .strokeColor(Color.GREEN)
                             .strokeWidth(4f)
                             .visible(false))

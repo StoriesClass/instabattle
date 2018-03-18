@@ -11,7 +11,7 @@ import retrofit2.Callback;
 
 public class User {
     @SerializedName("created_on")
-    @Expose // FIXME what is Expose actually?
+    @Expose
     private Date createdOn;
     @SerializedName("email")
     @Expose
