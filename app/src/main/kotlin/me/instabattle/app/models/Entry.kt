@@ -3,14 +3,11 @@ package me.instabattle.app.models
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-
-import java.util.Date
-
 import kotlinx.android.parcel.Parcelize
 import me.instabattle.app.managers.BattleManager
-import me.instabattle.app.managers.BitmapCallback
-import me.instabattle.app.managers.PhotoManager
+import me.instabattle.app.managers.UserManager
 import retrofit2.Callback
+import java.util.*
 
 @Parcelize
 data class Entry(
@@ -34,7 +31,7 @@ data class Entry(
         val description: String? = null) : Parcelable {
 
     fun getAuthorAndDo(callback: Callback<User>) {
-        //UserManager.getAndDo(authorId, callback);
+        UserManager.getAndDo(authorId, callback)
     }
 
     fun getRating(): Int {

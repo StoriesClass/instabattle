@@ -1,34 +1,28 @@
 package me.instabattle.app.adapters
 
-import android.app.Activity
 import android.content.Context
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-
-import java.text.SimpleDateFormat
-import java.util.Locale
-
-import me.instabattle.app.managers.BitmapCallback
-import me.instabattle.app.models.Battle
-import me.instabattle.app.models.Entry
 import me.instabattle.app.R
-import me.instabattle.app.R.id.userEntryListItemImage
-import me.instabattle.app.settings.State
 import me.instabattle.app.activities.BattleActivity
 import me.instabattle.app.activities.MapActivity
 import me.instabattle.app.activities.MyProfileActivity
 import me.instabattle.app.managers.PhotoManager
+import me.instabattle.app.models.Battle
+import me.instabattle.app.models.Entry
+import me.instabattle.app.settings.State
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class UserEntryListAdapter(private val ctx: Context, private val entries: List<Entry>) : BaseAdapter(), AnkoLogger {
     private val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -50,9 +44,9 @@ class UserEntryListAdapter(private val ctx: Context, private val entries: List<E
 
         val entry = entries[position]
 
-        PhotoManager.getPhotoInto(ctx, entry.imageName!!,res.findViewById<ImageView>(R.id.userEntryListItemImage))
+        PhotoManager.getPhotoInto(ctx, entry.imageName!!, res.findViewById<ImageView>(R.id.listEntryImage))
 
-        res.findViewById<TextView>(R.id.userEntryListItemDate).text = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(entry.createdOn)
+        res.findViewById<TextView>(R.id.listEntryUpvotes).text = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(entry.createdOn)
         res.findViewById<TextView>(R.id.userEntryListItemUpvotes).text = entry.rating.toString() + " points"
 
         entry.getBattleAndDo(object : Callback<Battle> {

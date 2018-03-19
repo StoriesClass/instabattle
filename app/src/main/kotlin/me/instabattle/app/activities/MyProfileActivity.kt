@@ -3,19 +3,17 @@ package me.instabattle.app.activities
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_my_profile.*
-
-import java.text.SimpleDateFormat
-
 import me.instabattle.app.R
-import me.instabattle.app.settings.State
 import me.instabattle.app.adapters.UserEntryListAdapter
 import me.instabattle.app.models.Entry
-import org.jetbrains.anko.info
+import me.instabattle.app.settings.State
 import org.jetbrains.anko.error
+import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MyProfileActivity : DefaultActivity() {
@@ -45,7 +43,7 @@ class MyProfileActivity : DefaultActivity() {
         })
     }
 
-    fun logout(view: View) {
+    fun logout(v: View) {
         State.token = "" // FIXME check
         //State.currentUser = null
 

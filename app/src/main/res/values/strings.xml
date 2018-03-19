@@ -86,4 +86,7 @@
     <!-- user_entry_list_item -->
     <string name="user_entry_list_image_description">A photo of user</string>
     <string name="posted_on">Posted on:</string>
+    <string name="battle_list_image_description">Battle image</string>
+    <string name="view">View</string>
+    <string name="on_map">On map</string>
 </resources>

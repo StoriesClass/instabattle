@@ -1,8 +1,6 @@
 package me.instabattle.app.activities
 
-import android.media.Image
 import android.os.Bundle
-import android.widget.ImageButton
 import com.otaliastudios.cameraview.CameraException
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
@@ -11,9 +9,9 @@ import me.instabattle.app.R
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
 import me.instabattle.app.settings.State
+import org.jetbrains.anko.error
 import org.jetbrains.anko.getStackTraceString
 import org.jetbrains.anko.info
-import org.jetbrains.anko.error
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,9 +27,9 @@ class CameraViewActivity: DefaultActivity() {
         cameraView = findViewById(R.id.camera)
         cameraView.addCameraListener(object: CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
-                info("onPictureTaken has been called")
                 try {
                     if (!State.creatingBattle) {
+                        info("A picture has been taken while NOT creating a battle")
                         State.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
                             override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
                                 PhotoManager.upload(response.body()!!.imageName!!, jpeg!!)
@@ -42,6 +40,7 @@ class CameraViewActivity: DefaultActivity() {
                             }
                         })
                     } else {
+                        info("A picture has been taken while creating a battle")
                         CreateBattleActivity.photoBytes = jpeg
                     }
                     toast("Nice photo, " + State.currentUser.username + "!")

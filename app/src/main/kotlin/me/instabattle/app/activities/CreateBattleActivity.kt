@@ -3,7 +3,6 @@ package me.instabattle.app.activities
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_create_battle.*
-
 import me.instabattle.app.R
 import me.instabattle.app.images.Util
 import me.instabattle.app.managers.BattleManager
@@ -12,8 +11,8 @@ import me.instabattle.app.models.Battle
 import me.instabattle.app.models.Entry
 import me.instabattle.app.services.LocationService
 import me.instabattle.app.settings.State
-import org.jetbrains.anko.info
 import org.jetbrains.anko.error
+import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -34,13 +33,15 @@ class CreateBattleActivity : DefaultActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_battle)
 
-        if (photoBytes != null) {
-            newBattlePhoto.setImageBitmap(Util.decodeSampledBitmapFromBytes(photoBytes, 256, 256))
-        }
     }
 
     public override fun onResume() {
         super.onResume()
+
+        if (photoBytes != null) {
+            info("Photo bytes are not null")
+            newBattlePhoto.setImageBitmap(Util.decodeSampledBitmapFromBytes(photoBytes!!, 256, 256))
+        }
 
         newBattleTitle.setText(savedTitle)
         newBattleDescription.setText(savedDescription)

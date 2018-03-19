@@ -19,11 +19,9 @@ class PhotoEditActivity : DefaultActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo_edit)
 
-        val battleTitle = intent.getStringExtra("battleTitle")
+        editPhotoBattleTitle.text = intent.getStringExtra("battleTitle")
 
-        editPhotoBattleTitle.text = battleTitle
-
-        val photoBitmap = Util.decodeSampledBitmapFromBytes(photoBytes, 256, 256)
+        val photoBitmap = Util.decodeSampledBitmapFromBytes(photoBytes!!, 256, 256)
         currentPhoto.setImageBitmap(photoBitmap)
     }
 

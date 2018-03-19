@@ -1,25 +1,24 @@
 package me.instabattle.app.adapters
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
+import android.support.v7.widget.CardView
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-
-import java.text.SimpleDateFormat
-import java.util.Locale
-
-import me.instabattle.app.models.Battle
+import me.instabattle.app.GlideApp
 import me.instabattle.app.R
-import me.instabattle.app.models.User
-import me.instabattle.app.settings.State
 import me.instabattle.app.activities.BattleActivity
 import me.instabattle.app.activities.BattleListActivity
 import me.instabattle.app.activities.MapActivity
 import me.instabattle.app.managers.PhotoManager
+import me.instabattle.app.models.Battle
 import me.instabattle.app.models.Entry
+import me.instabattle.app.models.User
+import me.instabattle.app.settings.State
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
@@ -27,71 +26,69 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BattleListAdapter(private val ctx: Context, private val battles: List<Battle>) : BaseAdapter(), AnkoLogger {
-    private val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+class BattleListAdapter(private val ctx: Context, private val battles: List<Battle>)
+    : RecyclerView.Adapter<BattleListAdapter.ViewHolder>(), AnkoLogger {
+    // FIXME unpack cv?
+    class ViewHolder(val cv: CardView) : RecyclerView.ViewHolder(cv)
 
-    override fun getCount(): Int {
-        return battles.size
+    override fun onCreateViewHolder(parent: ViewGroup,
+                                    viewType: Int): ViewHolder {
+        val cv = LayoutInflater.from(parent.context).inflate(R.layout.battle_list_item, parent, false) as CardView
+        return ViewHolder(cv)
     }
 
-    override fun getItem(position: Int): Any {
-        return battles[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val res = convertView ?: inflater.inflate(R.layout.battle_list_item, parent, false)
-
-        val battleListItemImage = res.findViewById<ImageView>(R.id.battleListItemImage)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val battle = battles[position]
+        val l = holder.cv.findViewById<ConstraintLayout>(R.id.battleListItemLayout)
+        l.findViewById<TextView>(R.id.battleListItemTitle).text = battle.name
+        //l.findViewById<TextView>(R.id.battleListItemDate).text = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(battle.createdOn)
+        //l.findViewById<TextView>(R.id.battleListItemCount).text = battle.entriesCount.toString() + " photos"
 
-        if (battleListItemImage.drawable == null) {
-            battle.getWinnerAndDo(object : Callback<List<Entry>> {
-                override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {
-                    //FIXME pls
-                    if (response.isSuccessful) {
-                        val top = response.body()
-                        val winner = top!![0]
+        val battleListItemImage = l.findViewById<ImageView>(R.id.battleListItemImage)
+        battle.getWinnerAndDo(object : Callback<List<Entry>> {
+            override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {
+                //FIXME
+                if (response.isSuccessful) {
+                    val top = response.body()
+                    val winner = top!![0]
 
-                        PhotoManager.getPhotoInto(ctx, winner.imageName!!,battleListItemImage )
-                    } else {
-                        error("winner entry is null")
-                    }
+                    PhotoManager.getPhotoInto(ctx, winner.imageName!!, battleListItemImage)
+                } else {
+                    error("winner entry is null")
                 }
+            }
 
-                override fun onFailure(call: Call<List<Entry>>, t: Throwable) {
-                    error("can't get entry: $t")
-                }
-            })
-        }
-
-        res.findViewById<TextView>(R.id.battleListItemTitle).text = battle.name
-        res.findViewById<TextView>(R.id.battleListItemDate).text = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(battle.createdOn)
-        res.findViewById<TextView>(R.id.battleListItemCount).text = battle.entriesCount.toString() + " photos"
-
-        res.findViewById<View>(R.id.battleListItemViewBtn).setOnClickListener { v ->
-            State.chosenBattle = battle
-            BattleActivity.gotHereFrom = BattleListActivity::class.java
-            ctx.startActivity<BattleActivity>()
-        }
-        res.findViewById<View>(R.id.battleListItemViewOnMapBtn).setOnClickListener { v ->
-            MapActivity.viewPoint = battle.location
-            MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM
-            ctx.startActivity<MapActivity>()
-        }
+            override fun onFailure(call: Call<List<Entry>>, t: Throwable) {
+                error("can't get entry: $t")
+            }
+        })
 
         battle.getAuthorAndDo(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
-                res.findViewById<TextView>(R.id.battleListItemAuthor).text = "by " + response.body()!!.username
+                l.findViewById<TextView>(R.id.battleListItemAuthor).text = "by " + response.body()!!.username
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
                 error("can't get battle author")
             }
         })
-        return res
+
+        l.findViewById<View>(R.id.battleListItemViewBtn).setOnClickListener { v ->
+            State.chosenBattle = battle
+            BattleActivity.gotHereFrom = BattleListActivity::class.java
+            ctx.startActivity<BattleActivity>("battle" to battle)
+        }
+        l.findViewById<View>(R.id.battleListItemMapBtn).setOnClickListener { v ->
+            MapActivity.viewPoint = battle.location
+            MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM
+            ctx.startActivity<MapActivity>()
+        }
     }
+
+    override fun onViewRecycled(holder: ViewHolder) {
+        super.onViewRecycled(holder)
+        GlideApp.with(ctx).clear(holder.cv.findViewById<ImageView>(R.id.battleListItemImage))
+    }
+
+    override fun getItemCount() = battles.size
 }

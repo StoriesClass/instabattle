@@ -3,16 +3,13 @@ package me.instabattle.app.managers
 import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-
 import com.cloudinary.Cloudinary
 import com.cloudinary.utils.ObjectUtils
 import me.instabattle.app.GlideApp
-
-import java.io.ByteArrayInputStream
-import java.io.IOException
-
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
+import java.io.ByteArrayInputStream
+import java.io.IOException
 import kotlin.concurrent.thread
 
 object PhotoManager: AnkoLogger {
@@ -32,8 +29,9 @@ object PhotoManager: AnkoLogger {
                 .load(url)
                 //.placeholder(R.mipmap.ic_launcher) // can also be a drawable
                 //.error(R.mipmap.future_studio_launcher) // will be displayed if the image cannot be loaded
+                .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(imageView);
+                .into(imageView)
     }
 
     fun upload(name: String, photo: ByteArray) {

@@ -14,7 +14,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <ImageView
-        android:id="@+id/userEntryListItemImage"
+        android:id="@+id/listEntryImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginBottom="8dp"
@@ -41,17 +41,17 @@
         tools:text="Title" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/listEntryAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/posted_on"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/userEntryListItemDate"
+        app:layout_constraintBottom_toTopOf="@+id/listEntryUpvotes"
         app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userEntryListItemImage"
+        app:layout_constraintStart_toEndOf="@+id/listEntryImage"
         app:layout_constraintTop_toBottomOf="@+id/userEntryListItemTitle"
         app:layout_constraintVertical_bias="0.13"
         app:layout_constraintVertical_chainStyle="packed"
@@ -59,16 +59,16 @@
         tools:layout_conversion_absoluteWidth="71dp" />
 
     <TextView
-        android:id="@+id/userEntryListItemDate"
+        android:id="@+id/listEntryUpvotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/userEntryListItemUpvotes"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="@+id/listEntryAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/listEntryAuthor"
         tools:layout_conversion_absoluteHeight="20dp"
         tools:layout_conversion_absoluteWidth="66dp"
-        tools:text="January 3" />
+        tools:text="20/04/2018" />
 
     <TextView
         android:id="@+id/userEntryListItemUpvotes"
@@ -76,11 +76,11 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/userEntryListItemDate"
-        app:layout_constraintTop_toBottomOf="@+id/userEntryListItemDate"
+        app:layout_constraintStart_toStartOf="@+id/listEntryUpvotes"
+        app:layout_constraintTop_toBottomOf="@+id/listEntryUpvotes"
         tools:layout_conversion_absoluteHeight="20dp"
         tools:layout_conversion_absoluteWidth="17dp"
-        tools:text="10" />
+        tools:text="10 photos" />
 
     <Button
         android:id="@+id/userEntryListItemViewBtn"
@@ -90,7 +90,7 @@
         android:text="@string/view_battle"
         android:textSize="20sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/userEntryListItemViewOnMapBtn"
-        app:layout_constraintStart_toEndOf="@+id/userEntryListItemImage"
+        app:layout_constraintStart_toEndOf="@+id/listEntryImage"
         tools:layout_conversion_absoluteHeight="50dp"
         tools:layout_conversion_absoluteWidth="190dp" />
 
@@ -102,7 +102,7 @@
         android:layout_marginRight="16dp"
         android:text="@string/view_on_map"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/userEntryListItemImage"
+        app:layout_constraintBottom_toBottomOf="@+id/listEntryImage"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/userEntryListItemViewBtn"
         tools:layout_conversion_absoluteHeight="50dp"

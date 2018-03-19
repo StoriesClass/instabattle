@@ -18,7 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class BattleActivity : DefaultActivity() {
-    private var entryListAdapter: EntryListAdapter? = null
+    private lateinit var entryListAdapter: EntryListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +38,13 @@ class BattleActivity : DefaultActivity() {
                 error { "cant get entries: $t" }
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (::entryListAdapter.isInitialized)
+            entryListAdapter.notifyDataSetChanged()
     }
 
     override fun onBackPressed() {

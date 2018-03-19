@@ -28,7 +28,7 @@ object Util : AnkoLogger{
         return inSampleSize
     }
 
-    private fun decodeSampledBitmapFromBytes(bytes: ByteArray, reqWidth: Int, reqHeight: Int, offset: Int =0): Bitmap {
+    fun decodeSampledBitmapFromBytes(bytes: ByteArray, reqWidth: Int, reqHeight: Int, offset: Int = 0): Bitmap {
         // First decode with inJustDecodeBounds=true to check dimensions
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
