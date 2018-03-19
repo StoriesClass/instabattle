@@ -33,10 +33,6 @@ data class Entry(
         @field:SerializedName("description") @field:Expose
         val description: String? = null) : Parcelable {
 
-    fun getPhotoAndDo(callback: BitmapCallback) {
-        PhotoManager.getPhotoAndDo(this.imageName!!, callback)
-    }
-
     fun getAuthorAndDo(callback: Callback<User>) {
         //UserManager.getAndDo(authorId, callback);
     }

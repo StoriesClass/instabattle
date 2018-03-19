@@ -27,7 +27,8 @@ android:layout_height="match_parent">
     app:cameraGestureScrollHorizontal="exposureCorrection"
     app:cameraGestureScrollVertical="none"
     app:cameraJpegQuality="100"
-    app:cameraSessionType="picture" />
+    app:cameraSessionType="picture"
+    app:cameraPictureSizeAspectRatio="1:1"/>
 
 <!-- Controls -->
 <LinearLayout

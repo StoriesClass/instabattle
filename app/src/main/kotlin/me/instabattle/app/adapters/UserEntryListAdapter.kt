@@ -17,10 +17,12 @@ import me.instabattle.app.managers.BitmapCallback
 import me.instabattle.app.models.Battle
 import me.instabattle.app.models.Entry
 import me.instabattle.app.R
+import me.instabattle.app.R.id.userEntryListItemImage
 import me.instabattle.app.settings.State
 import me.instabattle.app.activities.BattleActivity
 import me.instabattle.app.activities.MapActivity
 import me.instabattle.app.activities.MyProfileActivity
+import me.instabattle.app.managers.PhotoManager
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
@@ -48,15 +50,7 @@ class UserEntryListAdapter(private val ctx: Context, private val entries: List<E
 
         val entry = entries[position]
 
-        entry.getPhotoAndDo(object : BitmapCallback {
-            override fun onResponse(photo: Bitmap) {
-                (ctx as Activity).runOnUiThread { res.findViewById<ImageView>(R.id.userEntryListItemImage).setImageBitmap(photo) }
-            }
-
-            override fun onFailure(e: Exception) {
-                error("Can't get entry photo")
-            }
-        })
+        PhotoManager.getPhotoInto(ctx, entry.imageName!!,res.findViewById<ImageView>(R.id.userEntryListItemImage))
 
         res.findViewById<TextView>(R.id.userEntryListItemDate).text = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(entry.createdOn)
         res.findViewById<TextView>(R.id.userEntryListItemUpvotes).text = entry.rating.toString() + " points"

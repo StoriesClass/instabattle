@@ -1,61 +1,49 @@
 package me.instabattle.app.managers
 
-import android.util.Log
+import android.content.Context
+import android.widget.ImageView
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 import com.cloudinary.Cloudinary
 import com.cloudinary.utils.ObjectUtils
+import me.instabattle.app.GlideApp
 
 import java.io.ByteArrayInputStream
 import java.io.IOException
-import java.net.MalformedURLException
-import java.net.URL
-import java.util.HashMap
 
-import me.instabattle.app.images.Util
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.error
+import kotlin.concurrent.thread
 
-object PhotoManager {
-    private val TAG = "PhotoManager"
-    private val cloudinary: Cloudinary
-    private val config = HashMap<String, String>()
+object PhotoManager: AnkoLogger {
+    private val config = mapOf(
+            "cloud_name" to "instabattle",
+            "api_key" to "277887798658767",
+            "api_secret" to "V3VsI9jHpatwH1nsVgf6NP11nSg"
+    )
+    private val cloudinary = Cloudinary(config)
 
-    init {
-        config["cloud_name"] = "instabattle"
-        config["api_key"] = "277887798658767"
-        config["api_secret"] = "V3VsI9jHpatwH1nsVgf6NP11nSg"
-        cloudinary = Cloudinary(config)
-    }
-
-    fun getPhotoAndDo(name: String, callback: BitmapCallback) {
-        val exception: Exception
-        try {
-            val url = URL(cloudinary.url().generate(name) + ".jpg")
-            Thread {
-                try {
-                    val image = Util.decodeSampledBitmapFromURL(url, 256, 256)
-                    callback.onResponse(image)
-                    Log.d(TAG, "Got photo from " + url.toString())
-                } catch (e: IOException) {
-                    Log.e(TAG, "cannot establish connection with " + url.toString())
-                    callback.onFailure(e)
-                }
-            }.start()
-            return
-        } catch (e: MalformedURLException) {
-            Log.e(TAG, "can't create url from name")
-            exception = e
-        }
-
-        Thread { callback.onFailure(exception) }.start()
+    fun getPhotoInto(ctx: Context, name: String, imageView: ImageView) {
+        val url = cloudinary.url().generate(name) + ".jpg"
+        //val url = URL(cloudinary.url().generate(name) + ".jpg")
+        //val image = Util.decodeSampledBitmapFromURL(url, 256, 256)
+        GlideApp
+                .with(ctx)
+                .load(url)
+                //.placeholder(R.mipmap.ic_launcher) // can also be a drawable
+                //.error(R.mipmap.future_studio_launcher) // will be displayed if the image cannot be loaded
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(imageView);
     }
 
     fun upload(name: String, photo: ByteArray) {
-        Thread {
+        thread {
             try {
                 val params = ObjectUtils.asMap("public_id", name)
                 cloudinary.uploader().upload(ByteArrayInputStream(photo), params)
             } catch (e: IOException) {
-                Log.e("Cloudinary fail", "can't upload photo")
+                error("Can't upload photo")
             }
-        }.start()
+        }
     }
 }

@@ -55,9 +55,13 @@ class CameraViewActivity: DefaultActivity() {
                 error { err.getStackTraceString() }
             }
         })
-        findViewById<ImageButton>(R.id.capturePhoto).setOnClickListener {
+        capturePhoto.setOnClickListener {
             info("Photo has been captured")
             cameraView.capturePicture()
+        }
+        toggleCamera.setOnClickListener {
+            info("Camera has been toggled")
+            cameraView.toggleFacing()
         }
     }
 

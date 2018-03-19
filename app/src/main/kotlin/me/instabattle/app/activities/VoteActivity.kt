@@ -1,28 +1,23 @@
 package me.instabattle.app.activities
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.app.DialogFragment
 import android.view.View
 import kotlinx.android.synthetic.main.activity_vote.*
 
 import me.instabattle.app.R
-import me.instabattle.app.managers.BitmapCallback
 import me.instabattle.app.managers.EntryManager
 import me.instabattle.app.models.Vote
 import me.instabattle.app.settings.State
-import me.instabattle.app.dialogs.VotingEndDialog
+import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
-import org.jetbrains.anko.info
-import org.jetbrains.anko.error
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+import org.jetbrains.anko.*
+
 class VoteActivity : DefaultActivity() {
-    private var voteEnd: DialogFragment? = null
     private lateinit var firstEntry: Entry
     private lateinit var secondEntry: Entry
 
@@ -33,37 +28,12 @@ class VoteActivity : DefaultActivity() {
         firstEntry = intent.getParcelableExtra<Entry>("firstEntry")
         secondEntry = intent.getParcelableExtra<Entry>("secondEntry")
 
-        voteEnd = VotingEndDialog()
-
         setPhotos()
     }
 
     fun setPhotos() {
-        firstEntry.getPhotoAndDo(object : BitmapCallback {
-            override fun onResponse(photo: Bitmap) {
-                runOnUiThread { firstImage.setImageBitmap(photo) }
-            }
-
-            override fun onFailure(e: Exception) {
-                toast("Failed to get first photo, try again later.")
-                error("can't get firstEntry photo")
-                onBackPressed()
-            }
-        })
-        firstImage.invalidate()
-
-        secondEntry.getPhotoAndDo(object : BitmapCallback {
-            override fun onResponse(photo: Bitmap) {
-                runOnUiThread { secondImage.setImageBitmap(photo) }
-            }
-
-            override fun onFailure(e: Exception) {
-                toast("Failed to get first photo, try again later.")
-                error("can't get secondEntry photo")
-                onBackPressed()
-            }
-        })
-        secondImage.invalidate()
+        PhotoManager.getPhotoInto(this, firstEntry.imageName!!, firstImage)
+        PhotoManager.getPhotoInto(this, secondEntry.imageName!!, secondImage)
     }
 
     fun vote(v: View) {
@@ -77,15 +47,20 @@ class VoteActivity : DefaultActivity() {
             loserId = firstEntry.id!!
         }
 
-        error {"Vote info: ${State.chosenBattle!!.id} ${State.currentUser.id} $winnerId  $loserId"}
+        info {"Vote info: ${State.chosenBattle!!.id} ${State.currentUser.id} $winnerId  $loserId"}
 
         EntryManager.voteAndDo(State.chosenBattle!!.id, State.currentUser.id, winnerId, loserId, object : Callback<Vote> {
             override fun onResponse(call: Call<Vote>, response: Response<Vote>) {
-                toast("Nice vote, ${State.currentUser.username}!")
-                onBackPressed()
                 info("vote sent")
+                alert ("Nice vote, ${State.currentUser.username}!") {
+                    positiveButton("Vote again") {
+                        setPhotos()
+                    }
+                    negativeButton("To battle") {
+                        startActivity<BattleActivity>()
+                    }
+                }.show()
             }
-
             override fun onFailure(call: Call<Vote>, t: Throwable) {
                 toast("Failed to vote, try again later.")
                 error("failed to send vote")

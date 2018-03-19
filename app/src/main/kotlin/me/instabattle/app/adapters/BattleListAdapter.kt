@@ -1,8 +1,6 @@
 package me.instabattle.app.adapters
 
-import android.app.Activity
 import android.content.Context
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,6 @@ import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-import me.instabattle.app.managers.BitmapCallback
 import me.instabattle.app.models.Battle
 import me.instabattle.app.R
 import me.instabattle.app.models.User
@@ -21,6 +18,7 @@ import me.instabattle.app.settings.State
 import me.instabattle.app.activities.BattleActivity
 import me.instabattle.app.activities.BattleListActivity
 import me.instabattle.app.activities.MapActivity
+import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
@@ -57,16 +55,8 @@ class BattleListAdapter(private val ctx: Context, private val battles: List<Batt
                     if (response.isSuccessful) {
                         val top = response.body()
                         val winner = top!![0]
-                        winner.getPhotoAndDo(object : BitmapCallback {
-                            override fun onResponse(photo: Bitmap) {
-                                (ctx as Activity).runOnUiThread { battleListItemImage.setImageBitmap(photo) }
-                            }
 
-                            override fun onFailure(e: Exception) {
-                                error("Can't get winner's photo")
-                            }
-                        })
-
+                        PhotoManager.getPhotoInto(ctx, winner.imageName!!,battleListItemImage )
                     } else {
                         error("winner entry is null")
                     }

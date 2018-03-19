@@ -12,6 +12,7 @@ import android.widget.TextView
 import me.instabattle.app.managers.BitmapCallback
 import me.instabattle.app.models.Entry
 import me.instabattle.app.R
+import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.User
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -19,8 +20,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class EntryListAdapter(private val context: Context, private val entries: List<Entry>) : BaseAdapter(), AnkoLogger {
-    private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+class EntryListAdapter(private val ctx: Context, private val entries: List<Entry>) : BaseAdapter(), AnkoLogger {
+    private val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getCount(): Int {
         return entries.size
@@ -41,16 +42,9 @@ class EntryListAdapter(private val context: Context, private val entries: List<E
         val entry = entries[position]
 
         if (listEntryImage.drawable == null) {
-            entry.getPhotoAndDo(object : BitmapCallback {
-                override fun onResponse(photo: Bitmap) {
-                    (context as Activity).runOnUiThread { listEntryImage.setImageBitmap(photo) }
-                }
-
-                override fun onFailure(e: Exception) {
-                    error("Can't get entry photo")
-                }
-            })
+            PhotoManager.getPhotoInto(ctx, entry.imageName!!, listEntryImage)
         }
+
         res.findViewById<TextView>(R.id.listEntryUpvotes).text = entry.rating.toString() + " points"
         entry.getAuthorAndDo(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
