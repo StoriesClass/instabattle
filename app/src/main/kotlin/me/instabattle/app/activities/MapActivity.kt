@@ -1,14 +1,12 @@
 package me.instabattle.app.activities
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.support.v4.app.FragmentActivity
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.View
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -17,18 +15,16 @@ import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-
-import java.util.HashMap
-
-import me.instabattle.app.models.Battle
-import me.instabattle.app.managers.BattleManager
 import me.instabattle.app.R
+import me.instabattle.app.managers.BattleManager
+import me.instabattle.app.models.Battle
 import me.instabattle.app.services.LocationService
 import me.instabattle.app.settings.State
 import org.jetbrains.anko.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
     private lateinit var googleMap: GoogleMap
@@ -41,6 +37,8 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+
+        MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)

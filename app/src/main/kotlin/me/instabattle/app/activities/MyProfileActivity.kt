@@ -1,6 +1,8 @@
 package me.instabattle.app.activities
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import me.instabattle.app.R
@@ -17,11 +19,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MyProfileActivity : DefaultActivity() {
-    private var userEntryListAdapter: UserEntryListAdapter? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_profile)
+
+        viewManager = LinearLayoutManager(this)
 
         val registrationDate = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(State.currentUser.createdOn)
 
@@ -32,8 +38,13 @@ class MyProfileActivity : DefaultActivity() {
         State.currentUser.getEntriesAndDo(object : Callback<List<Entry>> {
             override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {
                 info("got user entries")
-                userEntryListAdapter = UserEntryListAdapter(this@MyProfileActivity, response.body()!!)
-                userEntryList.adapter = userEntryListAdapter
+                viewAdapter = UserEntryListAdapter(this@MyProfileActivity, response.body()!!)
+
+                recyclerView = findViewById<RecyclerView>(R.id.userEntryList).apply {
+                    setHasFixedSize(true)
+                    layoutManager = viewManager
+                    adapter = viewAdapter
+                }
             }
 
             override fun onFailure(call: Call<List<Entry>>, t: Throwable) {

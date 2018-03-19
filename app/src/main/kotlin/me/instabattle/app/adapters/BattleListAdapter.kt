@@ -31,11 +31,8 @@ class BattleListAdapter(private val ctx: Context, private val battles: List<Batt
     // FIXME unpack cv?
     class ViewHolder(val cv: CardView) : RecyclerView.ViewHolder(cv)
 
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): ViewHolder {
-        val cv = LayoutInflater.from(parent.context).inflate(R.layout.battle_list_item, parent, false) as CardView
-        return ViewHolder(cv)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.battle_list_item, parent, false) as CardView)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val battle = battles[position]
@@ -73,14 +70,14 @@ class BattleListAdapter(private val ctx: Context, private val battles: List<Batt
             }
         })
 
-        l.findViewById<View>(R.id.battleListItemViewBtn).setOnClickListener { v ->
+        l.findViewById<View>(R.id.battleListItemViewBtn).setOnClickListener {
             State.chosenBattle = battle
             BattleActivity.gotHereFrom = BattleListActivity::class.java
             ctx.startActivity<BattleActivity>("battle" to battle)
         }
-        l.findViewById<View>(R.id.battleListItemMapBtn).setOnClickListener { v ->
+
+        l.findViewById<View>(R.id.battleListItemMapBtn).setOnClickListener {
             MapActivity.viewPoint = battle.location
-            MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM
             ctx.startActivity<MapActivity>()
         }
     }

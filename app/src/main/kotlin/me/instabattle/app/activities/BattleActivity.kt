@@ -2,6 +2,8 @@ package me.instabattle.app.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.activity_battle.*
 import me.instabattle.app.R
@@ -18,19 +20,29 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class BattleActivity : DefaultActivity() {
-    private lateinit var entryListAdapter: EntryListAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_battle)
+
+        viewManager = LinearLayoutManager(this)
 
         battle_title.text = State.chosenBattle!!.name
         battle_description.text = State.chosenBattle!!.description
 
         State.chosenBattle!!.getEntriesAndDo(object : Callback<List<Entry>> {
             override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {
-                entryListAdapter = EntryListAdapter(this@BattleActivity, response.body()!!)
-                entryList.adapter = entryListAdapter
+                viewAdapter = EntryListAdapter(this@BattleActivity, response.body()!!)
+
+
+                recyclerView = findViewById<RecyclerView>(R.id.entryList).apply {
+                    setHasFixedSize(true)
+                    layoutManager = viewManager
+                    adapter = viewAdapter
+                }
             }
 
             override fun onFailure(call: Call<List<Entry>>, t: Throwable) {
@@ -43,8 +55,8 @@ class BattleActivity : DefaultActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (::entryListAdapter.isInitialized)
-            entryListAdapter.notifyDataSetChanged()
+        if (::viewAdapter.isInitialized)
+            viewAdapter.notifyDataSetChanged()
     }
 
     override fun onBackPressed() {
