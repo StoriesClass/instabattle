@@ -3,6 +3,7 @@ package me.instabattle.app.managers
 import android.util.Base64
 
 import com.google.gson.GsonBuilder
+import me.instabattle.app.BuildConfig
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,23 +12,18 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceGenerator {
-    private val API_BASE_URL = "https://instabattle2.herokuapp.com/"
-    private val logging = HttpLoggingInterceptor()
-    private val httpClient = OkHttpClient.Builder()
+    private val logging = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY // set desired log level
+    }
+    private val httpClient = OkHttpClient.Builder().apply {
+        interceptors().add(logging) // add logging as last interceptor
+    }
     private val gson = GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ")
             .create()
     private val builder = Retrofit.Builder()
-            .baseUrl(API_BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
-
-    init {
-        // set desired log level
-        logging.level = HttpLoggingInterceptor.Level.BODY
-
-        // add logging as last interceptor
-        httpClient.interceptors().add(logging)
-    }
 
     fun <S> createService(serviceClass: Class<S>): S {
         return createService(serviceClass, null, null)
@@ -37,8 +33,8 @@ object ServiceGenerator {
             val credentials = "$email:$password"
             val basic = "Basic " + Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
 
-            httpClient.addInterceptor { chain ->
-                val original = chain.request()
+            httpClient.addInterceptor {
+                val original = it.request()
 
                 val requestBuilder = original.newBuilder()
                         .header("Authorization", basic)
@@ -46,11 +42,10 @@ object ServiceGenerator {
                         .method(original.method(), original.body())
 
                 val request = requestBuilder.build()
-                chain.proceed(request)
+                it.proceed(request)
             }
         }
-        val client = httpClient.build()
-        val retrofit = builder.client(client)
+        val retrofit = builder.client(httpClient.build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
         return retrofit.create(serviceClass)

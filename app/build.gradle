@@ -38,8 +38,13 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", "\"https://instabattle2.herokuapp.com/\""
+        }
         release {
+            buildConfigField "String", "BASE_URL", "\"https://instabattle2.herokuapp.com/\""
             minifyEnabled false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
