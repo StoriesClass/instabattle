@@ -1,14 +1,15 @@
 package me.instabattle.app.activities
 
 import android.os.Bundle
+import com.otaliastudios.cameraview.AspectRatio
 import com.otaliastudios.cameraview.CameraException
 import com.otaliastudios.cameraview.CameraListener
-import com.otaliastudios.cameraview.CameraView
+import com.otaliastudios.cameraview.SizeSelectors
 import kotlinx.android.synthetic.main.activity_camera_view.*
 import me.instabattle.app.R
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.error
 import org.jetbrains.anko.getStackTraceString
 import org.jetbrains.anko.info
@@ -19,18 +20,16 @@ import retrofit2.Response
 import java.io.IOException
 
 class CameraViewActivity: DefaultActivity() {
-    lateinit var cameraView: CameraView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera_view)
-        cameraView = findViewById(R.id.camera)
-        cameraView.addCameraListener(object: CameraListener() {
+        setSize()
+        camera.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
                 try {
-                    if (!State.creatingBattle) {
+                    if (!GlobalState.creatingBattle) {
                         info("A picture has been taken while NOT creating a battle")
-                        State.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
+                        GlobalState.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
                             override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
                                 PhotoManager.upload(response.body()!!.imageName!!, jpeg!!)
                             }
@@ -43,7 +42,7 @@ class CameraViewActivity: DefaultActivity() {
                         info("A picture has been taken while creating a battle")
                         CreateBattleActivity.photoBytes = jpeg
                     }
-                    toast("Nice photo, " + State.currentUser.username + "!")
+                    toast("Nice photo, " + GlobalState.currentUser.username + "!")
                 } catch (e: IOException) {
                     error("failed to load picture from MediaStore") // FIXME no handling
                 }
@@ -56,26 +55,41 @@ class CameraViewActivity: DefaultActivity() {
         })
         capturePhoto.setOnClickListener {
             info("Photo has been captured")
-            cameraView.capturePicture()
+            camera.capturePicture()
         }
         toggleCamera.setOnClickListener {
             info("Camera has been toggled")
-            cameraView.toggleFacing()
+            camera.toggleFacing()
         }
+    }
+
+    // FIXME it's not working for some reason :hmm:
+    private fun setSize() {
+        val width = SizeSelectors.minWidth(1000)
+        val height = SizeSelectors.minWidth(2000)
+        val dimensions = SizeSelectors.and(width, height) // Matches sizes bigger than 1000x2000.
+        val ratio = SizeSelectors.aspectRatio(AspectRatio.of(1, 1), 0f) // Matches 1:1 sizes.
+
+        val result = SizeSelectors.or(
+                SizeSelectors.and(ratio, dimensions), // Try to match both constraints
+                ratio, // If none is found, at least try to match the aspect ratio
+                SizeSelectors.biggest() // If none is found, take the biggest
+        )
+        camera.setPictureSize(result)
     }
 
     override fun onResume() {
         super.onResume()
-        cameraView.start()
+        camera.start()
     }
 
     override fun onPause() {
         super.onPause()
-        cameraView.stop()
+        camera.stop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        cameraView.destroy()
+        camera.destroy()
     }
 }

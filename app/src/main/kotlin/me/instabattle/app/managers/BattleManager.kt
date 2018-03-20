@@ -1,24 +1,18 @@
 package me.instabattle.app.managers
 
 import android.location.Location
-
 import me.instabattle.app.models.Battle
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 object BattleManager {
     private val service = ServiceGenerator.createService(BattleService::class.java)
     private var tokenService: BattleService? = null
 
     fun initTokenService() {
-        tokenService = ServiceGenerator.createService(BattleService::class.java, State.token)
+        tokenService = ServiceGenerator.createService(BattleService::class.java, GlobalState.token)
     }
 
     fun getAllAndDo(callback: Callback<List<Battle>>) {

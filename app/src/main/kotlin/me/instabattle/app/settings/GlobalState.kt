@@ -6,7 +6,7 @@ import com.chibatching.kotpref.gsonpref.gsonPref
 import me.instabattle.app.models.Battle
 import me.instabattle.app.models.User
 
-object State: KotprefModel() {
+object GlobalState : KotprefModel() {
     var chosenBattle by gsonNullablePref<Battle>()
     var currentUser by gsonPref<User>(default = User("EMPTY_USER"))
     var token by stringPref()

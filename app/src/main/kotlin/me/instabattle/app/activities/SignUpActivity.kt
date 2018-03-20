@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_signup.*
 import me.instabattle.app.R
 import me.instabattle.app.managers.ServiceGenerator
 import me.instabattle.app.managers.UserManager
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.getStackTraceString
 import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
@@ -34,12 +34,12 @@ class SignUpActivity : DefaultActivity() {
                 .observeOn(Schedulers.io())
                 .flatMap { u ->
                         info("User was created successfully")
-                        State.currentUser = u
+                    GlobalState.currentUser = u
                         UserManager.getToken(loginText, passwordText)
                 }
                 .observeOn(AndroidSchedulers.mainThread()) // “listen” on UIThread
                 .subscribe({
-                    State.token = it.get()!!
+                    GlobalState.token = it.get()!!
                     info("Token was received successfully")
                     ServiceGenerator.initTokenServices()
                     startActivity<MenuActivity>()

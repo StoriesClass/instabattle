@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import me.instabattle.app.R
 import me.instabattle.app.managers.ServiceGenerator
 import me.instabattle.app.managers.UserManager
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.getStackTraceString
 import org.jetbrains.anko.startActivity
@@ -34,14 +34,14 @@ class LoginActivity : DefaultActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .flatMap {
-                    State.token = it.get()!!
-                    debug("Got token: %s".format(State.token))
+                    GlobalState.token = it.get()!!
+                    debug("Got token: %s".format(GlobalState.token))
                     ServiceGenerator.initTokenServices()
                     UserManager.get(username)
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    State.currentUser = it
+                    GlobalState.currentUser = it
                     startActivity<MenuActivity>()
                 }, {
                     when (it) {

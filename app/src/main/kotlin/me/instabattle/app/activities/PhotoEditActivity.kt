@@ -7,7 +7,7 @@ import me.instabattle.app.R
 import me.instabattle.app.images.Util
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
@@ -28,8 +28,8 @@ class PhotoEditActivity : DefaultActivity() {
     fun takeNewPhoto(v: View) = startActivity<CameraViewActivity>()
 
     fun useThisPhoto(v: View) {
-        if (!State.creatingBattle) {
-            State.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
+        if (!GlobalState.creatingBattle) {
+            GlobalState.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
                 override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
                     PhotoManager.upload(response.body()!!.imageName!!, photoBytes!!)
                 }

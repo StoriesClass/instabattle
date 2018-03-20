@@ -1,25 +1,25 @@
 package me.instabattle.app.activities
 
 import android.os.Bundle
-import android.app.DialogFragment
 import android.view.View
+import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.activity_vote.*
-
 import me.instabattle.app.R
 import me.instabattle.app.managers.EntryManager
-import me.instabattle.app.models.Vote
-import me.instabattle.app.settings.State
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
+import me.instabattle.app.models.Vote
+import me.instabattle.app.settings.GlobalState
+import org.jetbrains.anko.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-import org.jetbrains.anko.*
-
 class VoteActivity : DefaultActivity() {
-    private lateinit var firstEntry: Entry
-    private lateinit var secondEntry: Entry
+    @State
+    lateinit var firstEntry: Entry
+    @State
+    lateinit var secondEntry: Entry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +47,12 @@ class VoteActivity : DefaultActivity() {
             loserId = firstEntry.id!!
         }
 
-        info {"Vote info: ${State.chosenBattle!!.id} ${State.currentUser.id} $winnerId  $loserId"}
+        info { "Vote info: ${GlobalState.chosenBattle!!.id} ${GlobalState.currentUser.id} $winnerId  $loserId" }
 
-        EntryManager.voteAndDo(State.chosenBattle!!.id, State.currentUser.id, winnerId, loserId, object : Callback<Vote> {
+        EntryManager.voteAndDo(GlobalState.chosenBattle!!.id, GlobalState.currentUser.id, winnerId, loserId, object : Callback<Vote> {
             override fun onResponse(call: Call<Vote>, response: Response<Vote>) {
                 info("vote sent")
-                alert ("Nice vote, ${State.currentUser.username}!") {
+                alert("Nice vote, ${GlobalState.currentUser.username}!") {
                     positiveButton("Vote again") {
                         setPhotos()
                     }

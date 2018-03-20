@@ -2,6 +2,7 @@ package me.instabattle.app.activities
 
 import android.os.Bundle
 import android.view.View
+import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.activity_create_battle.*
 import me.instabattle.app.R
 import me.instabattle.app.images.Util
@@ -10,7 +11,7 @@ import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Battle
 import me.instabattle.app.models.Entry
 import me.instabattle.app.services.LocationService
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
@@ -20,14 +21,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CreateBattleActivity : DefaultActivity() {
-    private val battleTitle: String
-        get() = newBattleTitle.text.toString()
+    @State
+    var battleTitle = ""
 
-    private val battleDescription: String
-        get() = newBattleDescription.text.toString()
+    @State
+    var battleDescription = ""
 
-    private val battleRadius: String
-        get() = newBattleRadius.text.toString()
+    @State
+    var battleRadius = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +44,9 @@ class CreateBattleActivity : DefaultActivity() {
             newBattlePhoto.setImageBitmap(Util.decodeSampledBitmapFromBytes(photoBytes!!, 256, 256))
         }
 
-        newBattleTitle.setText(savedTitle)
-        newBattleDescription.setText(savedDescription)
-        newBattleRadius.setText(savedRadius)
+        newBattleTitle.setText(battleTitle)
+        newBattleDescription.setText(battleDescription)
+        newBattleRadius.setText(battleRadius)
     }
 
     private fun validateBattle(): Boolean {
@@ -66,7 +67,7 @@ class CreateBattleActivity : DefaultActivity() {
         }
 
         val loc = LocationService.getCurrentLocation()
-        BattleManager.createAndDo(State.currentUser.id,
+        BattleManager.createAndDo(GlobalState.currentUser.id,
                 battleTitle,
                 loc.latitude,
                 loc.longitude,
@@ -76,9 +77,9 @@ class CreateBattleActivity : DefaultActivity() {
                     override fun onResponse(call: Call<Battle>, response: Response<Battle>) {
                         info {"New battle was sent"}
                         if (response.isSuccessful) {
-                            State.chosenBattle = response.body()
-                            addFirstEntry(State.chosenBattle!!)
-                            State.creatingBattle = false
+                            GlobalState.chosenBattle = response.body()
+                            addFirstEntry(GlobalState.chosenBattle!!)
+                            GlobalState.creatingBattle = false
                             clearFields()
                             BattleActivity.gotHereFrom = MapActivity::class.java
                             startActivity<BattleActivity>()
@@ -114,29 +115,25 @@ class CreateBattleActivity : DefaultActivity() {
     }
 
     private fun saveFields() {
-        savedTitle = battleTitle
-        savedDescription = battleDescription
-        savedRadius = battleRadius
+        battleTitle = newBattleTitle.text.toString()
+        battleDescription = newBattleDescription.text.toString()
+        battleRadius = newBattleRadius.text.toString()
     }
 
     private fun clearFields() {
-        savedRadius = ""
-        savedDescription = ""
-        savedTitle = ""
+        battleTitle = ""
+        battleDescription = ""
+        battleRadius = ""
     }
 
     override fun onBackPressed() {
         clearFields()
-        State.creatingBattle = false
+        GlobalState.creatingBattle = false
         startActivity<MapActivity>()
     }
 
     companion object {
         private const val BATTLE_TITLE_MINIMUM_LENGTH = 1
-
-        private var savedTitle = ""
-        private var savedDescription = ""
-        private var savedRadius = ""
 
         var photoBytes: ByteArray? = null
     }

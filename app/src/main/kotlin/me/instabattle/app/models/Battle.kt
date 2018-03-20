@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import me.instabattle.app.managers.EntryManager
 import me.instabattle.app.managers.UserManager
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import retrofit2.Callback
 import java.util.*
 
@@ -40,7 +40,7 @@ data class Battle(
     init {
         this.creatorId = userId
 
-        this.creatorId = State.currentUser.id
+        this.creatorId = GlobalState.currentUser.id
         this.entriesCount = 1
         this.createdOn = Date()
     }//FIXME
@@ -53,7 +53,7 @@ data class Battle(
 
     fun getVoteAndDo(callback: Callback<List<Entry>>) = EntryManager.getVoteAndDo(id, callback)
 
-    fun createEntryAndDo(callback: Callback<Entry>) = EntryManager.createAndDo(id, State.currentUser.id, callback)
+    fun createEntryAndDo(callback: Callback<Entry>) = EntryManager.createAndDo(id, GlobalState.currentUser.id, callback)
 
     fun getAuthorAndDo(callback: Callback<User>) = UserManager.getAndDo(creatorId, callback)
 }

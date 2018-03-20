@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_my_profile.*
 import me.instabattle.app.R
 import me.instabattle.app.adapters.UserEntryListAdapter
 import me.instabattle.app.models.Entry
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
@@ -29,13 +29,13 @@ class MyProfileActivity : DefaultActivity() {
 
         viewManager = LinearLayoutManager(this)
 
-        val registrationDate = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(State.currentUser.createdOn)
+        val registrationDate = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(GlobalState.currentUser.createdOn)
 
-        currentUserName.text = State.currentUser.username
+        currentUserName.text = GlobalState.currentUser.username
         currentUserDate.text = "Registration date: $registrationDate"
-        userBattleLimit.text = "You can create ${State.currentUser.battleCreationLimit} more battles."
+        userBattleLimit.text = "You can create ${GlobalState.currentUser.battleCreationLimit} more battles."
 
-        State.currentUser.getEntriesAndDo(object : Callback<List<Entry>> {
+        GlobalState.currentUser.getEntriesAndDo(object : Callback<List<Entry>> {
             override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {
                 info("got user entries")
                 viewAdapter = UserEntryListAdapter(this@MyProfileActivity, response.body()!!)
@@ -55,8 +55,8 @@ class MyProfileActivity : DefaultActivity() {
     }
 
     fun logout(v: View) {
-        State.token = "" // FIXME check
-        //State.currentUser = null
+        GlobalState.token = "" // FIXME check
+        //GlobalState.currentUser = null
 
         MapActivity.viewPoint = MapActivity.DEFAULT_VIEW_POINT
         MapActivity.viewZoom = MapActivity.DEFAULT_ZOOM

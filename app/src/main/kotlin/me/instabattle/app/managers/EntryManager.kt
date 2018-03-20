@@ -3,21 +3,17 @@ package me.instabattle.app.managers
 import me.instabattle.app.models.Entry
 import me.instabattle.app.models.Vote
 import me.instabattle.app.services.LocationService
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 object EntryManager {
     private val service = ServiceGenerator.createService(EntryService::class.java)
     private var tokenService: EntryService? = null
 
     fun initTokenService() {
-        tokenService = ServiceGenerator.createService(EntryService::class.java, State.token)
+        tokenService = ServiceGenerator.createService(EntryService::class.java, GlobalState.token)
     }
 
     fun getByBattleAndDo(battleId: Int, callback: Callback<List<Entry>>) {
@@ -47,7 +43,7 @@ object EntryManager {
     }
 
     fun getVoteAndDo(battleId: Int?, callback: Callback<List<Entry>>) {
-        val call = service.getVote(battleId, State.currentUser.id)
+        val call = service.getVote(battleId, GlobalState.currentUser.id)
         call.enqueue(callback)
     }
 

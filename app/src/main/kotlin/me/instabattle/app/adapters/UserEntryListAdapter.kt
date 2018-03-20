@@ -17,7 +17,7 @@ import me.instabattle.app.activities.MyProfileActivity
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Battle
 import me.instabattle.app.models.Entry
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
@@ -51,7 +51,7 @@ class UserEntryListAdapter(private val ctx: Context, private val entries: List<E
                 l.findViewById<TextView>(R.id.userEntryTitle).text = battle!!.name
 
                 l.findViewById<View>(R.id.userEntryViewBtn).setOnClickListener {
-                    State.chosenBattle = battle
+                    GlobalState.chosenBattle = battle
                     BattleActivity.gotHereFrom = MyProfileActivity::class.java
                     ctx.startActivity<BattleActivity>()
                 }

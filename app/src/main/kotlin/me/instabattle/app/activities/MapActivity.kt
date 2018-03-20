@@ -19,7 +19,7 @@ import me.instabattle.app.R
 import me.instabattle.app.managers.BattleManager
 import me.instabattle.app.models.Battle
 import me.instabattle.app.services.LocationService
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,7 +66,7 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewPoint, viewZoom))
 
         googleMap.setOnInfoWindowClickListener { marker ->
-            State.chosenBattle = battleByMarker[marker.id]
+            GlobalState.chosenBattle = battleByMarker[marker.id]
             BattleActivity.gotHereFrom = MapActivity::class.java
             startActivity<BattleActivity>()
         }
@@ -126,11 +126,11 @@ class MapActivity : FragmentActivity(), OnMapReadyCallback, AnkoLogger {
     }
 
     fun goCreateBattle(v: View) {
-        if (State.currentUser.battleCreationLimit == 0) {
+        if (GlobalState.currentUser.battleCreationLimit == 0) {
             toast("Sorry, you've spent all of your battle creations for this week.")
             return
         }
-        State.creatingBattle = true
+        GlobalState.creatingBattle = true
         startActivity<CreateBattleActivity>()
     }
 

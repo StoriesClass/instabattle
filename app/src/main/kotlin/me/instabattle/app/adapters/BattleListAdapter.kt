@@ -18,7 +18,7 @@ import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Battle
 import me.instabattle.app.models.Entry
 import me.instabattle.app.models.User
-import me.instabattle.app.settings.State
+import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
@@ -71,7 +71,7 @@ class BattleListAdapter(private val ctx: Context, private val battles: List<Batt
         })
 
         l.findViewById<View>(R.id.battleListItemViewBtn).setOnClickListener {
-            State.chosenBattle = battle
+            GlobalState.chosenBattle = battle
             BattleActivity.gotHereFrom = BattleListActivity::class.java
             ctx.startActivity<BattleActivity>("battle" to battle)
         }
