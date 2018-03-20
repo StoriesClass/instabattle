@@ -1,4 +1,4 @@
-# instabattle
+# Instabattle
 The Next Big Thing.
 
 ## TODO
@@ -17,3 +17,6 @@ The Next Big Thing.
 1. Dagger 2
 2. EventBus
 3. AndroidAnnotations
+4. Firebase [Crashlytics](https://firebase.google.com/docs/crashlytics)?
+5. 
+

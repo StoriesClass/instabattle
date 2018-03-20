@@ -41,7 +41,7 @@ class PhotoEditActivity : DefaultActivity() {
             })
             startActivity<BattleActivity>()
         } else {
-            CreateBattleActivity.photoBytes = photoBytes
+            //CreateBattleActivity.photoBytes = photoBytes
             startActivity<CreateBattleActivity>()
         }
     }

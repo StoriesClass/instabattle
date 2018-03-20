@@ -1,39 +1,30 @@
 package me.instabattle.app.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.evernote.android.state.State
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kotlinx.android.synthetic.main.activity_create_battle.*
+import me.instabattle.app.GlideApp
 import me.instabattle.app.R
-import me.instabattle.app.images.Util
 import me.instabattle.app.managers.BattleManager
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Battle
 import me.instabattle.app.models.Entry
 import me.instabattle.app.services.LocationService
 import me.instabattle.app.settings.GlobalState
-import org.jetbrains.anko.error
-import org.jetbrains.anko.info
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class CreateBattleActivity : DefaultActivity() {
-    @State
-    var battleTitle = ""
-
-    @State
-    var battleDescription = ""
-
-    @State
-    var battleRadius = ""
-
+    var photoBytes: ByteArray? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_battle)
-
     }
 
     public override fun onResume() {
@@ -41,17 +32,16 @@ class CreateBattleActivity : DefaultActivity() {
 
         if (photoBytes != null) {
             info("Photo bytes are not null")
-            newBattlePhoto.setImageBitmap(Util.decodeSampledBitmapFromBytes(photoBytes!!, 256, 256))
         }
-
-        newBattleTitle.setText(battleTitle)
-        newBattleDescription.setText(battleDescription)
-        newBattleRadius.setText(battleRadius)
     }
 
     private fun validateBattle(): Boolean {
-        if (battleTitle.length < BATTLE_TITLE_MINIMUM_LENGTH) {
+        if (newBattleTitle.text.length < BATTLE_TITLE_MINIMUM_LENGTH) {
             toast("Battle name should have at least  $BATTLE_TITLE_MINIMUM_LENGTH characters!")
+            return false
+        }
+        if (newBattleRadius.text.isEmpty()) {
+            toast("Enter battle radius!")
             return false
         }
         if (photoBytes == null) {
@@ -68,11 +58,11 @@ class CreateBattleActivity : DefaultActivity() {
 
         val loc = LocationService.getCurrentLocation()
         BattleManager.createAndDo(GlobalState.currentUser.id,
-                battleTitle,
+                newBattleTitle.text.toString(),
                 loc.latitude,
                 loc.longitude,
-                battleDescription,
-                Integer.parseInt(battleRadius),
+                newBattleDescription.text.toString(),
+                newBattleRadius.text.toString().toInt(),
                 object : Callback<Battle> {
                     override fun onResponse(call: Call<Battle>, response: Response<Battle>) {
                         info {"New battle was sent"}
@@ -80,7 +70,6 @@ class CreateBattleActivity : DefaultActivity() {
                             GlobalState.chosenBattle = response.body()
                             addFirstEntry(GlobalState.chosenBattle!!)
                             GlobalState.creatingBattle = false
-                            clearFields()
                             BattleActivity.gotHereFrom = MapActivity::class.java
                             startActivity<BattleActivity>()
                         } else {
@@ -109,32 +98,60 @@ class CreateBattleActivity : DefaultActivity() {
         })
     }
 
-    fun takeBattlePhoto(v: View) {
-        saveFields()
-        startActivity<CameraViewActivity>()
+    fun takeBattlePhoto(v: View) =
+            startActivityForResult(intentFor<CameraViewActivity>(), TAKE_PHOTO_REQUEST)
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == TAKE_PHOTO_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                setPhoto(data?.getByteArrayExtra("jpeg"))
+            } else {
+                error { "Take photo request finished with bad result code: $resultCode" }
+            }
+        }
     }
 
-    private fun saveFields() {
-        battleTitle = newBattleTitle.text.toString()
-        battleDescription = newBattleDescription.text.toString()
-        battleRadius = newBattleRadius.text.toString()
-    }
+    private fun setPhoto(jpeg: ByteArray?) {
+        if (jpeg == null) {
+            error("Received empty jpeg ByteArray")
+            return
+        }
+        try {
+            if (!GlobalState.creatingBattle) {
+                info("A picture has been taken while NOT creating a battle")
+                GlobalState.chosenBattle!!.createEntryAndDo(object : Callback<Entry> {
+                    override fun onResponse(call: Call<Entry>, response: Response<Entry>) {
+                        PhotoManager.upload(response.body()!!.imageName!!, jpeg)
+                    }
 
-    private fun clearFields() {
-        battleTitle = ""
-        battleDescription = ""
-        battleRadius = ""
+                    override fun onFailure(call: Call<Entry>, t: Throwable) {
+                        error("failed to add new entry: $t")
+                    }
+                })
+            } else {
+                info("A picture has been taken while creating a battle")
+                photoBytes = jpeg
+                GlideApp.with(this)
+                        .load(jpeg)
+                        .centerCrop()
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(newBattlePhoto)
+                //newBattlePhoto.setImageBitmap(Util.decodeSampledBitmapFromBytes(jpeg, 256, 256))
+            }
+            toast("Nice photo, " + GlobalState.currentUser.username + "!")
+        } catch (e: IOException) {
+            error("failed to load picture from MediaStore") // FIXME no handling
+        }
     }
 
     override fun onBackPressed() {
-        clearFields()
         GlobalState.creatingBattle = false
         startActivity<MapActivity>()
     }
 
     companion object {
         private const val BATTLE_TITLE_MINIMUM_LENGTH = 1
-
-        var photoBytes: ByteArray? = null
+        private const val TAKE_PHOTO_REQUEST = 1
     }
 }
