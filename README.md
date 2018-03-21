@@ -12,6 +12,7 @@ The Next Big Thing.
 8. Clear up for RxJava disposables.
 9. Use @dimen and @string.
 10. Get rid of gotHereFrom.
+11. Use Loaders with Retrofit?
 
 ### Libs to consider
 1. Dagger 2
