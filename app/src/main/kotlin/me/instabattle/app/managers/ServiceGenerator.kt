@@ -39,7 +39,7 @@ object ServiceGenerator {
                 val requestBuilder = original.newBuilder()
                         .header("Authorization", basic)
                         .header("Accept", "application/json")
-                        .method(original.method(), original.body())
+                        .method(original.method, original.body)
 
                 val request = requestBuilder.build()
                 it.proceed(request)

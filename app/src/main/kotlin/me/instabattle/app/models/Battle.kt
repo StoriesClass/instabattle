@@ -45,8 +45,6 @@ data class Battle(
         this.createdOn = Date()
     }//FIXME
 
-    fun getRadius(): Int = radius!!
-
     fun getEntriesAndDo(callback: Callback<List<Entry>>) = EntryManager.getByBattleAndDo(id!!, callback)
 
     fun getWinnerAndDo(callback: Callback<List<Entry>>) = EntryManager.getTopByBattleAndDo(id!!, 1, callback)

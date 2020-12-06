@@ -1,4 +1,4 @@
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardView.Light"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp">
 
-    <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/battleListItemLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -95,6 +95,6 @@
             app:layout_constraintStart_toEndOf="@+id/battleListItemViewBtn"
             app:layout_constraintTop_toTopOf="@+id/battleListItemViewBtn" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

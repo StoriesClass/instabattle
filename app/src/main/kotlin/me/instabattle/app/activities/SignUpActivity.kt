@@ -46,9 +46,9 @@ class SignUpActivity : DefaultActivity() {
                 }, {
                     when (it) {
                         is HttpException -> {
-                            val errorBody = it.response().errorBody()
+                            val errorBody = it.response()?.errorBody()
                             if (errorBody == null) { // is it even possible?
-                                error("Server returned unsuccessful response with empty error and code: %d".format(it.response().code()))
+                                error("Server returned unsuccessful response with empty error and code: %d".format(it.response()?.code()))
                             } else {
                                 //val errorMessage = JSONObject(errorBody.string()).getString("error")
                                 toast("Couldn't create user")

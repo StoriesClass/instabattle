@@ -57,6 +57,6 @@ object Util : AnkoLogger{
 
         options.inJustDecodeBounds = false
         `is` = url.openConnection().getInputStream()
-        return BitmapFactory.decodeStream(`is`, null, options)
+        return BitmapFactory.decodeStream(`is`, null, options)!!
     }
 }

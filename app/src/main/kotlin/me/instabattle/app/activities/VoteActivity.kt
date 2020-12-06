@@ -25,8 +25,8 @@ class VoteActivity : DefaultActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vote)
 
-        firstEntry = intent.getParcelableExtra<Entry>("firstEntry")
-        secondEntry = intent.getParcelableExtra<Entry>("secondEntry")
+        firstEntry = intent.getParcelableExtra("firstEntry")!!
+        secondEntry = intent.getParcelableExtra("secondEntry")!!
 
         setPhotos()
     }
