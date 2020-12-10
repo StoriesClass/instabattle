@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import kotlinx.android.synthetic.main.activity_create_battle.*
 import me.instabattle.app.GlideApp
 import me.instabattle.app.R
+import me.instabattle.app.databinding.ActivityCreateBattleBinding
 import me.instabattle.app.managers.BattleManager
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Battle
@@ -22,8 +22,11 @@ import java.io.IOException
 
 class CreateBattleActivity : DefaultActivity() {
     var photoBytes: ByteArray? = null
+    private lateinit var binding: ActivityCreateBattleBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCreateBattleBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_create_battle)
     }
 
@@ -36,11 +39,11 @@ class CreateBattleActivity : DefaultActivity() {
     }
 
     private fun validateBattle(): Boolean {
-        if (newBattleTitle.text.length < BATTLE_TITLE_MINIMUM_LENGTH) {
+        if (binding.newBattleTitle.text.length < BATTLE_TITLE_MINIMUM_LENGTH) {
             toast("Battle name should have at least  $BATTLE_TITLE_MINIMUM_LENGTH characters!")
             return false
         }
-        if (newBattleRadius.text.isEmpty()) {
+        if (binding.newBattleRadius.text.isEmpty()) {
             toast("Enter battle radius!")
             return false
         }
@@ -58,11 +61,11 @@ class CreateBattleActivity : DefaultActivity() {
 
         val loc = LocationService.getCurrentLocation()
         BattleManager.createAndDo(GlobalState.currentUser.id,
-                newBattleTitle.text.toString(),
+                binding.newBattleTitle.text.toString(),
                 loc.latitude,
                 loc.longitude,
-                newBattleDescription.text.toString(),
-                newBattleRadius.text.toString().toInt(),
+                binding.newBattleDescription.text.toString(),
+                binding.newBattleRadius.text.toString().toInt(),
                 object : Callback<Battle> {
                     override fun onResponse(call: Call<Battle>, response: Response<Battle>) {
                         info {"New battle was sent"}
@@ -136,7 +139,7 @@ class CreateBattleActivity : DefaultActivity() {
                         .load(jpeg)
                         .centerCrop()
                         .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(newBattlePhoto)
+                        .into(binding.newBattlePhoto)
                 //newBattlePhoto.setImageBitmap(Util.decodeSampledBitmapFromBytes(jpeg, 256, 256))
             }
             toast("Nice photo, " + GlobalState.currentUser.username + "!")

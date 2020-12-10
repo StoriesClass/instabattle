@@ -3,8 +3,8 @@ package me.instabattle.app.activities
 import android.os.Bundle
 import android.view.View
 import com.evernote.android.state.State
-import kotlinx.android.synthetic.main.activity_vote.*
 import me.instabattle.app.R
+import me.instabattle.app.databinding.ActivityVoteBinding
 import me.instabattle.app.managers.EntryManager
 import me.instabattle.app.managers.PhotoManager
 import me.instabattle.app.models.Entry
@@ -21,8 +21,11 @@ class VoteActivity : DefaultActivity() {
     @State
     lateinit var secondEntry: Entry
 
+    private lateinit var binding: ActivityVoteBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityVoteBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_vote)
 
         firstEntry = intent.getParcelableExtra("firstEntry")!!
@@ -32,8 +35,8 @@ class VoteActivity : DefaultActivity() {
     }
 
     fun setPhotos() {
-        PhotoManager.getPhotoInto(this, firstEntry.imageName!!, firstImage)
-        PhotoManager.getPhotoInto(this, secondEntry.imageName!!, secondImage)
+        PhotoManager.getPhotoInto(this, firstEntry.imageName!!, binding.firstImage)
+        PhotoManager.getPhotoInto(this, secondEntry.imageName!!, binding.secondImage)
     }
 
     fun vote(v: View) {

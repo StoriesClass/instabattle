@@ -11,9 +11,8 @@ import org.robolectric.annotation.Config
 
 import me.instabattle.app.BuildConfig
 
-import junit.framework.Assert.assertNotNull
-import junit.framework.Assert.assertTrue
-import kotlinx.android.synthetic.main.activity_login.*
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 
 @Config(constants = BuildConfig::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
 @RunWith(RobolectricTestRunner::class)

@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
-import kotlinx.android.synthetic.main.activity_battle.*
 import me.instabattle.app.R
 import me.instabattle.app.adapters.EntryListAdapter
+import me.instabattle.app.databinding.ActivityBattleBinding
 import me.instabattle.app.models.Entry
 import me.instabattle.app.services.LocationService
 import me.instabattle.app.settings.GlobalState
@@ -23,15 +23,17 @@ class BattleActivity : DefaultActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var binding: ActivityBattleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityBattleBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_battle)
 
         viewManager = LinearLayoutManager(this)
 
-        battle_title.text = GlobalState.chosenBattle!!.name
-        battle_description.text = GlobalState.chosenBattle!!.description
+        binding.battleTitle.text = GlobalState.chosenBattle!!.name
+        binding.battleDescription.text = GlobalState.chosenBattle!!.description
 
         GlobalState.chosenBattle!!.getEntriesAndDo(object : Callback<List<Entry>> {
             override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {

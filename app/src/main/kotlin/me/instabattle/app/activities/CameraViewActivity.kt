@@ -7,18 +7,22 @@ import com.otaliastudios.cameraview.AspectRatio
 import com.otaliastudios.cameraview.CameraException
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.SizeSelectors
-import kotlinx.android.synthetic.main.activity_camera_view.*
 import me.instabattle.app.R
+import me.instabattle.app.databinding.ActivityCameraViewBinding
 import org.jetbrains.anko.error
 import org.jetbrains.anko.getStackTraceString
 import org.jetbrains.anko.info
 
 class CameraViewActivity: DefaultActivity() {
+    private lateinit var binding: ActivityCameraViewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCameraViewBinding.inflate(layoutInflater)
+
         setContentView(R.layout.activity_camera_view)
         setSize()
-        camera.addCameraListener(object : CameraListener() {
+        binding.camera.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(jpeg: ByteArray?) {
                 val returnIntent = Intent()
                 returnIntent.putExtra("jpeg", jpeg)
@@ -29,13 +33,13 @@ class CameraViewActivity: DefaultActivity() {
                 error { err.getStackTraceString() }
             }
         })
-        capturePhoto.setOnClickListener {
+        binding.capturePhoto.setOnClickListener {
             info("Photo has been captured")
-            camera.capturePicture()
+            binding.camera.capturePicture()
         }
-        toggleCamera.setOnClickListener {
+        binding.toggleCamera.setOnClickListener {
             info("Camera has been toggled")
-            camera.toggleFacing()
+            binding.camera.toggleFacing()
         }
     }
 
@@ -51,21 +55,21 @@ class CameraViewActivity: DefaultActivity() {
                 ratio, // If none is found, at least try to match the aspect ratio
                 SizeSelectors.biggest() // If none is found, take the biggest
         )
-        camera.setPictureSize(result)
+        binding.camera.setPictureSize(result)
     }
 
     override fun onResume() {
         super.onResume()
-        camera.start()
+        binding.camera.start()
     }
 
     override fun onPause() {
         super.onPause()
-        camera.stop()
+        binding.camera.stop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        camera.destroy()
+        binding.camera.destroy()
     }
 }

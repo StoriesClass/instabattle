@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
 
 android {
     // Just in case
@@ -66,6 +66,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -152,10 +153,4 @@ configurations.all { config ->
             }
         }
     }
-}
-
-
-// For Parcelize support
-androidExtensions {
-    experimental = true
 }

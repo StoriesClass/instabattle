@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
-import kotlinx.android.synthetic.main.activity_my_profile.*
 import me.instabattle.app.R
 import me.instabattle.app.adapters.UserEntryListAdapter
+import me.instabattle.app.databinding.ActivityMyProfileBinding
 import me.instabattle.app.models.Entry
 import me.instabattle.app.settings.GlobalState
 import org.jetbrains.anko.error
@@ -22,18 +22,20 @@ class MyProfileActivity : DefaultActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var binding: ActivityMyProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMyProfileBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_my_profile)
 
         viewManager = LinearLayoutManager(this)
 
         val registrationDate = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(GlobalState.currentUser.createdOn)
 
-        currentUserName.text = GlobalState.currentUser.username
-        currentUserDate.text = "Registration date: $registrationDate"
-        userBattleLimit.text = "You can create ${GlobalState.currentUser.battleCreationLimit} more battles."
+        binding.currentUserName.text = GlobalState.currentUser.username
+        binding.currentUserDate.text = "Registration date: $registrationDate"
+        binding.userBattleLimit.text = "You can create ${GlobalState.currentUser.battleCreationLimit} more battles."
 
         GlobalState.currentUser.getEntriesAndDo(object : Callback<List<Entry>> {
             override fun onResponse(call: Call<List<Entry>>, response: Response<List<Entry>>) {

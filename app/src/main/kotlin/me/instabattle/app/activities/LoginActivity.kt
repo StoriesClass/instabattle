@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_login.*
 
 import me.instabattle.app.R
+import me.instabattle.app.databinding.ActivityLoginBinding
 import me.instabattle.app.managers.ServiceGenerator
 import me.instabattle.app.managers.UserManager
 import me.instabattle.app.settings.GlobalState
@@ -19,14 +19,17 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 
 class LoginActivity : DefaultActivity() {
+    private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_login)
     }
 
     fun onSignInClick(view: View) {
-        val username = loginInput.text.toString()
-        val pass = passwordInput.text.toString()
+        val username = binding.loginInput.text.toString()
+        val pass = binding.passwordInput.text.toString()
 
         debug("username: $username\t password: $pass")
 
